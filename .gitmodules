@@ -4,8 +4,8 @@
 	branch = main
 [submodule "src/code.cloudfoundry.org/bbs"]
 	path = src/code.cloudfoundry.org/bbs
-	url = https://github.com/cloudfoundry/bbs
-	branch = main
+	url = https://github.com/dimitardimitrov13/bbs
+	branch = CFAR-929_VCAP_SERVICES
 [submodule "src/code.cloudfoundry.org/auctioneer"]
 	path = src/code.cloudfoundry.org/auctioneer
 	url = https://github.com/cloudfoundry/auctioneer

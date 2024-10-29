@@ -108,8 +108,8 @@ describe 'rep' do
     end
   end
 
-  describe 'setup_service_binding_root.erb' do
-    let(:template) { job.template('bin/setup_service_binding_root') }
+  describe 'volume_mounted_files.erb' do
+    let(:template) { job.template('bin/volume_mounted_files') }
 
     context 'checks the max_containers value' do
       it 'raises an error if max_containers is <= 0' do
