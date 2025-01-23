@@ -1,6 +1,8 @@
 package goci
 
-import specs "github.com/opencontainers/runtime-spec/specs-go"
+import (
+	specs "github.com/opencontainers/runtime-spec/specs-go"
+)
 
 // Bndl represents an in-memory OCI bundle
 type Bndl struct {
@@ -113,14 +115,7 @@ func (b Bndl) WithBlockIO(blockIO specs.LinuxBlockIO) Bndl {
 }
 
 func (b Bndl) WithCPUShares(shares specs.LinuxCPU) Bndl {
-	resources := b.Resources()
-	if resources == nil {
-		resources = &specs.LinuxResources{}
-	}
-
-	resources.CPU = &shares
-	b.CloneLinux().Spec.Linux.Resources = resources
-
+	b = b.setCPUShares(shares)
 	return b
 }
 
@@ -137,14 +132,7 @@ func (b Bndl) WithWindowsCPUShares(shares specs.WindowsCPUResources) Bndl {
 }
 
 func (b Bndl) WithMemoryLimit(limit specs.LinuxMemory) Bndl {
-	resources := b.Resources()
-	if resources == nil {
-		resources = &specs.LinuxResources{}
-	}
-
-	resources.Memory = &limit
-	b.CloneLinux().Spec.Linux.Resources = resources
-
+	b = b.setMemoryLimit(limit)
 	return b
 }
 
