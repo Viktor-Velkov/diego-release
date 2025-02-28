@@ -1,3 +1,25 @@
+# v1.31.2 (2025-02-05)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.31.1 (2025-01-31)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.31.0 (2025-01-30)
+
+* **Feature**: Temporarily updating dualstack endpoint support
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.30.0 (2025-01-29)
+
+* **Feature**: Add support for Dualstack Endpoints
+
+# v1.29.5 (2025-01-24)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+* **Dependency Update**: Upgrade to smithy-go v1.22.2.
+
 # v1.29.4 (2025-01-17)
 
 * **Bug Fix**: Fix bug where credentials weren't refreshed during retry loop.
