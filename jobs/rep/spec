@@ -142,7 +142,7 @@ properties:
     description: "Interval that checks envoy responsiveness every 30s."
     default: "30s"
   diego.executor.enable_container_proxy_healthcheck:
-    description: "Healthcheck for the envoy container."
+    description: "When set, enables the liveness health check for the envoy proxy in the container."
     default: false
   diego.executor.garden.address:
     description: "Garden server listening address."
