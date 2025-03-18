@@ -18,27 +18,27 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.28.0
-	code.cloudfoundry.org/bytefmt v0.32.0
+	code.cloudfoundry.org/archiver v0.29.0
+	code.cloudfoundry.org/bytefmt v0.33.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.44.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.37.0
-	code.cloudfoundry.org/clock v1.30.0
+	code.cloudfoundry.org/cfhttp/v2 v2.38.0
+	code.cloudfoundry.org/clock v1.31.0
 	code.cloudfoundry.org/cnbapplifecycle v0.0.5
-	code.cloudfoundry.org/credhub-cli v0.0.0-20250310131029-ea50fd1cfd0a
-	code.cloudfoundry.org/debugserver v0.41.0
-	code.cloudfoundry.org/diego-logging-client v0.46.0
-	code.cloudfoundry.org/dockerdriver v0.41.0
-	code.cloudfoundry.org/durationjson v0.33.0
-	code.cloudfoundry.org/eventhub v0.32.0
+	code.cloudfoundry.org/credhub-cli v0.0.0-20250317130919-6d4d60c755af
+	code.cloudfoundry.org/debugserver v0.42.0
+	code.cloudfoundry.org/diego-logging-client v0.47.0
+	code.cloudfoundry.org/dockerdriver v0.42.0
+	code.cloudfoundry.org/durationjson v0.34.0
+	code.cloudfoundry.org/eventhub v0.33.0
 	code.cloudfoundry.org/garden v0.0.0-20250312022458-1d757121fb8a
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
-	code.cloudfoundry.org/goshims v0.63.0
-	code.cloudfoundry.org/guardian v0.0.0-20250312023221-36b810d3057a
-	code.cloudfoundry.org/lager/v3 v3.29.0
-	code.cloudfoundry.org/localip v0.33.0
+	code.cloudfoundry.org/goshims v0.64.0
+	code.cloudfoundry.org/guardian v0.0.0-20250314141613-861472c652a5
+	code.cloudfoundry.org/lager/v3 v3.30.0
+	code.cloudfoundry.org/localip v0.34.0
 	code.cloudfoundry.org/tlsconfig v0.21.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
@@ -46,7 +46,7 @@ require (
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.9.1
 	github.com/cactus/go-statsd-client v3.1.1-0.20161031215955-d8eabe07bc70+incompatible
 	github.com/cespare/xxhash/v2 v2.3.0
-	github.com/cloudfoundry-community/go-uaa v0.3.3
+	github.com/cloudfoundry-community/go-uaa v0.3.5
 	github.com/cloudfoundry/dropsonde v1.1.0
 	github.com/containers/image/v5 v5.34.2
 	github.com/docker/libtrust v0.0.0-20160708172513-aabc10ec26b7
@@ -98,7 +98,7 @@ require (
 require (
 	cel.dev/expr v0.22.0 // indirect
 	code.cloudfoundry.org/commandrunner v0.31.0 // indirect
-	code.cloudfoundry.org/go-diodes v0.0.0-20250313101733-a4678758a1c9 // indirect
+	code.cloudfoundry.org/go-diodes v0.0.0-20250317104522-5c806ff4fd8d // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
@@ -138,7 +138,7 @@ require (
 	github.com/chrismellard/docker-credential-acr-env v0.0.0-20230304212654-82a0ddb27589 // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20240831012420-2590b55236ee // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.145 // indirect
-	github.com/cloudfoundry/sonde-go v0.0.0-20250217093333-7351ffed9384 // indirect
+	github.com/cloudfoundry/sonde-go v0.0.0-20250317104451-a50013ad58bc // indirect
 	github.com/cncf/xds/go v0.0.0-20250121191232-2f005788dc42 // indirect
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/containerd/stargz-snapshotter/estargz v0.16.3 // indirect
@@ -154,7 +154,7 @@ require (
 	github.com/docker/cli v28.0.1+incompatible // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
 	github.com/docker/docker v28.0.1+incompatible // indirect
-	github.com/docker/docker-credential-helpers v0.9.2 // indirect
+	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
@@ -166,7 +166,7 @@ require (
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-containerregistry v0.20.3 // indirect
-	github.com/google/pprof v0.0.0-20250302191652-9094ed2288e7 // indirect
+	github.com/google/pprof v0.0.0-20250317173921-a4b03ec1a45e // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
@@ -196,12 +196,12 @@ require (
 	github.com/nats-io/jwt/v2 v2.7.3 // indirect
 	github.com/nats-io/nkeys v0.4.10 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
-	github.com/opencontainers/runc v1.2.5 // indirect
+	github.com/opencontainers/runc v1.2.6 // indirect
 	github.com/opencontainers/runtime-spec v1.2.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/prometheus/client_golang v1.21.1 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.62.0 // indirect
+	github.com/prometheus/common v0.63.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
@@ -221,6 +221,6 @@ require (
 	golang.org/x/term v0.30.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/tools v0.31.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250311190419-81fb87f6b8bf // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250311190419-81fb87f6b8bf // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
 )
