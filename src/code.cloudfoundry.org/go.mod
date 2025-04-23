@@ -22,22 +22,22 @@ require (
 	code.cloudfoundry.org/cfhttp/v2 v2.43.0
 	code.cloudfoundry.org/clock v1.36.0
 	code.cloudfoundry.org/cnbapplifecycle v0.0.5
-	code.cloudfoundry.org/credhub-cli v0.0.0-20250421130851-cded072a83a8
+	code.cloudfoundry.org/credhub-cli v0.0.0-20250422214913-c4e5375deae6
 	code.cloudfoundry.org/debugserver v0.47.0
 	code.cloudfoundry.org/diego-logging-client v0.52.0
 	code.cloudfoundry.org/dockerdriver v0.47.0
 	code.cloudfoundry.org/durationjson v0.39.0
 	code.cloudfoundry.org/eventhub v0.38.0
-	code.cloudfoundry.org/garden v0.0.0-20250421112302-cd1e492051ed
+	code.cloudfoundry.org/garden v0.0.0-20250422223445-75bc73b534cf
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
-	code.cloudfoundry.org/guardian v0.0.0-20250421112904-561eda7dd718
+	code.cloudfoundry.org/guardian v0.0.0-20250423023453-f0ba90fb9dfb
 	code.cloudfoundry.org/lager/v3 v3.35.0
 	code.cloudfoundry.org/localip v0.38.0
 	code.cloudfoundry.org/tlsconfig v0.25.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/aws/aws-sdk-go v1.55.6
+	github.com/aws/aws-sdk-go v1.55.7
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.9.1
 	github.com/cactus/go-statsd-client v3.1.1-0.20161031215955-d8eabe07bc70+incompatible
 	github.com/cespare/xxhash/v2 v2.3.0
@@ -92,7 +92,7 @@ require (
 
 require (
 	cel.dev/expr v0.23.1 // indirect
-	code.cloudfoundry.org/commandrunner v0.34.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.35.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20250417050917-333c2580673b // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible // indirect
@@ -126,8 +126,8 @@ require (
 	github.com/aws/smithy-go v1.22.3 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
-	github.com/buildpacks/imgutil v0.0.0-20250224200932-4dcbf829e753 // indirect
-	github.com/buildpacks/lifecycle v0.20.7 // indirect
+	github.com/buildpacks/imgutil v0.0.0-20250423150926-0916404f4da8 // indirect
+	github.com/buildpacks/lifecycle v0.20.8 // indirect
 	github.com/buildpacks/pack v0.37.0 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/chrismellard/docker-credential-acr-env v0.0.0-20230304212654-82a0ddb27589 // indirect
@@ -162,7 +162,7 @@ require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-containerregistry v0.20.3 // indirect
 	github.com/google/go-tpm v0.9.3 // indirect
-	github.com/google/pprof v0.0.0-20250418163039-24c5476c6587 // indirect
+	github.com/google/pprof v0.0.0-20250423184734-337e5dd93bb4 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
@@ -219,6 +219,6 @@ require (
 	golang.org/x/term v0.31.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/tools v0.32.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250421163800-61c742ae3ef0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250421163800-61c742ae3ef0 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250422160041-2d3770c4ea7f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f // indirect
 )
