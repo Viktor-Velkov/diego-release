@@ -13,27 +13,27 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.35.0
-	code.cloudfoundry.org/bytefmt v0.39.0
+	code.cloudfoundry.org/archiver v0.36.0
+	code.cloudfoundry.org/bytefmt v0.40.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.50.0
+	code.cloudfoundry.org/certsplitter v0.51.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.44.0
-	code.cloudfoundry.org/clock v1.37.0
+	code.cloudfoundry.org/cfhttp/v2 v2.45.0
+	code.cloudfoundry.org/clock v1.38.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20250505130841-11f3a43db498
-	code.cloudfoundry.org/debugserver v0.48.0
-	code.cloudfoundry.org/diego-logging-client v0.53.0
-	code.cloudfoundry.org/dockerdriver v0.48.0
-	code.cloudfoundry.org/durationjson v0.40.0
-	code.cloudfoundry.org/eventhub v0.39.0
+	code.cloudfoundry.org/debugserver v0.49.0
+	code.cloudfoundry.org/diego-logging-client v0.54.0
+	code.cloudfoundry.org/dockerdriver v0.49.0
+	code.cloudfoundry.org/durationjson v0.41.0
+	code.cloudfoundry.org/eventhub v0.40.0
 	code.cloudfoundry.org/garden v0.0.0-20250502134244-ecba9e3ce67c
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
 	code.cloudfoundry.org/guardian v0.0.0-20250430192413-53d09923198c
 	code.cloudfoundry.org/lager/v3 v3.36.0
-	code.cloudfoundry.org/localip v0.39.0
-	code.cloudfoundry.org/tlsconfig v0.26.0
+	code.cloudfoundry.org/localip v0.40.0
+	code.cloudfoundry.org/tlsconfig v0.27.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go v1.55.7
@@ -174,7 +174,7 @@ require (
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/text v0.25.0 // indirect
-	golang.org/x/tools v0.32.0 // indirect
+	golang.org/x/tools v0.33.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250505200425-f936aa4a68b2 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250505200425-f936aa4a68b2 // indirect
 )
