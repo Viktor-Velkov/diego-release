@@ -1,4 +1,4 @@
-# cel.dev/expr v0.23.1
+# cel.dev/expr v0.24.0
 ## explicit; go 1.22.0
 cel.dev/expr
 # code.cloudfoundry.org/archiver v0.36.0
@@ -30,7 +30,7 @@ code.cloudfoundry.org/cfhttp/v2/handlers
 ## explicit; go 1.23.0
 code.cloudfoundry.org/clock
 code.cloudfoundry.org/clock/fakeclock
-# code.cloudfoundry.org/commandrunner v0.36.0
+# code.cloudfoundry.org/commandrunner v0.37.0
 ## explicit; go 1.23.0
 code.cloudfoundry.org/commandrunner
 # code.cloudfoundry.org/credhub-cli v0.0.0-20250505130841-11f3a43db498
@@ -43,14 +43,14 @@ code.cloudfoundry.org/credhub-cli/credhub/credentials/generate
 code.cloudfoundry.org/credhub-cli/credhub/credentials/values
 code.cloudfoundry.org/credhub-cli/credhub/permissions
 code.cloudfoundry.org/credhub-cli/credhub/server
-# code.cloudfoundry.org/debugserver v0.49.0
+# code.cloudfoundry.org/debugserver v0.50.0
 ## explicit; go 1.23.0
 code.cloudfoundry.org/debugserver
-# code.cloudfoundry.org/diego-logging-client v0.54.0
+# code.cloudfoundry.org/diego-logging-client v0.55.0
 ## explicit; go 1.23.0
 code.cloudfoundry.org/diego-logging-client
 code.cloudfoundry.org/diego-logging-client/testhelpers
-# code.cloudfoundry.org/dockerdriver v0.49.0
+# code.cloudfoundry.org/dockerdriver v0.50.0
 ## explicit; go 1.23.0
 code.cloudfoundry.org/dockerdriver
 code.cloudfoundry.org/dockerdriver/dockerdriverfakes
@@ -62,7 +62,7 @@ code.cloudfoundry.org/durationjson
 # code.cloudfoundry.org/eventhub v0.40.0
 ## explicit; go 1.23.0
 code.cloudfoundry.org/eventhub
-# code.cloudfoundry.org/garden v0.0.0-20250502134244-ecba9e3ce67c => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20250507022932-d3475276d354 => ../garden
 ## explicit; go 1.23.0
 code.cloudfoundry.org/garden
 code.cloudfoundry.org/garden/client
@@ -89,7 +89,7 @@ code.cloudfoundry.org/goshims/filepathshim
 code.cloudfoundry.org/goshims/http_wrap
 code.cloudfoundry.org/goshims/osshim
 code.cloudfoundry.org/goshims/osshim/os_fake
-# code.cloudfoundry.org/guardian v0.0.0-20250430192413-53d09923198c => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20250507023555-b305eaa5d822 => ../guardian
 ## explicit; go 1.23.3
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -102,7 +102,7 @@ code.cloudfoundry.org/guardian/rundmc/cgroups
 code.cloudfoundry.org/guardian/rundmc/cgroups/fs
 code.cloudfoundry.org/guardian/rundmc/event
 code.cloudfoundry.org/guardian/rundmc/goci
-# code.cloudfoundry.org/lager/v3 v3.36.0
+# code.cloudfoundry.org/lager/v3 v3.37.0
 ## explicit; go 1.23.0
 code.cloudfoundry.org/lager/v3
 code.cloudfoundry.org/lager/v3/internal/truncate
@@ -327,7 +327,7 @@ github.com/cloudfoundry/dropsonde/runtime_stats
 # github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851
 ## explicit; go 1.21.0
 github.com/cloudfoundry/go-socks5
-# github.com/cloudfoundry/socks5-proxy v0.2.150
+# github.com/cloudfoundry/socks5-proxy v0.2.151
 ## explicit; go 1.23.0
 github.com/cloudfoundry/socks5-proxy
 # github.com/cloudfoundry/sonde-go v0.0.0-20250505082611-517434ece96d
@@ -524,7 +524,7 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
-# github.com/google/go-tpm v0.9.4
+# github.com/google/go-tpm v0.9.5
 ## explicit; go 1.22
 github.com/google/go-tpm/legacy/tpm2
 github.com/google/go-tpm/tpmutil
@@ -780,7 +780,7 @@ github.com/tedsuo/ifrit/sigmon
 # github.com/tedsuo/rata v1.0.0
 ## explicit
 github.com/tedsuo/rata
-# github.com/vishvananda/netlink v1.3.1-0.20240922070040-084abd93d350
+# github.com/vishvananda/netlink v1.3.1
 ## explicit; go 1.12
 github.com/vishvananda/netlink
 github.com/vishvananda/netlink/nl
@@ -895,10 +895,10 @@ golang.org/x/time/rate
 golang.org/x/tools/cover
 golang.org/x/tools/go/ast/inspector
 golang.org/x/tools/internal/astutil/edge
-# google.golang.org/genproto/googleapis/api v0.0.0-20250505200425-f936aa4a68b2
+# google.golang.org/genproto/googleapis/api v0.0.0-20250512202823-5a2f75b736a9
 ## explicit; go 1.23.0
 google.golang.org/genproto/googleapis/api/expr/v1alpha1
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20250505200425-f936aa4a68b2
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20250512202823-5a2f75b736a9
 ## explicit; go 1.23.0
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.72.0

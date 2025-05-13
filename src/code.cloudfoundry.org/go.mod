@@ -22,16 +22,16 @@ require (
 	code.cloudfoundry.org/cfhttp/v2 v2.45.0
 	code.cloudfoundry.org/clock v1.38.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20250505130841-11f3a43db498
-	code.cloudfoundry.org/debugserver v0.49.0
-	code.cloudfoundry.org/diego-logging-client v0.54.0
-	code.cloudfoundry.org/dockerdriver v0.49.0
+	code.cloudfoundry.org/debugserver v0.50.0
+	code.cloudfoundry.org/diego-logging-client v0.55.0
+	code.cloudfoundry.org/dockerdriver v0.50.0
 	code.cloudfoundry.org/durationjson v0.41.0
 	code.cloudfoundry.org/eventhub v0.40.0
-	code.cloudfoundry.org/garden v0.0.0-20250502134244-ecba9e3ce67c
+	code.cloudfoundry.org/garden v0.0.0-20250507022932-d3475276d354
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
-	code.cloudfoundry.org/guardian v0.0.0-20250430192413-53d09923198c
-	code.cloudfoundry.org/lager/v3 v3.36.0
+	code.cloudfoundry.org/guardian v0.0.0-20250507023555-b305eaa5d822
+	code.cloudfoundry.org/lager/v3 v3.37.0
 	code.cloudfoundry.org/localip v0.40.0
 	code.cloudfoundry.org/tlsconfig v0.27.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
@@ -90,8 +90,8 @@ require (
 )
 
 require (
-	cel.dev/expr v0.23.1 // indirect
-	code.cloudfoundry.org/commandrunner v0.36.0 // indirect
+	cel.dev/expr v0.24.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.37.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20250505082646-e4c2d772c2ec // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
@@ -114,7 +114,7 @@ require (
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
-	github.com/cloudfoundry/socks5-proxy v0.2.150 // indirect
+	github.com/cloudfoundry/socks5-proxy v0.2.151 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20250505082611-517434ece96d // indirect
 	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
@@ -135,7 +135,7 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/go-tpm v0.9.4 // indirect
+	github.com/google/go-tpm v0.9.5 // indirect
 	github.com/google/pprof v0.0.0-20250501235452-c0086092b71a // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
@@ -167,7 +167,7 @@ require (
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
-	github.com/vishvananda/netlink v1.3.1-0.20240922070040-084abd93d350 // indirect
+	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.35.0 // indirect
 	go.step.sm/crypto v0.63.0 // indirect
@@ -175,6 +175,6 @@ require (
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/tools v0.33.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250505200425-f936aa4a68b2 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250505200425-f936aa4a68b2 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250512202823-5a2f75b736a9 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250512202823-5a2f75b736a9 // indirect
 )
