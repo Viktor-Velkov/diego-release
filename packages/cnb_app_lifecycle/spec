@@ -45,7 +45,6 @@ files:
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/defaults/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/middleware/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/middleware/private/metrics/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/protocol/query/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/protocol/restjson/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/aws/protocol/xml/*.go # gosub
@@ -110,11 +109,13 @@ files:
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/internal/sync/singleflight/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/io/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/logging/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/smithy-go/metrics/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/middleware/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/private/requestcompression/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/ptr/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/rand/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/time/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/smithy-go/tracing/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/transport/http/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/transport/http/internal/io/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/waiter/*.go # gosub
@@ -264,7 +265,6 @@ files:
   - cnbapplifecycle/vendor/github.com/gorilla/mux/*.go # gosub
   - cnbapplifecycle/vendor/github.com/heroku/color/*.go # gosub
   - cnbapplifecycle/vendor/github.com/inconshreveable/mousetrap/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/jmespath/go-jmespath/*.go # gosub
   - cnbapplifecycle/vendor/github.com/klauspost/compress/*.go # gosub
   - cnbapplifecycle/vendor/github.com/klauspost/compress/fse/*.go # gosub
   - cnbapplifecycle/vendor/github.com/klauspost/compress/huff0/*.go # gosub
