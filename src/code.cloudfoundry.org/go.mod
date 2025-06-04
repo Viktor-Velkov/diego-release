@@ -27,10 +27,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.51.0
 	code.cloudfoundry.org/durationjson v0.42.0
 	code.cloudfoundry.org/eventhub v0.41.0
-	code.cloudfoundry.org/garden v0.0.0-20250507022932-d3475276d354
+	code.cloudfoundry.org/garden v0.0.0-20250604020255-2f07acb6e208
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
-	code.cloudfoundry.org/guardian v0.0.0-20250514023630-af31d1ee6689
+	code.cloudfoundry.org/guardian v0.0.0-20250604020826-30b5a859f9dd
 	code.cloudfoundry.org/lager/v3 v3.38.0
 	code.cloudfoundry.org/localip v0.41.0
 	code.cloudfoundry.org/tlsconfig v0.28.0
@@ -62,7 +62,7 @@ require (
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
 	github.com/nats-io/nats-server/v2 v2.11.4
-	github.com/nats-io/nats.go v1.42.0
+	github.com/nats-io/nats.go v1.43.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 	github.com/onsi/ginkgo/v2 v2.23.4
 	github.com/onsi/gomega v1.37.0
@@ -91,7 +91,7 @@ require (
 
 require (
 	cel.dev/expr v0.24.0 // indirect
-	code.cloudfoundry.org/commandrunner v0.37.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.38.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20250505082646-e4c2d772c2ec // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
@@ -175,6 +175,6 @@ require (
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/tools v0.33.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250528174236-200df99c418a // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250528174236-200df99c418a // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
 )
