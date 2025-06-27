@@ -30,7 +30,7 @@ require (
 	code.cloudfoundry.org/garden v0.0.0-20250611020234-e214b0859579
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
-	code.cloudfoundry.org/guardian v0.0.0-20250618020817-caa1dd747d30
+	code.cloudfoundry.org/guardian v0.0.0-20250625021013-79e4be171eda
 	code.cloudfoundry.org/lager/v3 v3.39.0
 	code.cloudfoundry.org/localip v0.42.0
 	code.cloudfoundry.org/tlsconfig v0.30.0
@@ -61,7 +61,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
-	github.com/nats-io/nats-server/v2 v2.11.4
+	github.com/nats-io/nats-server/v2 v2.11.5
 	github.com/nats-io/nats.go v1.43.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 	github.com/onsi/ginkgo/v2 v2.23.4
@@ -126,7 +126,7 @@ require (
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/cli v28.1.1+incompatible // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
-	github.com/docker/docker v28.2.2+incompatible // indirect
+	github.com/docker/docker v28.3.0+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
