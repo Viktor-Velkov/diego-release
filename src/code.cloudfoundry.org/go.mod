@@ -13,26 +13,26 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.38.0
-	code.cloudfoundry.org/bytefmt v0.42.0
+	code.cloudfoundry.org/archiver v0.39.0
+	code.cloudfoundry.org/bytefmt v0.43.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.53.0
+	code.cloudfoundry.org/certsplitter v0.54.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.47.0
-	code.cloudfoundry.org/clock v1.40.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20250616130814-79ad10d5e505
-	code.cloudfoundry.org/debugserver v0.53.0
-	code.cloudfoundry.org/diego-logging-client v0.58.0
-	code.cloudfoundry.org/dockerdriver v0.53.0
-	code.cloudfoundry.org/durationjson v0.43.0
-	code.cloudfoundry.org/eventhub v0.42.0
-	code.cloudfoundry.org/garden v0.0.0-20250611020234-e214b0859579
+	code.cloudfoundry.org/cfhttp/v2 v2.48.0
+	code.cloudfoundry.org/clock v1.41.0
+	code.cloudfoundry.org/credhub-cli v0.0.0-20250630133601-61e52f0de0d8
+	code.cloudfoundry.org/debugserver v0.54.0
+	code.cloudfoundry.org/diego-logging-client v0.59.0
+	code.cloudfoundry.org/dockerdriver v0.54.0
+	code.cloudfoundry.org/durationjson v0.44.0
+	code.cloudfoundry.org/eventhub v0.43.0
+	code.cloudfoundry.org/garden v0.0.0-20250630203456-610b5c082a0f
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
-	code.cloudfoundry.org/guardian v0.0.0-20250625021013-79e4be171eda
-	code.cloudfoundry.org/lager/v3 v3.39.0
-	code.cloudfoundry.org/localip v0.42.0
+	code.cloudfoundry.org/guardian v0.0.0-20250630204325-6af1e3421091
+	code.cloudfoundry.org/lager/v3 v3.40.0
+	code.cloudfoundry.org/localip v0.43.0
 	code.cloudfoundry.org/tlsconfig v0.30.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
@@ -136,7 +136,7 @@ require (
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-tpm v0.9.5 // indirect
-	github.com/google/pprof v0.0.0-20250607225305-033d6d78b36a // indirect
+	github.com/google/pprof v0.0.0-20250630185457-6e76a2b096b5 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
