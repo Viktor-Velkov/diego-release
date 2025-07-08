@@ -23,14 +23,14 @@ require (
 	code.cloudfoundry.org/clock v1.41.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20250630133601-61e52f0de0d8
 	code.cloudfoundry.org/debugserver v0.54.0
-	code.cloudfoundry.org/diego-logging-client v0.59.0
-	code.cloudfoundry.org/dockerdriver v0.54.0
+	code.cloudfoundry.org/diego-logging-client v0.60.0
+	code.cloudfoundry.org/dockerdriver v0.55.0
 	code.cloudfoundry.org/durationjson v0.44.0
 	code.cloudfoundry.org/eventhub v0.43.0
-	code.cloudfoundry.org/garden v0.0.0-20250702020342-90c04595b589
+	code.cloudfoundry.org/garden v0.0.0-20250702171543-d3b7c3a6ecb8
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.69.0
-	code.cloudfoundry.org/guardian v0.0.0-20250702020949-a352cc33ca0f
+	code.cloudfoundry.org/guardian v0.0.0-20250707160748-03a2f9c1bc23
 	code.cloudfoundry.org/lager/v3 v3.40.0
 	code.cloudfoundry.org/localip v0.43.0
 	code.cloudfoundry.org/tlsconfig v0.30.0
@@ -114,7 +114,7 @@ require (
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
-	github.com/cloudfoundry/socks5-proxy v0.2.154 // indirect
+	github.com/cloudfoundry/socks5-proxy v0.2.155 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20250505082611-517434ece96d // indirect
 	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
@@ -126,7 +126,7 @@ require (
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/cli v28.1.1+incompatible // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
-	github.com/docker/docker v28.3.0+incompatible // indirect
+	github.com/docker/docker v28.3.1+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
@@ -174,6 +174,6 @@ require (
 	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/text v0.26.0 // indirect
 	golang.org/x/tools v0.34.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
 )
