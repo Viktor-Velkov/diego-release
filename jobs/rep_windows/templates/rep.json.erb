@@ -187,15 +187,11 @@
 
   config[:bbs_address] = "https://#{p("diego.rep.bbs.api_location")}"
 
-  if config[:enable_container_proxy]
-    begin
+  begin
       p("diego.executor.instance_identity_ca_cert")
       p("diego.executor.instance_identity_key")
-    rescue
+  rescue
       raise '"when containers.proxy.enabled is true, diego.executor.instance_identity_ca_cert" and "diego.executor.instance_identity_key" must both be set'
-    end
-  elsif !p("containers.proxy.enable_unproxied_port_mappings")
-    raise 'containers.proxy.enabled must be set to true in order to disable the unproxied port mappings'
   end
 
   if config[:container_proxy_require_and_verify_client_certs]
