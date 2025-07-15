@@ -13,27 +13,27 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.39.0
-	code.cloudfoundry.org/bytefmt v0.43.0
+	code.cloudfoundry.org/archiver v0.40.0
+	code.cloudfoundry.org/bytefmt v0.44.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.54.0
+	code.cloudfoundry.org/certsplitter v0.55.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.48.0
-	code.cloudfoundry.org/clock v1.41.0
+	code.cloudfoundry.org/cfhttp/v2 v2.49.0
+	code.cloudfoundry.org/clock v1.42.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20250714135215-5818ddba5dbd
-	code.cloudfoundry.org/debugserver v0.57.0
-	code.cloudfoundry.org/diego-logging-client v0.60.0
-	code.cloudfoundry.org/dockerdriver v0.55.0
-	code.cloudfoundry.org/durationjson v0.44.0
-	code.cloudfoundry.org/eventhub v0.43.0
-	code.cloudfoundry.org/garden v0.0.0-20250702171543-d3b7c3a6ecb8
+	code.cloudfoundry.org/debugserver v0.58.0
+	code.cloudfoundry.org/diego-logging-client v0.61.0
+	code.cloudfoundry.org/dockerdriver v0.56.0
+	code.cloudfoundry.org/durationjson v0.45.0
+	code.cloudfoundry.org/eventhub v0.44.0
+	code.cloudfoundry.org/garden v0.0.0-20250714195604-95da0d086a3c
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.71.0
-	code.cloudfoundry.org/guardian v0.0.0-20250709021230-eeffd4e4d771
-	code.cloudfoundry.org/lager/v3 v3.40.0
-	code.cloudfoundry.org/localip v0.43.0
-	code.cloudfoundry.org/tlsconfig v0.30.0
+	code.cloudfoundry.org/guardian v0.0.0-20250714200212-d16908221133
+	code.cloudfoundry.org/lager/v3 v3.41.0
+	code.cloudfoundry.org/localip v0.44.0
+	code.cloudfoundry.org/tlsconfig v0.31.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go v1.55.7
@@ -119,7 +119,7 @@ require (
 	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
 	github.com/containers/ocicrypt v1.2.1 // indirect
-	github.com/containers/storage v1.58.0 // indirect
+	github.com/containers/storage v1.59.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/creack/pty v1.1.24 // indirect
 	github.com/cyphar/filepath-securejoin v0.4.1 // indirect
@@ -157,7 +157,7 @@ require (
 	github.com/nats-io/jwt/v2 v2.7.4 // indirect
 	github.com/nats-io/nkeys v0.4.11 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
-	github.com/opencontainers/cgroups v0.0.3 // indirect
+	github.com/opencontainers/cgroups v0.0.4 // indirect
 	github.com/opencontainers/runc v1.3.0 // indirect
 	github.com/opencontainers/runtime-spec v1.2.1 // indirect
 	github.com/prometheus/client_golang v1.22.0 // indirect
