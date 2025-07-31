@@ -27,16 +27,16 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.58.0
 	code.cloudfoundry.org/durationjson v0.46.0
 	code.cloudfoundry.org/eventhub v0.45.0
-	code.cloudfoundry.org/garden v0.0.0-20250723020637-e97ef1c64f2b
+	code.cloudfoundry.org/garden v0.0.0-20250730020702-3c607f063fc6
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.72.0
-	code.cloudfoundry.org/guardian v0.0.0-20250723021209-000898a45c27
+	code.cloudfoundry.org/guardian v0.0.0-20250730021248-862109afbc38
 	code.cloudfoundry.org/lager/v3 v3.42.0
 	code.cloudfoundry.org/localip v0.45.0
 	code.cloudfoundry.org/tlsconfig v0.31.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/aws/aws-sdk-go v1.55.7
+	github.com/aws/aws-sdk-go v1.55.8
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.10.1
 	github.com/cactus/go-statsd-client v3.1.1-0.20161031215955-d8eabe07bc70+incompatible
 	github.com/cespare/xxhash/v2 v2.3.0
@@ -96,20 +96,20 @@ require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.37.0 // indirect
-	github.com/aws/aws-sdk-go-v2/config v1.30.1 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.18.1 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.0 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.37.1 // indirect
+	github.com/aws/aws-sdk-go-v2/config v1.30.2 // indirect
+	github.com/aws/aws-sdk-go-v2/credentials v1.18.2 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.1 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.1 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.1 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ecr v1.47.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.34.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ecr v1.47.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.34.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.26.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.31.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.35.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.26.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.31.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.35.1 // indirect
 	github.com/aws/smithy-go v1.22.5 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
@@ -166,7 +166,7 @@ require (
 	github.com/spf13/pflag v1.0.7 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
-	go.step.sm/crypto v0.67.0 // indirect
+	go.step.sm/crypto v0.68.0 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
