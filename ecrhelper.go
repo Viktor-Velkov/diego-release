@@ -7,11 +7,11 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/endpoints"
-	awssession "github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ecr"
+	"github.com/aws/aws-sdk-go/aws"                    //lint:ignore SA1019 - need tot bump to aws-sdk-go-v2
+	"github.com/aws/aws-sdk-go/aws/credentials"        //lint:ignore SA1019 - need tot bump to aws-sdk-go-v2
+	"github.com/aws/aws-sdk-go/aws/endpoints"          //lint:ignore SA1019 - need tot bump to aws-sdk-go-v2
+	awssession "github.com/aws/aws-sdk-go/aws/session" //lint:ignore SA1019 - need tot bump to aws-sdk-go-v2
+	"github.com/aws/aws-sdk-go/service/ecr"            //lint:ignore SA1019 - need tot bump to aws-sdk-go-v2
 	ecrapi "github.com/awslabs/amazon-ecr-credential-helper/ecr-login/api"
 )
 
