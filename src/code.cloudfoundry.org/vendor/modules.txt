@@ -89,7 +89,7 @@ code.cloudfoundry.org/goshims/filepathshim
 code.cloudfoundry.org/goshims/http_wrap
 code.cloudfoundry.org/goshims/osshim
 code.cloudfoundry.org/goshims/osshim/os_fake
-# code.cloudfoundry.org/guardian v0.0.0-20250806021341-ef3063efe1fe => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20250808184411-192bb72b6048 => ../guardian
 ## explicit; go 1.23.3
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
