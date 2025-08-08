@@ -630,7 +630,7 @@ github.com/moby/sys/userns
 ## explicit; go 1.18
 github.com/moby/term
 github.com/moby/term/windows
-# github.com/nats-io/jwt/v2 v2.7.4
+# github.com/nats-io/jwt/v2 v2.8.0
 ## explicit; go 1.23.0
 github.com/nats-io/jwt/v2
 # github.com/nats-io/nats-server/v2 v2.11.7
