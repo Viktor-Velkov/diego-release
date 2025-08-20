@@ -13,26 +13,26 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.41.0
+	code.cloudfoundry.org/archiver v0.42.0
 	code.cloudfoundry.org/bytefmt v0.47.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.56.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.52.0
-	code.cloudfoundry.org/clock v1.43.0
+	code.cloudfoundry.org/clock v1.44.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20250818133441-006e3fb362ab
 	code.cloudfoundry.org/debugserver v0.63.0
-	code.cloudfoundry.org/diego-logging-client v0.63.0
+	code.cloudfoundry.org/diego-logging-client v0.64.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
-	code.cloudfoundry.org/durationjson v0.46.0
+	code.cloudfoundry.org/durationjson v0.47.0
 	code.cloudfoundry.org/eventhub v0.47.0
-	code.cloudfoundry.org/garden v0.0.0-20250813020845-616be2b2878a
+	code.cloudfoundry.org/garden v0.0.0-20250820020934-176fcbafd0b1
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.73.0
-	code.cloudfoundry.org/guardian v0.0.0-20250813021533-41691f414571
+	code.cloudfoundry.org/guardian v0.0.0-20250820021601-755f7030f48a
 	code.cloudfoundry.org/lager/v3 v3.44.0
-	code.cloudfoundry.org/localip v0.45.0
+	code.cloudfoundry.org/localip v0.46.0
 	code.cloudfoundry.org/tlsconfig v0.33.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
@@ -62,7 +62,7 @@ require (
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
 	github.com/nats-io/nats-server/v2 v2.11.8
-	github.com/nats-io/nats.go v1.44.0
+	github.com/nats-io/nats.go v1.45.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 	github.com/onsi/ginkgo/v2 v2.24.0
 	github.com/onsi/gomega v1.38.0
@@ -83,16 +83,16 @@ require (
 	golang.org/x/oauth2 v0.30.0
 	golang.org/x/sys v0.35.0
 	golang.org/x/time v0.12.0
-	google.golang.org/grpc v1.74.2
-	google.golang.org/protobuf v1.36.7
+	google.golang.org/grpc v1.75.0
+	google.golang.org/protobuf v1.36.8
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
 	cel.dev/expr v0.24.0 // indirect
-	code.cloudfoundry.org/commandrunner v0.42.0 // indirect
-	code.cloudfoundry.org/go-diodes v0.0.0-20250728062316-2a591619c2ae // indirect
+	code.cloudfoundry.org/commandrunner v0.43.0 // indirect
+	code.cloudfoundry.org/go-diodes v0.0.0-20250819102816-d2f6d525a844 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
