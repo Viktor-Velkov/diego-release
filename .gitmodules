@@ -88,10 +88,6 @@
 [submodule "src/code.cloudfoundry.org/guardian"]
 	path = src/guardian
 	url = https://github.com/cloudfoundry/guardian
-[submodule "src/code.cloudfoundry.org/workpool"]
-	path = src/code.cloudfoundry.org/workpool
-	url = https://github.com/cloudfoundry/workpool
-	branch = main
 [submodule "src/code.cloudfoundry.org/ecrhelper"]
 	path = src/code.cloudfoundry.org/ecrhelper
 	url = https://github.com/cloudfoundry/ecrhelper
