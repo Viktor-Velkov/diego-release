@@ -46,10 +46,6 @@
 	path = src/code.cloudfoundry.org/dockerapplifecycle
 	url = https://github.com/cloudfoundry/dockerapplifecycle
 	branch = main
-[submodule "src/code.cloudfoundry.org/fileserver"]
-	path = src/code.cloudfoundry.org/fileserver
-	url = https://github.com/cloudfoundry/fileserver
-	branch = main
 [submodule "src/code.cloudfoundry.org/diego-ssh"]
 	path = src/code.cloudfoundry.org/diego-ssh
 	url = https://github.com/cloudfoundry/diego-ssh
