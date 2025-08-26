@@ -58,10 +58,6 @@
 	path = src/code.cloudfoundry.org/route-emitter
 	url = https://github.com/cloudfoundry/route-emitter
 	branch = main
-[submodule "src/code.cloudfoundry.org/operationq"]
-	path = src/code.cloudfoundry.org/operationq
-	url = https://github.com/cloudfoundry/operationq
-	branch = main
 [submodule "src/code.cloudfoundry.org/cfdot"]
 	path = src/code.cloudfoundry.org/cfdot
 	url = https://github.com/cloudfoundry/cfdot
