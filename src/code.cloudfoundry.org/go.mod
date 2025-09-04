@@ -27,10 +27,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.61.0
 	code.cloudfoundry.org/durationjson v0.49.0
 	code.cloudfoundry.org/eventhub v0.49.0
-	code.cloudfoundry.org/garden v0.0.0-20250827021015-6595353d2654
+	code.cloudfoundry.org/garden v0.0.0-20250904200541-47838cd97b9c
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.75.0
-	code.cloudfoundry.org/guardian v0.0.0-20250827022048-0e3818ede36b
+	code.cloudfoundry.org/guardian v0.0.0-20250904201253-46f1db7abef6
 	code.cloudfoundry.org/lager/v3 v3.46.0
 	code.cloudfoundry.org/localip v0.48.0
 	code.cloudfoundry.org/tlsconfig v0.34.0
@@ -42,7 +42,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0
 	github.com/cloudfoundry-community/go-uaa v0.3.5
 	github.com/cloudfoundry/dropsonde v1.1.0
-	github.com/containers/image/v5 v5.36.1
+	github.com/containers/image/v5 v5.36.2
 	github.com/docker/libtrust v0.0.0-20160708172513-aabc10ec26b7
 	github.com/envoyproxy/go-control-plane v0.13.4
 	github.com/fsnotify/fsnotify v1.9.0
@@ -64,7 +64,7 @@ require (
 	github.com/nats-io/nats-server/v2 v2.11.8
 	github.com/nats-io/nats.go v1.45.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
-	github.com/onsi/ginkgo/v2 v2.25.2
+	github.com/onsi/ginkgo/v2 v2.25.3
 	github.com/onsi/gomega v1.38.2
 	github.com/onsi/say v1.2.0
 	github.com/opencontainers/go-digest v1.0.0
@@ -91,7 +91,7 @@ require (
 
 require (
 	cel.dev/expr v0.24.0 // indirect
-	code.cloudfoundry.org/commandrunner v0.44.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.45.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20250901213313-bd708234e594 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
@@ -126,7 +126,7 @@ require (
 	github.com/cyphar/filepath-securejoin v0.4.1 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
-	github.com/docker/docker v28.3.3+incompatible // indirect
+	github.com/docker/docker v28.4.0+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/docker/go-connections v0.6.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
@@ -136,7 +136,7 @@ require (
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-tpm v0.9.5 // indirect
-	github.com/google/pprof v0.0.0-20250830080959-101d87ff5bc3 // indirect
+	github.com/google/pprof v0.0.0-20250903194437-c28834ac2320 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -158,13 +158,13 @@ require (
 	github.com/nats-io/nkeys v0.4.11 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/opencontainers/cgroups v0.0.4 // indirect
-	github.com/opencontainers/runc v1.3.0 // indirect
+	github.com/opencontainers/runc v1.3.1 // indirect
 	github.com/opencontainers/runtime-spec v1.2.1 // indirect
 	github.com/prometheus/common v0.63.0 // indirect
 	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/spf13/pflag v1.0.9 // indirect
+	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.step.sm/crypto v0.70.0 // indirect

@@ -30,7 +30,7 @@ code.cloudfoundry.org/cfhttp/v2/handlers
 ## explicit; go 1.24.0
 code.cloudfoundry.org/clock
 code.cloudfoundry.org/clock/fakeclock
-# code.cloudfoundry.org/commandrunner v0.44.0
+# code.cloudfoundry.org/commandrunner v0.45.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/commandrunner
 # code.cloudfoundry.org/credhub-cli v0.0.0-20250818133441-006e3fb362ab
@@ -62,7 +62,7 @@ code.cloudfoundry.org/durationjson
 # code.cloudfoundry.org/eventhub v0.49.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/eventhub
-# code.cloudfoundry.org/garden v0.0.0-20250827021015-6595353d2654 => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20250904200541-47838cd97b9c => ../garden
 ## explicit; go 1.24.0
 code.cloudfoundry.org/garden
 code.cloudfoundry.org/garden/client
@@ -89,7 +89,7 @@ code.cloudfoundry.org/goshims/filepathshim
 code.cloudfoundry.org/goshims/http_wrap
 code.cloudfoundry.org/goshims/osshim
 code.cloudfoundry.org/goshims/osshim/os_fake
-# code.cloudfoundry.org/guardian v0.0.0-20250827022048-0e3818ede36b => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20250904201253-46f1db7abef6 => ../guardian
 ## explicit; go 1.23.3
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -343,7 +343,7 @@ github.com/cncf/xds/go/xds/annotations/v3
 github.com/cncf/xds/go/xds/core/v3
 github.com/cncf/xds/go/xds/type/matcher/v3
 github.com/cncf/xds/go/xds/type/v3
-# github.com/containers/image/v5 v5.36.1
+# github.com/containers/image/v5 v5.36.2
 ## explicit; go 1.23.3
 github.com/containers/image/v5/docker
 github.com/containers/image/v5/docker/policyconfiguration
@@ -417,7 +417,7 @@ github.com/distribution/reference
 ## explicit
 github.com/docker/distribution/registry/api/errcode
 github.com/docker/distribution/registry/api/v2
-# github.com/docker/docker v28.3.3+incompatible
+# github.com/docker/docker v28.4.0+incompatible
 ## explicit
 github.com/docker/docker/api/types/versions
 # github.com/docker/docker-credential-helpers v0.9.3
@@ -531,7 +531,7 @@ github.com/google/go-cmp/cmp/internal/value
 github.com/google/go-tpm/legacy/tpm2
 github.com/google/go-tpm/tpmutil
 github.com/google/go-tpm/tpmutil/tbs
-# github.com/google/pprof v0.0.0-20250830080959-101d87ff5bc3
+# github.com/google/pprof v0.0.0-20250903194437-c28834ac2320
 ## explicit; go 1.24.0
 github.com/google/pprof/profile
 # github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
@@ -669,7 +669,7 @@ github.com/nats-io/nuid
 # github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 ## explicit
 github.com/nu7hatch/gouuid
-# github.com/onsi/ginkgo/v2 v2.25.2
+# github.com/onsi/ginkgo/v2 v2.25.3
 ## explicit; go 1.23.0
 github.com/onsi/ginkgo/v2
 github.com/onsi/ginkgo/v2/config
@@ -729,7 +729,7 @@ github.com/opencontainers/go-digest
 ## explicit; go 1.18
 github.com/opencontainers/image-spec/specs-go
 github.com/opencontainers/image-spec/specs-go/v1
-# github.com/opencontainers/runc v1.3.0
+# github.com/opencontainers/runc v1.3.1
 ## explicit; go 1.23.0
 github.com/opencontainers/runc/libcontainer/configs
 # github.com/opencontainers/runtime-spec v1.2.1
@@ -762,7 +762,7 @@ github.com/sirupsen/logrus
 # github.com/spf13/cobra v1.10.1
 ## explicit; go 1.15
 github.com/spf13/cobra
-# github.com/spf13/pflag v1.0.9
+# github.com/spf13/pflag v1.0.10
 ## explicit; go 1.12
 github.com/spf13/pflag
 # github.com/square/certstrap v1.3.0
