@@ -22,10 +22,6 @@
 	path = src/code.cloudfoundry.org/healthcheck
 	url = https://github.com/cloudfoundry/healthcheck
 	branch = main
-[submodule "src/code.cloudfoundry.org/inigo"]
-	path = src/code.cloudfoundry.org/inigo
-	url = https://github.com/cloudfoundry/inigo
-	branch = main
 [submodule "src/code.cloudfoundry.org/locket"]
 	path = src/code.cloudfoundry.org/locket
 	url = https://github.com/cloudfoundry/locket
