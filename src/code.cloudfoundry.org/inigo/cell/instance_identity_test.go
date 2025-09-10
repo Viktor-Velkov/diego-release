@@ -429,7 +429,10 @@ var _ = Describe("InstanceIdentity", func() {
 			JustBeforeEach(func() {
 				err := bbsClient.DesireLRP(lgr, "", lrp)
 				Expect(err).NotTo(HaveOccurred())
-				Eventually(helpers.LRPStatePoller(lgr, bbsClient, processGUID, nil)).Should(Equal(models.ActualLRPStateRunning))
+				Eventually(func() func() string {
+					return helpers.LRPStatePoller(lgr, bbsClient, processGUID, nil)
+				},
+					cellSuiteEventuallyTestTimeout, cellSuiteEventuallyPollingTimeout).Should(Equal(models.ActualLRPStateRunning))
 
 				address = getContainerInternalAddress(bbsClient, processGUID, 8080, true)
 			})

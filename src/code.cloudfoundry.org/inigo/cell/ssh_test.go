@@ -174,9 +174,9 @@ var _ = Describe("SSH", func() {
 			return lrps
 		}).Should(HaveLen(2))
 
-		Eventually(
-			helpers.LRPInstanceStatePoller(logger, bbsClient, processGuid, 0, nil),
-		).Should(Equal(models.ActualLRPStateRunning))
+		Eventually(func() func() string {
+			return helpers.LRPInstanceStatePoller(logger, bbsClient, processGuid, 0, nil)
+		}, cellSuiteEventuallyTestTimeout, cellSuiteEventuallyPollingTimeout).Should(Equal(models.ActualLRPStateRunning))
 
 		Eventually(
 			helpers.LRPInstanceStatePoller(logger, bbsClient, processGuid, 1, nil),

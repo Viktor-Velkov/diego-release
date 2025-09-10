@@ -221,7 +221,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 					It("eventually brings it up", func() {
 						Eventually(runningLRPsPoller).Should(HaveLen(1))
-						Eventually(helloWorldInstancePoller).Should(Equal([]string{"0"}))
+						Eventually(helloWorldInstancePoller, cellSuiteEventuallyTestTimeout, cellSuiteEventuallyPollingTimeout).Should(Equal([]string{"0"}))
 					})
 				})
 			})
