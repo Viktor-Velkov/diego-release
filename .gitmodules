@@ -34,10 +34,6 @@
 	path = src/code.cloudfoundry.org/operationq
 	url = https://github.com/cloudfoundry/operationq
 	branch = main
-[submodule "src/code.cloudfoundry.org/cfdot"]
-	path = src/code.cloudfoundry.org/cfdot
-	url = https://github.com/cloudfoundry/cfdot
-	branch = main
 [submodule "src/code.cloudfoundry.org/localdriver"]
 	path = src/code.cloudfoundry.org/localdriver
 	url = https://github.com/cloudfoundry/localdriver
