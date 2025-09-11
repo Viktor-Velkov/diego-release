@@ -30,10 +30,6 @@
 	path = src/code.cloudfoundry.org/buildpackapplifecycle
 	url = https://github.com/cloudfoundry/buildpackapplifecycle
 	branch = main
-[submodule "src/code.cloudfoundry.org/operationq"]
-	path = src/code.cloudfoundry.org/operationq
-	url = https://github.com/cloudfoundry/operationq
-	branch = main
 [submodule "src/code.cloudfoundry.org/localdriver"]
 	path = src/code.cloudfoundry.org/localdriver
 	url = https://github.com/cloudfoundry/localdriver
