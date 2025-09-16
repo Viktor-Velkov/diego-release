@@ -32,7 +32,7 @@ import (
 )
 
 const cellSuiteEventuallyTestTimeout = 30 * time.Second
-const cellSuiteEventuallyPollingTimeout = 1 * time.Second
+const cellSuiteEventuallyPollingInterval = 1 * time.Second
 
 var (
 	componentMaker world.ComponentMaker
