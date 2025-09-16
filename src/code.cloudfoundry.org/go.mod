@@ -13,26 +13,26 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.45.0
-	code.cloudfoundry.org/bytefmt v0.50.0
+	code.cloudfoundry.org/archiver v0.46.0
+	code.cloudfoundry.org/bytefmt v0.51.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.58.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.55.0
-	code.cloudfoundry.org/clock v1.47.0
+	code.cloudfoundry.org/cfhttp/v2 v2.56.0
+	code.cloudfoundry.org/clock v1.48.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20250909205012-f47c0c9e1b66
-	code.cloudfoundry.org/debugserver v0.66.0
-	code.cloudfoundry.org/diego-logging-client v0.67.0
+	code.cloudfoundry.org/debugserver v0.67.0
+	code.cloudfoundry.org/diego-logging-client v0.68.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
-	code.cloudfoundry.org/durationjson v0.50.0
-	code.cloudfoundry.org/eventhub v0.50.0
+	code.cloudfoundry.org/durationjson v0.51.0
+	code.cloudfoundry.org/eventhub v0.51.0
 	code.cloudfoundry.org/garden v0.0.0-20250910021241-ba9233db87fe
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
-	code.cloudfoundry.org/goshims v0.76.0
+	code.cloudfoundry.org/goshims v0.77.0
 	code.cloudfoundry.org/guardian v0.0.0-20250910021926-22793b175722
 	code.cloudfoundry.org/lager/v3 v3.47.0
-	code.cloudfoundry.org/localip v0.49.0
+	code.cloudfoundry.org/localip v0.50.0
 	code.cloudfoundry.org/tlsconfig v0.35.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
@@ -117,7 +117,7 @@ require (
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.156 // indirect
-	github.com/cloudfoundry/sonde-go v0.0.0-20250909082137-fc1b731b62ac // indirect
+	github.com/cloudfoundry/sonde-go v0.0.0-20250915135239-ebea5d8dc26e // indirect
 	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
 	github.com/containers/ocicrypt v1.2.1 // indirect
@@ -136,7 +136,7 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/go-tpm v0.9.5 // indirect
+	github.com/google/go-tpm v0.9.6 // indirect
 	github.com/google/pprof v0.0.0-20250903194437-c28834ac2320 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
