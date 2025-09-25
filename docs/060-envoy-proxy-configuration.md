@@ -21,8 +21,6 @@ This document describes how to enable the per-container [Envoy proxy](https://gi
 
 ## <a name="enabling-per-container-envoy-proxy"/> Enabling Per-Container Envoy Proxy
 
-A deployment operator enables the Linux cell reps to run an Envoy proxy process for each container by setting the `containers.proxy.enabled` property on the `rep` job to `true`.
-
 [Instance Identity Credentials](https://docs.cloudfoundry.org/adminguide/instance-identity.html) must also be enabled on the Diego cell rep so that it can configure the Envoy proxy process with the required TLS configuration.
 
 

@@ -264,9 +264,6 @@ properties:
     description: "time in seconds between signalling a container to shutdown gracefully and stopping it forcefully. Should not be less than 10."
     default: 10
 
-  containers.proxy.enabled:
-    description: "EXPERIMENTAL: Enable envoy proxy on garden containers. Currently doesn't work on windows cells but left here for compatability with the linux Rep"
-    default: false
   containers.proxy.additional_memory_allocation_mb:
     description: "EXPERIMENTAL: Additional memory allocated to each container for the envoy proxy. This must not be negative. Currently doesn't work on windows cells but left here for compatability with the linux Rep"
     default: 32
@@ -276,7 +273,7 @@ properties:
 
   containers.proxy.require_and_verify_client_certificates:
     default: false
-    description: "whether the per-container proxy should require and verify a TLS certificate from a client connecting to one of its ingress listeners. Proxy will trust the set of CA certificates supplied in the containers.proxy.trusted_ca_certificates property. Requires containers.proxy.enabled to be set to true to enable."
+    description: "whether the per-container proxy should require and verify a TLS certificate from a client connecting to one of its ingress listeners. Proxy will trust the set of CA certificates supplied in the containers.proxy.trusted_ca_certificates property. 
 
   containers.proxy.trusted_ca_certificates:
     default: []
@@ -307,7 +304,7 @@ properties:
 
   containers.proxy.enable_unproxied_port_mappings:
     default: true
-    description: "EXPERIMENTAL: whether the cell should still map host ports directly to the unproxied container ports. Setting to false requires containers.proxy.enabled to be set to true."
+    description: "EXPERIMENTAL: whether the cell should still map host ports directly to the unproxied container ports. 
 
   containers.trusted_ca_certificates:
     description: "List of PEM-encoded CA certificates to make available inside containers in a conventional location. List entries may be individual or concatenated CAs."
