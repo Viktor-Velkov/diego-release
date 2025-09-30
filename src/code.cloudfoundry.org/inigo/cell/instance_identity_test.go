@@ -379,7 +379,6 @@ var _ = Describe("InstanceIdentity", func() {
 				cfg.LoggregatorConfig = logging.Config{
 					BatchFlushInterval: 10 * time.Millisecond,
 					BatchMaxSize:       1,
-					UseV2API:           true,
 					APIPort:            metricsPort,
 					CACertPath:         metronCAFile,
 					KeyPath:            metronClientKeyFile,

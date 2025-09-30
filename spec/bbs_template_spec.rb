@@ -65,7 +65,6 @@ describe 'bbs' do
           },
           'enable_consul_service_registration' => 'false',
           'loggregator' => {
-            'use_v2_api' => 'true',
             'ca_cert' => 'CA CERT',
             'client_cert' => 'CLIENT CERT',
             'client_key' => 'CLIENT KEY'

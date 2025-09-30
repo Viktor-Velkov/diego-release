@@ -27,6 +27,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs/models"
+	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/durationjson"
 	"code.cloudfoundry.org/lager/v3/lagerflags"
 	"code.cloudfoundry.org/lager/v3/lagertest"
@@ -163,10 +164,11 @@ var _ = Describe("Route Emitter", func() {
 			EnableTCPEmitter:             false,
 			EnableInternalEmitter:        false,
 			RegisterDirectInstanceRoutes: false,
+			LoggregatorConfig:            test_helpers.GetLoggregatorConfigWithMetronCerts(),
 		}
 		cfg.ClientLocketConfig = locketrunner.ClientLocketConfig()
 		cfg.ClientLocketConfig.LocketAddress = locketAddress
-
+		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
 		for _, f := range modifyConfig {
 			f(&cfg)
 		}
@@ -327,6 +329,10 @@ var _ = Describe("Route Emitter", func() {
 			cfg.DatabaseConnectionString = sqlRunner.ConnectionString()
 			cfg.DatabaseDriver = sqlRunner.DriverName()
 			cfg.ListenAddress = routingAPILocketAddress
+			cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+			cfg.LoggregatorConfig.CACertPath = test_helpers.MetronCAFile
+			cfg.LoggregatorConfig.CertPath = test_helpers.MetronServerCertFile
+			cfg.LoggregatorConfig.KeyPath = test_helpers.MetronServerKeyFile
 		})
 		routingAPILocketProcess = ginkgomon.Invoke(routingAPILocketRunner)
 		routingAPIPort := port + 2
@@ -413,10 +419,6 @@ var _ = Describe("Route Emitter", func() {
 			runner  *ginkgomon.Runner
 			emitter ifrit.Process
 		)
-
-		BeforeEach(func() {
-			useLoggregatorV2 = true
-		})
 
 		JustBeforeEach(func() {
 			testIngressServer.Stop()
@@ -805,21 +807,10 @@ var _ = Describe("Route Emitter", func() {
 							cellID = "cell-id"
 						})
 
-						Context("when using loggregator v2 api", func() {
-							BeforeEach(func() {
-								useLoggregatorV2 = true
-							})
-
-							It("emits the tcp route count", func() {
-								Eventually(testMetricsChan).Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "TCPRouteCount", Value: int32(1)})))
-							})
+						It("emits the tcp route count", func() {
+							Eventually(testMetricsChan).Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "TCPRouteCount", Value: int32(1)})))
 						})
 
-						Context("when not using the loggregator v2 api", func() {
-							It("doesn't emit any metrics", func() {
-								Consistently(testMetricsChan).ShouldNot(Receive())
-							})
-						})
 					})
 
 					Context("and the route-emitter cell id doesn't match the actual lrp cell", func() {
@@ -1070,6 +1061,10 @@ var _ = Describe("Route Emitter", func() {
 				cfg.DatabaseConnectionString = sqlRunner.ConnectionString()
 				cfg.DatabaseDriver = sqlRunner.DriverName()
 				cfg.ListenAddress = locketAddress
+				cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+				cfg.LoggregatorConfig.CACertPath = test_helpers.MetronCAFile
+				cfg.LoggregatorConfig.CertPath = test_helpers.MetronServerCertFile
+				cfg.LoggregatorConfig.KeyPath = test_helpers.MetronServerKeyFile
 			})
 			locketProcess = ginkgomon.Invoke(locketRunner)
 			cfgs = append(cfgs, func(cfg *config.RouteEmitterConfig) {
@@ -1313,21 +1308,10 @@ var _ = Describe("Route Emitter", func() {
 						cellID = "cell-id"
 					})
 
-					Context("when using loggregator v2 api", func() {
-						BeforeEach(func() {
-							useLoggregatorV2 = true
-						})
-
-						It("emits the http route count", func() {
-							Eventually(testMetricsChan, "2s").Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "HTTPRouteCount", Value: int32(2)})))
-						})
+					It("emits the http route count", func() {
+						Eventually(testMetricsChan, "2s").Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "HTTPRouteCount", Value: int32(2)})))
 					})
 
-					Context("when not using the loggregator v2 api", func() {
-						It("doesn't emit any metrics", func() {
-							Consistently(testMetricsChan).ShouldNot(Receive())
-						})
-					})
 				})
 
 				Context("when backing store loses its data", func() {
@@ -1796,7 +1780,6 @@ var _ = Describe("Route Emitter", func() {
 
 		BeforeEach(func() {
 			cellID = ""
-			useLoggregatorV2 = true
 
 			internalHostnames = []string{"foo1.bar", "foo2.bar"}
 			routes = newInternalRoutes(internalHostnames)

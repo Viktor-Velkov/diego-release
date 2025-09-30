@@ -41,7 +41,6 @@ var _ = Describe("AuctioneerConfig", func() {
 			"locket_client_key_file": "locket-client-key",
 			"log_level": "debug",
 			"loggregator": {
-				"loggregator_use_v2_api": true,
 				"loggregator_api_port": 1234,
 				"loggregator_ca_path": "ca-path",
 				"loggregator_cert_path": "cert-path",
@@ -113,7 +112,6 @@ var _ = Describe("AuctioneerConfig", func() {
 			LockRetryInterval: durationjson.Duration(1 * time.Minute),
 			LockTTL:           durationjson.Duration(20 * time.Second),
 			LoggregatorConfig: loggingclient.Config{
-				UseV2API:      true,
 				APIPort:       1234,
 				CACertPath:    "ca-path",
 				CertPath:      "cert-path",

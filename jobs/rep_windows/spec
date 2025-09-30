@@ -65,9 +65,6 @@ properties:
     description: "Length in bytes above which logged strings will be truncated. If set to 0, turns off truncation."
     default: 640
 
-  loggregator.use_v2_api:
-    description: "True to use local metron agent gRPC v2 API. False to use UDP v1 API."
-    default: false
   loggregator.v2_api_port:
     description: "Local metron agent gRPC port"
     default: 3458

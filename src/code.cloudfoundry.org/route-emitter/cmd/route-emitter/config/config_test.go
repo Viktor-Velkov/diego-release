@@ -71,7 +71,6 @@ var _ = Describe("Config", func() {
 				"skip_cert_verify": true
 			},
 			"loggregator": {
-			  "loggregator_use_v2_api": true,
 			  "loggregator_api_port": 1234,
 			  "loggregator_ca_path": "/var/ca_cert",
 			  "loggregator_cert_path": "/var/cert_path",
@@ -158,7 +157,6 @@ var _ = Describe("Config", func() {
 				SkipCertVerify:    true,
 			},
 			LoggregatorConfig: loggingclient.Config{
-				UseV2API:      true,
 				APIPort:       1234,
 				CACertPath:    "/var/ca_cert",
 				CertPath:      "/var/cert_path",
