@@ -46,6 +46,16 @@ files:
   - code.cloudfoundry.org/vendor/github.com/cloudfoundry/go-socks5/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/cloudfoundry/socks5-proxy/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/internal/consts/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/assert/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/fd/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/gocompat/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/kernelversion/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/linux/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/internal/procfs/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/cyphar/filepath-securejoin/pathrs-lite/procfs/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/hashicorp/go-version/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/openzipkin/zipkin-go/idgenerator/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/openzipkin/zipkin-go/model/*.go # gosub
