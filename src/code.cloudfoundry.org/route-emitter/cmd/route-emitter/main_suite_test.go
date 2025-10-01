@@ -16,7 +16,6 @@ import (
 	"code.cloudfoundry.org/bbs/encryption"
 	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/bbs/test_helpers/sqlrunner"
-	loggingclient "code.cloudfoundry.org/diego-logging-client"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/durationjson"
 	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
@@ -178,11 +177,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 			TimeFormat:          lagerflags.FormatRFC3339,
 			MaxDataStringLength: 0,
 		},
-		LoggregatorConfig: loggingclient.Config{
-			CACertPath: "fixtures/metron/CA.crt",
-			CertPath:   "fixtures/metron/metron.crt",
-			KeyPath:    "fixtures/metron/metron.key",
-		},
+
 		ListenAddress:            bbsAddress,
 		AdvertiseURL:             bbsURL.String(),
 		AuctioneerAddress:        "http://some-address",
@@ -246,7 +241,7 @@ var _ = BeforeEach(func() {
 	oauthServer = startOAuthServer()
 
 	sqlProcess = ginkgomon.Invoke(sqlRunner)
-
+	test_helpers.GetLoggregatorMetronConfig(&bbsConfig.LoggregatorConfig)
 	metronIngressSetup, err = test_helpers.StartMetronIngress(fixturesPath)
 	Expect(err).NotTo(HaveOccurred())
 	testIngressServer = metronIngressSetup.Server
@@ -258,9 +253,10 @@ var _ = BeforeEach(func() {
 		cfg.DatabaseDriver = sqlRunner.DriverName()
 		cfg.ListenAddress = locketAddress
 		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-		cfg.LoggregatorConfig.CACertPath = test_helpers.MetronCAFile
-		cfg.LoggregatorConfig.CertPath = test_helpers.MetronServerCertFile
-		cfg.LoggregatorConfig.KeyPath = test_helpers.MetronServerKeyFile
+		test_helpers.GetLoggregatorMetronConfig(&cfg.LoggregatorConfig)
+		// cfg.LoggregatorConfig.CACertPath = test_helpers.MetronCAFile
+		// cfg.LoggregatorConfig.CertPath = test_helpers.MetronServerCertFile
+		// cfg.LoggregatorConfig.KeyPath = test_helpers.MetronServerKeyFile
 
 	})
 	bbsConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
