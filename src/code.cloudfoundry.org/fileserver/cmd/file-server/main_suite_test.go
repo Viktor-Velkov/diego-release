@@ -36,7 +36,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 
 var _ = BeforeEach(func() {
 	var err error
-	metronIngressSetup, err = test_helpers.StartMetronIngress("fixtures")
+	metronIngressSetup, err = test_helpers.StartMetronIngress()
 	Expect(err).NotTo(HaveOccurred())
 	testIngressServer = metronIngressSetup.Server
 	signalMetricsChan = metronIngressSetup.SignalMetricsChan

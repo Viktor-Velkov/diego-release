@@ -18,6 +18,7 @@ import (
 	"code.cloudfoundry.org/bbs/test_helpers/sqlrunner"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/durationjson"
+	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers/certauthority"
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
@@ -177,7 +178,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 			TimeFormat:          lagerflags.FormatRFC3339,
 			MaxDataStringLength: 0,
 		},
-
+		LoggregatorConfig:        test_helpers.GetLoggregatorConfigWithMetronCerts(),
 		ListenAddress:            bbsAddress,
 		AdvertiseURL:             bbsURL.String(),
 		AuctioneerAddress:        "http://some-address",
@@ -241,8 +242,7 @@ var _ = BeforeEach(func() {
 	oauthServer = startOAuthServer()
 
 	sqlProcess = ginkgomon.Invoke(sqlRunner)
-	test_helpers.GetLoggregatorMetronConfig(&bbsConfig.LoggregatorConfig)
-	metronIngressSetup, err = test_helpers.StartMetronIngress(fixturesPath)
+	metronIngressSetup, err = test_helpers.StartMetronIngress()
 	Expect(err).NotTo(HaveOccurred())
 	testIngressServer = metronIngressSetup.Server
 	signalMetricsChan = metronIngressSetup.SignalMetricsChan
@@ -253,10 +253,9 @@ var _ = BeforeEach(func() {
 		cfg.DatabaseDriver = sqlRunner.DriverName()
 		cfg.ListenAddress = locketAddress
 		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-		test_helpers.GetLoggregatorMetronConfig(&cfg.LoggregatorConfig)
-		// cfg.LoggregatorConfig.CACertPath = test_helpers.MetronCAFile
-		// cfg.LoggregatorConfig.CertPath = test_helpers.MetronServerCertFile
-		// cfg.LoggregatorConfig.KeyPath = test_helpers.MetronServerKeyFile
+		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
 
 	})
 	bbsConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
@@ -294,9 +293,9 @@ var _ = JustBeforeEach(func() {
 		cfg.LoggregatorConfig.BatchFlushInterval = 10 * time.Millisecond
 		cfg.LoggregatorConfig.BatchMaxSize = 1
 		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-		cfg.LoggregatorConfig.CACertPath = test_helpers.MetronCAFile
-		cfg.LoggregatorConfig.CertPath = test_helpers.MetronServerCertFile
-		cfg.LoggregatorConfig.KeyPath = test_helpers.MetronServerKeyFile
+		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
 	})
 })
 
