@@ -15,7 +15,10 @@ import (
 	"code.cloudfoundry.org/bbs/encryption"
 	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/bbs/test_helpers/sqlrunner"
+	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/durationjson"
+	"code.cloudfoundry.org/fixtures"
+	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/lager/v3/lagerflags"
@@ -47,6 +50,11 @@ var (
 	locketBinPath string
 	locketProcess ifrit.Process
 	locketRunner  *ginkgomon.Runner
+
+	testMetricsChan    chan *loggregator_v2.Envelope
+	signalMetricsChan  chan struct{}
+	metronIngressSetup *test_helpers.MetronIngressSetup
+	testIngressServer  *testhelpers.TestIngressServer
 
 	sqlProcess ifrit.Process
 	sqlRunner  sqlrunner.SQLRunner
@@ -140,6 +148,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 		AuctioneerRequireTLS:        false,
 		RepClientSessionCacheSize:   0,
 		LagerConfig:                 lagerflags.DefaultLagerConfig(),
+		LoggregatorConfig:           test_helpers.GetLoggregatorConfigWithMetronCerts(),
 
 		ListenAddress:     bbsAddress,
 		AdvertiseURL:      bbsURL.String(),
@@ -163,11 +172,24 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 })
 
 var _ = BeforeEach(func() {
+
+	var err error
+	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	Expect(err).NotTo(HaveOccurred())
+	testIngressServer = metronIngressSetup.Server
+	signalMetricsChan = metronIngressSetup.SignalMetricsChan
+	testMetricsChan = metronIngressSetup.TestMetricsChan
+
 	locketRunner = locketrunner.NewLocketRunner(locketBinPath, func(cfg *locketconfig.LocketConfig) {
 		cfg.DatabaseConnectionString = sqlRunner.ConnectionString()
 		cfg.DatabaseDriver = sqlRunner.DriverName()
 		cfg.ListenAddress = locketAddress
+		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
 	})
+	bbsConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
 	locketProcess = ginkgomon.Invoke(locketRunner)
 
 	bbsRunner = bbstestrunner.New(bbsBinPath, bbsConfig)
@@ -177,6 +199,9 @@ var _ = BeforeEach(func() {
 var _ = AfterEach(func() {
 	ginkgomon.Interrupt(locketProcess)
 	ginkgomon.Kill(bbsProcess)
+
+	testIngressServer.Stop()
+	close(signalMetricsChan)
 
 	sqlRunner.Reset()
 })

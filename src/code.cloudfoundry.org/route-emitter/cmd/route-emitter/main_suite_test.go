@@ -64,15 +64,15 @@ var (
 	testMetricsChan    chan *loggregator_v2.Envelope
 	signalMetricsChan  chan struct{}
 	metronIngressSetup *test_helpers.MetronIngressSetup
+	testIngressServer  *testhelpers.TestIngressServer
 
 	locketProcess ifrit.Process
 	locketPath    string
 	locketAddress string
 
-	sqlProcess        ifrit.Process
-	sqlRunner         sqlrunner.SQLRunner
-	bbsRunning        = false
-	testIngressServer *testhelpers.TestIngressServer
+	sqlProcess ifrit.Process
+	sqlRunner  sqlrunner.SQLRunner
+	bbsRunning = false
 
 	portAllocator portauthority.PortAllocator
 )
