@@ -75,7 +75,6 @@ var (
 	testIngressServer *testhelpers.TestIngressServer
 
 	portAllocator portauthority.PortAllocator
-	fixturesPath  = "fixtures"
 )
 
 func TestRouteEmitter(t *testing.T) {

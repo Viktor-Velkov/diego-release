@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs/models"
+	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/diego-ssh/authenticators"
 	"code.cloudfoundry.org/diego-ssh/cmd/ssh-proxy/config"
@@ -141,6 +142,8 @@ var _ = Describe("SSH proxy", Serial, func() {
 		sshProxyConfig.CommunicationTimeout = durationjson.Duration(10 * time.Second)
 		sshProxyConfig.ConnectToInstanceAddress = false
 		sshProxyConfig.LagerConfig = lagerflags.DefaultLagerConfig()
+		sshProxyConfig.LoggregatorConfig = test_helpers.GetLoggregatorConfigWithMetronCerts()
+		sshProxyConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
 
 		expectedGetActualLRPRequest = &models.ActualLRPsRequest{
 			ProcessGuid:   processGuid,
