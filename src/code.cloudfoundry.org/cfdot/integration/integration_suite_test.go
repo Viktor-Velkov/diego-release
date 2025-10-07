@@ -11,6 +11,9 @@ import (
 
 	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/bbs/test_helpers/sqlrunner"
+	"code.cloudfoundry.org/diego-logging-client/testhelpers"
+	"code.cloudfoundry.org/fixtures"
+	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
 	"code.cloudfoundry.org/locket/cmd/locket/config"
 	"code.cloudfoundry.org/locket/cmd/locket/testrunner"
@@ -37,6 +40,11 @@ var (
 	locketClientKeyFile   string
 	locketServerCertFile  string
 	locketServerKeyFile   string
+
+	testMetricsChan    chan *loggregator_v2.Envelope
+	signalMetricsChan  chan struct{}
+	metronIngressSetup *test_helpers.MetronIngressSetup
+	testIngressServer  *testhelpers.TestIngressServer
 )
 
 var bbsServer *ghttp.Server
@@ -69,6 +77,12 @@ var _ = SynchronizedAfterSuite(func() {
 var _ = BeforeEach(func() {
 	bbsServer = ghttp.NewUnstartedServer()
 	defer bbsServer.HTTPTestServer.StartTLS()
+	var err error
+	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	Expect(err).NotTo(HaveOccurred())
+	testIngressServer = metronIngressSetup.Server
+	signalMetricsChan = metronIngressSetup.SignalMetricsChan
+	testMetricsChan = metronIngressSetup.TestMetricsChan
 
 	node := GinkgoParallelProcess()
 	startPort := 1050 * node
@@ -107,6 +121,10 @@ var _ = BeforeEach(func() {
 		cfg.ListenAddress = locketAPILocation
 		cfg.DatabaseDriver = dbRunner.DriverName()
 		cfg.DatabaseConnectionString = dbRunner.ConnectionString()
+		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+		cfg.LoggregatorConfig.CACertPath = fixtures.Fixture("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Fixture("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Fixture("metron.key")
 	})
 	locketProcess = ginkgomon.Invoke(locketRunner)
 })
