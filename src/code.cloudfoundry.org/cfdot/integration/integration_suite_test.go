@@ -122,9 +122,9 @@ var _ = BeforeEach(func() {
 		cfg.DatabaseDriver = dbRunner.DriverName()
 		cfg.DatabaseConnectionString = dbRunner.ConnectionString()
 		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-		cfg.LoggregatorConfig.CACertPath = fixtures.Fixture("CA.crt")
-		cfg.LoggregatorConfig.CertPath = fixtures.Fixture("metron.crt")
-		cfg.LoggregatorConfig.KeyPath = fixtures.Fixture("metron.key")
+		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
 	})
 	locketProcess = ginkgomon.Invoke(locketRunner)
 })
