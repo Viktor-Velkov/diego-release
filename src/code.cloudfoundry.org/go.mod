@@ -21,7 +21,7 @@ require (
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.60.0
 	code.cloudfoundry.org/clock v1.52.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20251006131851-da8a271bccef
+	code.cloudfoundry.org/credhub-cli v0.0.0-20251014195659-0e45fa40da27
 	code.cloudfoundry.org/debugserver v0.71.0
 	code.cloudfoundry.org/diego-logging-client v0.73.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
@@ -31,7 +31,7 @@ require (
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.81.0
 	code.cloudfoundry.org/guardian v0.0.0-20251008024448-cbb40f6bda5b
-	code.cloudfoundry.org/lager/v3 v3.51.0
+	code.cloudfoundry.org/lager/v3 v3.52.0
 	code.cloudfoundry.org/localip v0.54.0
 	code.cloudfoundry.org/tlsconfig v0.36.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
@@ -61,8 +61,8 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
-	github.com/nats-io/nats-server/v2 v2.12.0
-	github.com/nats-io/nats.go v1.46.1
+	github.com/nats-io/nats-server/v2 v2.12.1
+	github.com/nats-io/nats.go v1.47.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 	github.com/onsi/ginkgo/v2 v2.26.0
 	github.com/onsi/gomega v1.38.2
@@ -118,7 +118,7 @@ require (
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.156 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20251008062332-ece9fc2bedb4 // indirect
-	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
+	github.com/cncf/xds/go v0.0.0-20251014123835-2ee22ca58382 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
 	github.com/containers/ocicrypt v1.2.1 // indirect
 	github.com/containers/storage v1.59.1 // indirect
@@ -167,13 +167,13 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
-	go.step.sm/crypto v0.71.0 // indirect
+	go.step.sm/crypto v0.72.0 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/mod v0.29.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20251007200510-49b9836ed3ff // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20251007200510-49b9836ed3ff // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20251014184007-4626949a642f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251014184007-4626949a642f // indirect
 )
