@@ -123,15 +123,15 @@
   end
 
   if_p("diego.bbs.sql.db_connection_timeout") do |value|
-    config[:db_connection_timeout] = value
+    config[:db_connection_timeout] = "#{value}s" # add time unit
   end
 
   if_p("diego.bbs.sql.db_read_timeout") do |value|
-    config[:db_read_timeout] = value
+    config[:db_read_timeout] = "#{value}s" # add time unit
   end
 
   if_p("diego.bbs.sql.db_write_timeout") do |value|
-    config[:db_write_timeout] = value
+    config[:db_write_timeout] = "#{value}s" # add time unit
   end
 
   if_p("diego.bbs.sql.db_driver") do |value|
