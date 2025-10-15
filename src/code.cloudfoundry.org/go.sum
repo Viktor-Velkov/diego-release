@@ -734,8 +734,8 @@ code.cloudfoundry.org/cfhttp/v2 v2.60.0 h1:gaUE6WOCoeWyYDz7KSq09hKspXeVZM/X0Va3C
 code.cloudfoundry.org/cfhttp/v2 v2.60.0/go.mod h1:nwOEnNKSY7UYtNEOM/4XFShEC5eQr+AQF5iHNpNIWpE=
 code.cloudfoundry.org/clock v1.52.0 h1:EjrvYuCdfxcynTU0l/W8lFneXtf7nl2Mn3c2Wh0AvrQ=
 code.cloudfoundry.org/clock v1.52.0/go.mod h1:PAEBWCTWzb0thd4L8X+KhdZZytJdFSrFwTp1f0jQfks=
-code.cloudfoundry.org/commandrunner v0.48.0 h1:yq6wVPwTKRoYbOGpX9dk/gyR5zyiqbgSYWqbshm0ZSA=
-code.cloudfoundry.org/commandrunner v0.48.0/go.mod h1:2QwQ2BuMcJBB7PYVvTHdemv78ZnAJ5mxiOcK/ecR4hw=
+code.cloudfoundry.org/commandrunner v0.49.0 h1:0F7Ox6LL6UQwTBhRjmi1vBmJ2i6u+n+aYGqAeGXHMY4=
+code.cloudfoundry.org/commandrunner v0.49.0/go.mod h1:f0apmq8Yn0VTSV0solKHCB5NMd5f9qvrHHdA5HqV9tM=
 code.cloudfoundry.org/credhub-cli v0.0.0-20251014195659-0e45fa40da27 h1:IBIsfNjDTIGF2qm96c3qikni9Wuc//qQTyKobSQqOeE=
 code.cloudfoundry.org/credhub-cli v0.0.0-20251014195659-0e45fa40da27/go.mod h1:IrVzsWYqVqFEv7/PfyLEAdX6E5fDnof/YWvnri+9ebI=
 code.cloudfoundry.org/debugserver v0.71.0 h1:du6K4y6uBwO6GvsGTP2JKaR5QVNN3gXmjSqSTT3bnBc=
