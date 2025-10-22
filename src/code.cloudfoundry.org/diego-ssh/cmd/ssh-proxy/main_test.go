@@ -744,10 +744,8 @@ var _ = Describe("SSH proxy", Serial, func() {
 					Expect(err).NotTo(HaveOccurred())
 				})
 
-				Context("when using loggregator v2 api", func() {
-					It("emits the number of current ssh-connections", func() {
-						Eventually(testMetricsChan).Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "ssh-connections", Value: int32(1)})))
-					})
+				It("emits the number of current ssh-connections", func() {
+					Eventually(testMetricsChan).Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "ssh-connections", Value: int32(1)})))
 				})
 			})
 		})
