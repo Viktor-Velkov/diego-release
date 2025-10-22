@@ -5,7 +5,6 @@ go 1.24.0
 toolchain go1.24.6
 
 replace (
-	code.cloudfoundry.org/diego-logging-client => github.com/kart2bc/diego-logging-client v0.0.0-20250930154104-68684fb6b666
 	code.cloudfoundry.org/garden => ../garden
 	code.cloudfoundry.org/grootfs => ../grootfs
 	code.cloudfoundry.org/guardian => ../guardian
@@ -20,11 +19,11 @@ require (
 	code.cloudfoundry.org/certsplitter v0.58.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.59.0
-	code.cloudfoundry.org/clock v1.51.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20251006131851-da8a271bccef
-	code.cloudfoundry.org/debugserver v0.70.0
-	code.cloudfoundry.org/diego-logging-client v0.0.0-00010101000000-000000000000
+	code.cloudfoundry.org/cfhttp/v2 v2.60.0
+	code.cloudfoundry.org/clock v1.52.0
+	code.cloudfoundry.org/credhub-cli v0.0.0-20251020132013-870a4dda3a37
+	code.cloudfoundry.org/debugserver v0.72.0
+	code.cloudfoundry.org/diego-logging-client v0.75.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
 	code.cloudfoundry.org/durationjson v0.55.0
 	code.cloudfoundry.org/eventhub v0.55.0
@@ -173,6 +172,6 @@ require (
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20251020155222-88f65dc88635 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250818200422-3122310a409c // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251020155222-88f65dc88635 // indirect
 )
