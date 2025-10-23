@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs/models"
+	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/diego-ssh/authenticators"
 	"code.cloudfoundry.org/diego-ssh/cmd/ssh-proxy/config"
@@ -141,6 +142,8 @@ var _ = Describe("SSH proxy", Serial, func() {
 		sshProxyConfig.CommunicationTimeout = durationjson.Duration(10 * time.Second)
 		sshProxyConfig.ConnectToInstanceAddress = false
 		sshProxyConfig.LagerConfig = lagerflags.DefaultLagerConfig()
+		sshProxyConfig.LoggregatorConfig = test_helpers.GetLoggregatorConfigWithMetronCerts()
+		sshProxyConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
 
 		expectedGetActualLRPRequest = &models.ActualLRPsRequest{
 			ProcessGuid:   processGuid,
@@ -711,7 +714,6 @@ var _ = Describe("SSH proxy", Serial, func() {
 				sshProxyConfig.LoggregatorConfig.BatchFlushInterval = 10 * time.Millisecond
 				sshProxyConfig.LoggregatorConfig.BatchMaxSize = 1
 				sshProxyConfig.LoggregatorConfig.APIPort = port
-				sshProxyConfig.LoggregatorConfig.UseV2API = true
 				sshProxyConfig.LoggregatorConfig.CACertPath = serverCAFile
 				sshProxyConfig.LoggregatorConfig.KeyPath = serverKeyFile
 				sshProxyConfig.LoggregatorConfig.CertPath = serverCertFile
@@ -742,24 +744,8 @@ var _ = Describe("SSH proxy", Serial, func() {
 					Expect(err).NotTo(HaveOccurred())
 				})
 
-				Context("when using loggregator v2 api", func() {
-					BeforeEach(func() {
-						sshProxyConfig.LoggregatorConfig.UseV2API = true
-					})
-
-					It("emits the number of current ssh-connections", func() {
-						Eventually(testMetricsChan).Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "ssh-connections", Value: int32(1)})))
-					})
-				})
-
-				Context("when not using the loggregator v2 api", func() {
-					BeforeEach(func() {
-						sshProxyConfig.LoggregatorConfig.UseV2API = false
-					})
-
-					It("doesn't emit any metrics", func() {
-						Consistently(testMetricsChan).ShouldNot(Receive())
-					})
+				It("emits the number of current ssh-connections", func() {
+					Eventually(testMetricsChan).Should(Receive(testhelpers.MatchV2MetricAndValue(testhelpers.MetricAndValue{Name: "ssh-connections", Value: int32(1)})))
 				})
 			})
 		})

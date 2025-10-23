@@ -23,7 +23,7 @@ require (
 	code.cloudfoundry.org/clock v1.52.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20251020132013-870a4dda3a37
 	code.cloudfoundry.org/debugserver v0.72.0
-	code.cloudfoundry.org/diego-logging-client v0.74.0
+	code.cloudfoundry.org/diego-logging-client v0.76.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
 	code.cloudfoundry.org/durationjson v0.55.0
 	code.cloudfoundry.org/eventhub v0.55.0
@@ -172,6 +172,6 @@ require (
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20251020155222-88f65dc88635 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250818200422-3122310a409c // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251020155222-88f65dc88635 // indirect
 )

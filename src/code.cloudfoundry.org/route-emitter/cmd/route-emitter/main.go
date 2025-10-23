@@ -266,10 +266,8 @@ func initializeMetron(logger lager.Logger, locketConfig config.RouteEmitterConfi
 		return nil, err
 	}
 
-	if locketConfig.LoggregatorConfig.UseV2API {
-		emitter := runtimeemitter.NewV1(client)
-		go emitter.Run()
-	}
+	emitter := runtimeemitter.NewV1(client)
+	go emitter.Run()
 
 	return client, nil
 }

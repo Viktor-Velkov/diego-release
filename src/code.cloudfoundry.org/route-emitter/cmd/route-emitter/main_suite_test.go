@@ -18,10 +18,12 @@ import (
 	"code.cloudfoundry.org/bbs/test_helpers/sqlrunner"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/durationjson"
+	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers/certauthority"
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
 	"code.cloudfoundry.org/lager/v3/lagerflags"
+	"code.cloudfoundry.org/lager/v3/lagertest"
 	"code.cloudfoundry.org/locket"
 	locketconfig "code.cloudfoundry.org/locket/cmd/locket/config"
 	locketrunner "code.cloudfoundry.org/locket/cmd/locket/testrunner"
@@ -46,30 +48,31 @@ var (
 
 	oauthServer *ghttp.Server
 
-	bbsPath    string
-	bbsURL     *url.URL
-	bbsConfig  bbsconfig.BBSConfig
-	bbsRunner  *ginkgomon.Runner
-	bbsProcess ifrit.Process
+	bbsPath      string
+	bbsURL       *url.URL
+	bbsConfig    bbsconfig.BBSConfig
+	bbsRunner    *ginkgomon.Runner
+	bbsProcess   ifrit.Process
+	locketRunner *ginkgomon.Runner
 
 	routingAPIPath string
 	certDepot      string
 
-	natsServerProcess ifrit.Process
-	natsClient        diegonats.NATSClient
-	syncInterval      time.Duration
-	testMetricsChan   chan *loggregator_v2.Envelope
-	signalMetricsChan chan struct{}
+	natsServerProcess  ifrit.Process
+	natsClient         diegonats.NATSClient
+	syncInterval       time.Duration
+	testMetricsChan    chan *loggregator_v2.Envelope
+	signalMetricsChan  chan struct{}
+	metronIngressSetup *test_helpers.MetronIngressSetup
+	testIngressServer  *testhelpers.TestIngressServer
 
 	locketProcess ifrit.Process
 	locketPath    string
 	locketAddress string
 
-	sqlProcess        ifrit.Process
-	sqlRunner         sqlrunner.SQLRunner
-	bbsRunning        = false
-	useLoggregatorV2  bool
-	testIngressServer *testhelpers.TestIngressServer
+	sqlProcess ifrit.Process
+	sqlRunner  sqlrunner.SQLRunner
+	bbsRunning = false
 
 	portAllocator portauthority.PortAllocator
 )
@@ -174,7 +177,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 			TimeFormat:          lagerflags.FormatRFC3339,
 			MaxDataStringLength: 0,
 		},
-
+		LoggregatorConfig:        test_helpers.GetLoggregatorConfigWithMetronCerts(),
 		ListenAddress:            bbsAddress,
 		AdvertiseURL:             bbsURL.String(),
 		AuctioneerAddress:        "http://some-address",
@@ -234,24 +237,35 @@ func startOAuthServer() *ghttp.Server {
 
 var _ = BeforeEach(func() {
 	cfgs = nil
-	useLoggregatorV2 = false
-
+	var err error
 	oauthServer = startOAuthServer()
 
 	sqlProcess = ginkgomon.Invoke(sqlRunner)
+	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	Expect(err).NotTo(HaveOccurred())
+	testIngressServer = metronIngressSetup.Server
+	signalMetricsChan = metronIngressSetup.SignalMetricsChan
+	testMetricsChan = metronIngressSetup.TestMetricsChan
 
-	locketRunner := locketrunner.NewLocketRunner(locketPath, func(cfg *locketconfig.LocketConfig) {
+	locketRunner = locketrunner.NewLocketRunner(locketPath, func(cfg *locketconfig.LocketConfig) {
 		cfg.DatabaseConnectionString = sqlRunner.ConnectionString()
 		cfg.DatabaseDriver = sqlRunner.DriverName()
 		cfg.ListenAddress = locketAddress
+		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
+
 	})
+	bbsConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
+	logger := lagertest.NewTestLogger("test")
+	logger.Debug(fmt.Sprintf("bbs locket address: %s", locketAddress))
 	locketProcess = ginkgomon.Invoke(locketRunner)
 
 	bbsConfig.ClientLocketConfig = locketrunner.ClientLocketConfig()
 	bbsConfig.ClientLocketConfig.LocketAddress = locketAddress
 	startBBS()
 
-	var err error
 	certDepot, err = os.MkdirTemp("", "")
 	Expect(err).NotTo(HaveOccurred())
 	certAuthority, err := certauthority.NewCertAuthority(certDepot, "nats")
@@ -274,27 +288,14 @@ var _ = BeforeEach(func() {
 })
 
 var _ = JustBeforeEach(func() {
-	var err error
-	testIngressServer, err = testhelpers.NewTestIngressServer(
-		"fixtures/metron/metron.crt",
-		"fixtures/metron/metron.key",
-		"fixtures/metron/CA.crt",
-	)
-	Expect(err).NotTo(HaveOccurred())
-	receiversChan := testIngressServer.Receivers()
-	Expect(testIngressServer.Start()).To(Succeed())
-	port, err := testIngressServer.Port()
-	Expect(err).NotTo(HaveOccurred())
 	cfgs = append(cfgs, func(cfg *config.RouteEmitterConfig) {
 		cfg.LoggregatorConfig.BatchFlushInterval = 10 * time.Millisecond
 		cfg.LoggregatorConfig.BatchMaxSize = 1
-		cfg.LoggregatorConfig.UseV2API = useLoggregatorV2
-		cfg.LoggregatorConfig.APIPort = port
-		cfg.LoggregatorConfig.CACertPath = "fixtures/metron/CA.crt"
-		cfg.LoggregatorConfig.KeyPath = "fixtures/metron/client.key"
-		cfg.LoggregatorConfig.CertPath = "fixtures/metron/client.crt"
+		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
+		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
+		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
 	})
-	testMetricsChan, signalMetricsChan = testhelpers.TestMetricChan(receiversChan)
 })
 
 var _ = AfterEach(func() {
