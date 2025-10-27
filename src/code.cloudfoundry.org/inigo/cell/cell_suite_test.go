@@ -23,12 +23,18 @@ import (
 	"code.cloudfoundry.org/bbs"
 	bbsconfig "code.cloudfoundry.org/bbs/cmd/bbs/config"
 	"code.cloudfoundry.org/bbs/serviceclient"
+	"code.cloudfoundry.org/bbs/test_helpers"
+	loggingclient "code.cloudfoundry.org/diego-logging-client"
+	"code.cloudfoundry.org/diego-logging-client/testhelpers"
+	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/garden"
+	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers"
 	"code.cloudfoundry.org/inigo/helpers/certauthority"
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
 	"code.cloudfoundry.org/inigo/inigo_announcement_server"
 	"code.cloudfoundry.org/inigo/world"
+	locketconfig "code.cloudfoundry.org/locket/cmd/locket/config"
 )
 
 const cellSuiteEventuallyTestTimeout = 30 * time.Second
@@ -45,6 +51,11 @@ var (
 	gardenRunner                        *runner.GardenRunner
 	lgr                                 lager.Logger
 	suiteTempDir                        string
+
+	testMetricsChan    chan *loggregator_v2.Envelope
+	signalMetricsChan  chan struct{}
+	metronIngressSetup *test_helpers.MetronIngressSetup
+	testIngressServer  *testhelpers.TestIngressServer
 )
 
 func overrideConvergenceRepeatInterval(conf *bbsconfig.BBSConfig) {
@@ -121,16 +132,31 @@ var _ = SynchronizedAfterSuite(func() {
 })
 
 var _ = BeforeEach(func() {
+	var err error
+	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	Expect(err).NotTo(HaveOccurred())
+	testIngressServer = metronIngressSetup.Server
+	signalMetricsChan = metronIngressSetup.SignalMetricsChan
+	testMetricsChan = metronIngressSetup.TestMetricsChan
+
+	modifyFuncLocketLoggregatorConfig := func(cfg *locketconfig.LocketConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
+
+	modifyFuncBBSLoggregatorConfig := func(cfg *bbsconfig.BBSConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
+
 	plumbing = ginkgomon.Invoke(grouper.NewOrdered(os.Kill, grouper.Members{
 		{Name: "initial-services", Runner: grouper.NewParallel(os.Kill, grouper.Members{
 			{Name: "sql", Runner: componentMaker.SQL()},
 			{Name: "nats", Runner: componentMaker.NATS()},
 		})},
-		{Name: "locket", Runner: componentMaker.Locket()},
+		{Name: "locket", Runner: componentMaker.Locket(modifyFuncLocketLoggregatorConfig)},
 	}))
 	gardenRunner = componentMaker.Garden()
 	gardenProcess = ginkgomon.Invoke(gardenRunner)
-	bbsRunner = componentMaker.BBS()
+	bbsRunner = componentMaker.BBS(modifyFuncBBSLoggregatorConfig)
 	bbsProcess = ginkgomon.Invoke(bbsRunner)
 
 	lgr = lager.NewLogger("test")
@@ -151,6 +177,9 @@ var _ = AfterEach(func() {
 	helpers.StopProcesses(bbsProcess)
 	helpers.StopProcesses(gardenProcess)
 	helpers.StopProcesses(plumbing)
+
+	testIngressServer.Stop()
+	close(signalMetricsChan)
 
 	Expect(destroyContainerErrors).To(
 		BeEmpty(),
@@ -232,4 +261,12 @@ func CompileTestedExecutables() world.BuiltExecutables {
 	Expect(err).NotTo(HaveOccurred())
 
 	return builtExecutables
+}
+
+func setupMetronConfig(cfg loggingclient.Config) loggingclient.Config {
+	cfg.APIPort = metronIngressSetup.Port
+	cfg.CACertPath = fixtures.Path("CA.crt")
+	cfg.CertPath = fixtures.Path("metron.crt")
+	cfg.KeyPath = fixtures.Path("metron.key")
+	return cfg
 }
