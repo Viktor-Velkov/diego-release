@@ -48,7 +48,7 @@ var _ = Describe("LocalRouteEmitter", func() {
 		processGuid = helpers.GenerateGuid()
 
 		var fileServer ifrit.Runner
-		fileServer, fileServerStaticDir = componentMaker.FileServer()
+		fileServer, fileServerStaticDir = componentMaker.FileServer(modifyFunFileServerLoggregatorConfig)
 
 		cellAID = "cell-a"
 		cellBID = "cell-b"
@@ -65,7 +65,7 @@ var _ = Describe("LocalRouteEmitter", func() {
 		ifritRuntime = ginkgomon.Invoke(grouper.NewParallel(os.Kill, grouper.Members{
 			{Name: "router", Runner: componentMaker.Router()},
 			{Name: "file-server", Runner: fileServer},
-			{Name: "auctioneer", Runner: componentMaker.Auctioneer()},
+			{Name: "auctioneer", Runner: componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig)},
 		}))
 
 		archiveFiles = fixtures.GoServerApp()

@@ -52,10 +52,13 @@ var _ = Describe("Task Lifecycle", func() {
 	Context("when a rep, and auctioneer are running", func() {
 		BeforeEach(func() {
 
+			modifyFunRepLoggregatorConfig := func(cfg *repconfig.RepConfig) {
+				cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+				cfg.MemoryMB = "1024"
+			}
+
 			cellProcess = ginkgomon.Invoke(grouper.NewParallel(os.Kill, grouper.Members{
-				{Name: "rep", Runner: componentMaker.Rep(func(config *repconfig.RepConfig) {
-					config.MemoryMB = "1024"
-				})},
+				{Name: "rep", Runner: componentMaker.Rep(modifyFunRepLoggregatorConfig)},
 			}))
 
 			auctioneerProcess = ginkgomon.Invoke(componentMaker.Auctioneer())
@@ -346,6 +349,7 @@ exit 0
 			bbsProcess = ginkgomon.Invoke(componentMaker.BBS(
 				overrideConvergenceRepeatInterval,
 				overrideExpirePendingTaskDuration,
+				modifyFuncBBSLoggregatorConfig,
 			))
 		})
 

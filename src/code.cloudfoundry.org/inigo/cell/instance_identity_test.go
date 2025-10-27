@@ -126,7 +126,7 @@ var _ = Describe("InstanceIdentity", func() {
 			OrganizationalUnit: organizationalUnit,
 		}
 
-		fileServer, fileServerStaticDir = componentMaker.FileServer()
+		fileServer, fileServerStaticDir = componentMaker.FileServer(modifyFunFileServerLoggregatorConfig)
 		archiveFiles := fixtures.GoServerApp()
 		archive_helper.CreateTarGZArchive(filepath.Join(fileServerStaticDir, "lrp.tgz"), archiveFiles)
 		archive_helper.CreateZipArchive(
@@ -134,7 +134,7 @@ var _ = Describe("InstanceIdentity", func() {
 			archiveFiles,
 		)
 
-		rep = componentMaker.Rep(configRepCerts)
+		rep = componentMaker.Rep(configRepCerts, modifyFunRepLoggregatorConfig)
 		logger = lagertest.NewTestLogger("metron-agent")
 		metronAgent = ifrit.RunFunc(func(signals <-chan os.Signal, ready chan<- struct{}) error {
 			close(ready)
@@ -145,11 +145,12 @@ var _ = Describe("InstanceIdentity", func() {
 	})
 
 	JustBeforeEach(func() {
+
 		cellGroup := grouper.Members{
 			{Name: "metron-agent", Runner: metronAgent},
 			{Name: "file-server", Runner: fileServer},
 			{Name: "rep", Runner: rep},
-			{Name: "auctioneer", Runner: componentMaker.Auctioneer()},
+			{Name: "auctioneer", Runner: componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig)},
 		}
 		terminationSignal := os.Interrupt
 		if runtime.GOOS == "windows" {

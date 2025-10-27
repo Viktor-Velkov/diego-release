@@ -365,7 +365,7 @@ type ComponentMaker interface {
 	BBSURL() string
 	BBSSSLConfig() SSLConfig
 	DefaultStack() string
-	FileServer() (ifrit.Runner, string)
+	FileServer(modifyConfigFuncs ...func(*fileserverconfig.FileServerConfig)) (ifrit.Runner, string)
 	Garden(fs ...func(*runner.GdnRunnerConfig)) *runner.GardenRunner
 	GardenClient() garden.Client
 	GardenWithoutDefaultStack() ifrit.Runner
@@ -820,7 +820,7 @@ func (maker commonComponentMaker) RouteEmitterN(n int, fs ...func(config *routee
 	})
 }
 
-func (maker commonComponentMaker) FileServer() (ifrit.Runner, string) {
+func (maker commonComponentMaker) FileServer(modifyConfigFuncs ...func(*fileserverconfig.FileServerConfig)) (ifrit.Runner, string) {
 	servedFilesDir := TempDirWithParent(maker.tmpDir, "file-server-files")
 
 	configFile, err := os.CreateTemp(TempDirWithParent(maker.tmpDir, "file-server"), "file-server-config")
@@ -834,6 +834,10 @@ func (maker commonComponentMaker) FileServer() (ifrit.Runner, string) {
 			TimeFormat: lagerflags.FormatRFC3339,
 		},
 		StaticDirectory: servedFilesDir,
+	}
+
+	for _, f := range modifyConfigFuncs {
+		f(&cfg)
 	}
 
 	buildpackAppLifeCycleDir := filepath.Join(servedFilesDir, "buildpack_app_lifecycle")
@@ -1249,7 +1253,7 @@ func (maker v0ComponentMaker) RouteEmitter(modifyConfigFuncs ...func(config *rou
 	})
 }
 
-func (maker v0ComponentMaker) FileServer() (ifrit.Runner, string) {
+func (maker v0ComponentMaker) FileServer(modifyConfigFuncs ...func(*fileserverconfig.FileServerConfig)) (ifrit.Runner, string) {
 	servedFilesDir := TempDirWithParent(maker.tmpDir, fmt.Sprintf("file-server-files-%d-", GinkgoParallelProcess()))
 
 	return ginkgomon.New(ginkgomon.Config{

@@ -55,19 +55,20 @@ var _ = Describe("Evacuation", func() {
 		}
 		processGuid = helpers.GenerateGuid()
 
-		fileServer, fileServerStaticDir := componentMaker.FileServer()
+		fileServer, fileServerStaticDir := componentMaker.FileServer(modifyFunFileServerLoggregatorConfig)
 
 		By("restarting the bbs with smaller convergeRepeatInterval")
 		ginkgomon.Interrupt(bbsProcess)
 		bbsProcess = ginkgomon.Invoke(componentMaker.BBS(
 			overrideConvergenceRepeatInterval,
+			modifyFuncBBSLoggregatorConfig,
 		))
 
 		ifritRuntime = ginkgomon.Invoke(grouper.NewParallel(os.Kill, grouper.Members{
 			{Name: "router", Runner: componentMaker.Router()},
 			{Name: "file-server", Runner: fileServer},
-			{Name: "auctioneer", Runner: componentMaker.Auctioneer()},
-			{Name: "route-emitter", Runner: componentMaker.RouteEmitter()},
+			{Name: "auctioneer", Runner: componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig)},
+			{Name: "route-emitter", Runner: componentMaker.RouteEmitter(modifyFunRouteEmitterLoggregatorConfig)},
 		}))
 
 		cellAID = "cell-a"

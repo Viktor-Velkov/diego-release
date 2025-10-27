@@ -35,11 +35,12 @@ var _ = Describe("Convergence to desired state", func() {
 		if runtime.GOOS == "windows" {
 			Skip(" not yet working on windows")
 		}
-		fileServer, fileServerStaticDir := componentMaker.FileServer()
+
+		fileServer, fileServerStaticDir := componentMaker.FileServer(modifyFunFileServerLoggregatorConfig)
 
 		ifritRuntime = ginkgomon.Invoke(grouper.NewParallel(os.Kill, grouper.Members{
 			{Name: "file-server", Runner: fileServer},
-			{Name: "route-emitter", Runner: componentMaker.RouteEmitter()},
+			{Name: "route-emitter", Runner: componentMaker.RouteEmitter(modifyFunRouteEmitterLoggregatorConfig)},
 			{Name: "router", Runner: componentMaker.Router()},
 		}))
 
@@ -79,7 +80,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 	Describe("Executor fault tolerance", func() {
 		BeforeEach(func() {
-			auctioneer = ginkgomon.Invoke(componentMaker.Auctioneer())
+			auctioneer = ginkgomon.Invoke(componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig))
 		})
 
 		Context("when an rep and converger are running", func() {
@@ -196,7 +197,7 @@ var _ = Describe("Convergence to desired state", func() {
 			By("restarting the bbs with smaller convergeRepeatInterval")
 			ginkgomon.Interrupt(bbsProcess)
 			bbsProcess = ginkgomon.Invoke(componentMaker.BBS(
-				overrideConvergenceRepeatInterval,
+				overrideConvergenceRepeatInterval, modifyFuncBBSLoggregatorConfig,
 			))
 		})
 

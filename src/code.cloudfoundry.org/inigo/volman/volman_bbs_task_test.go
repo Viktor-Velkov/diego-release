@@ -30,7 +30,7 @@ var _ = Describe("Tasks", func() {
 	BeforeEach(func() {
 		logger = lagertest.NewTestLogger("volman-tasks")
 		var fileServerRunner ifrit.Runner
-		fileServerRunner, _ = componentMaker.FileServer()
+		fileServerRunner, _ = componentMaker.FileServer(modifyFunFileServerLoggregatorConfig)
 
 		plumbing = ginkgomon.Invoke(grouper.NewOrdered(os.Kill, grouper.Members{
 			{Name: "initial-services", Runner: grouper.NewParallel(os.Kill, grouper.Members{
@@ -43,7 +43,7 @@ var _ = Describe("Tasks", func() {
 		cellProcess = ginkgomon.Invoke(grouper.NewParallel(os.Interrupt, grouper.Members{
 			{Name: "file-server", Runner: fileServerRunner},
 			{Name: "rep", Runner: componentMaker.Rep(func(config *repconfig.RepConfig) { config.MemoryMB = "1024" })},
-			{Name: "auctioneer", Runner: componentMaker.Auctioneer()},
+			{Name: "auctioneer", Runner: componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig)},
 		}))
 
 		bbsServiceClient := componentMaker.BBSServiceClient(logger)

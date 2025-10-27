@@ -9,10 +9,14 @@ import (
 	"testing"
 	"time"
 
+	auctioneerconfig "code.cloudfoundry.org/auctioneer/cmd/auctioneer/config"
 	"code.cloudfoundry.org/durationjson"
+	fileserverconfig "code.cloudfoundry.org/fileserver/cmd/file-server/config"
 	"code.cloudfoundry.org/guardian/gqt/runner"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/localip"
+	repconfig "code.cloudfoundry.org/rep/cmd/rep/config"
+	routeemitterconfig "code.cloudfoundry.org/route-emitter/cmd/route-emitter/config"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gexec"
@@ -56,6 +60,12 @@ var (
 	signalMetricsChan  chan struct{}
 	metronIngressSetup *test_helpers.MetronIngressSetup
 	testIngressServer  *testhelpers.TestIngressServer
+
+	modifyFunAuctioneerLoggregatorConfig   func(cfg *auctioneerconfig.AuctioneerConfig)
+	modifyFunRouteEmitterLoggregatorConfig func(cfg *routeemitterconfig.RouteEmitterConfig)
+	modifyFunRepLoggregatorConfig          func(cfg *repconfig.RepConfig)
+	modifyFunFileServerLoggregatorConfig   func(cfg *fileserverconfig.FileServerConfig)
+	modifyFuncBBSLoggregatorConfig         func(cfg *bbsconfig.BBSConfig)
 )
 
 func overrideConvergenceRepeatInterval(conf *bbsconfig.BBSConfig) {
@@ -143,7 +153,23 @@ var _ = BeforeEach(func() {
 		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
 	}
 
-	modifyFuncBBSLoggregatorConfig := func(cfg *bbsconfig.BBSConfig) {
+	modifyFuncBBSLoggregatorConfig = func(cfg *bbsconfig.BBSConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
+
+	modifyFunAuctioneerLoggregatorConfig = func(cfg *auctioneerconfig.AuctioneerConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
+
+	modifyFunRouteEmitterLoggregatorConfig = func(cfg *routeemitterconfig.RouteEmitterConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
+
+	modifyFunRepLoggregatorConfig = func(cfg *repconfig.RepConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
+
+	modifyFunFileServerLoggregatorConfig = func(cfg *fileserverconfig.FileServerConfig) {
 		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
 	}
 
