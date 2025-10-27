@@ -27,10 +27,8 @@ import (
 	"code.cloudfoundry.org/bbs"
 	bbsconfig "code.cloudfoundry.org/bbs/cmd/bbs/config"
 	"code.cloudfoundry.org/bbs/serviceclient"
-	"code.cloudfoundry.org/bbs/test_helpers"
 	loggingclient "code.cloudfoundry.org/diego-logging-client"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
-	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/garden"
 	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers"
@@ -56,16 +54,16 @@ var (
 	lgr                                 lager.Logger
 	suiteTempDir                        string
 
-	testMetricsChan    chan *loggregator_v2.Envelope
-	signalMetricsChan  chan struct{}
-	metronIngressSetup *test_helpers.MetronIngressSetup
-	testIngressServer  *testhelpers.TestIngressServer
+	testMetricsChan   chan *loggregator_v2.Envelope
+	signalMetricsChan chan struct{}
+	testIngressServer *testhelpers.TestIngressServer
 
-	modifyFunAuctioneerLoggregatorConfig   func(cfg *auctioneerconfig.AuctioneerConfig)
-	modifyFunRouteEmitterLoggregatorConfig func(cfg *routeemitterconfig.RouteEmitterConfig)
-	modifyFunRepLoggregatorConfig          func(cfg *repconfig.RepConfig)
-	modifyFunFileServerLoggregatorConfig   func(cfg *fileserverconfig.FileServerConfig)
-	modifyFuncBBSLoggregatorConfig         func(cfg *bbsconfig.BBSConfig)
+	modifyFunAuctioneerLoggregatorConfig                    func(cfg *auctioneerconfig.AuctioneerConfig)
+	modifyFunRouteEmitterLoggregatorConfig                  func(cfg *routeemitterconfig.RouteEmitterConfig)
+	modifyFunRepLoggregatorConfig                           func(cfg *repconfig.RepConfig)
+	modifyFunFileServerLoggregatorConfig                    func(cfg *fileserverconfig.FileServerConfig)
+	modifyFuncBBSLoggregatorConfig                          func(cfg *bbsconfig.BBSConfig)
+	metronCAFile, metronServerCertFile, metronServerKeyFile string
 )
 
 func overrideConvergenceRepeatInterval(conf *bbsconfig.BBSConfig) {
@@ -142,12 +140,18 @@ var _ = SynchronizedAfterSuite(func() {
 })
 
 var _ = BeforeEach(func() {
+
+	fixturesPath := "../fixtures/certs"
 	var err error
-	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	metronCAFile = filepath.Join(fixturesPath, "metron", "CA.crt")
+	metronServerCertFile = filepath.Join(fixturesPath, "metron", "metron.crt")
+	metronServerKeyFile = filepath.Join(fixturesPath, "metron", "metron.key")
+	testIngressServer, err = testhelpers.NewTestIngressServer(metronServerCertFile, metronServerKeyFile, metronCAFile)
 	Expect(err).NotTo(HaveOccurred())
-	testIngressServer = metronIngressSetup.Server
-	signalMetricsChan = metronIngressSetup.SignalMetricsChan
-	testMetricsChan = metronIngressSetup.TestMetricsChan
+	receiversChan := testIngressServer.Receivers()
+	testIngressServer.Start()
+
+	testMetricsChan, signalMetricsChan = testhelpers.TestMetricChan(receiversChan)
 
 	modifyFuncLocketLoggregatorConfig := func(cfg *locketconfig.LocketConfig) {
 		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
@@ -290,9 +294,9 @@ func CompileTestedExecutables() world.BuiltExecutables {
 }
 
 func setupMetronConfig(cfg loggingclient.Config) loggingclient.Config {
-	cfg.APIPort = metronIngressSetup.Port
-	cfg.CACertPath = fixtures.Path("CA.crt")
-	cfg.CertPath = fixtures.Path("metron.crt")
-	cfg.KeyPath = fixtures.Path("metron.key")
+	cfg.APIPort, _ = testIngressServer.Port()
+	cfg.CACertPath = metronCAFile
+	cfg.CertPath = metronServerCertFile
+	cfg.KeyPath = metronServerKeyFile
 	return cfg
 }
