@@ -56,7 +56,7 @@ code.cloudfoundry.org/dockerdriver
 code.cloudfoundry.org/dockerdriver/dockerdriverfakes
 code.cloudfoundry.org/dockerdriver/driverhttp
 code.cloudfoundry.org/dockerdriver/utils
-# code.cloudfoundry.org/durationjson v0.55.0
+# code.cloudfoundry.org/durationjson v0.56.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/durationjson
 # code.cloudfoundry.org/eventhub v0.56.0
@@ -756,7 +756,7 @@ github.com/vishvananda/netns
 # github.com/vito/go-sse v1.1.3
 ## explicit; go 1.24
 github.com/vito/go-sse/sse
-# go.step.sm/crypto v0.72.0
+# go.step.sm/crypto v0.73.0
 ## explicit; go 1.24.0
 go.step.sm/crypto/fingerprint
 go.step.sm/crypto/internal/bcrypt_pbkdf

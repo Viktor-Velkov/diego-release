@@ -744,8 +744,8 @@ code.cloudfoundry.org/diego-logging-client v0.77.0 h1:4e0bq5tGYLQkuYYwXENl8eNeuX
 code.cloudfoundry.org/diego-logging-client v0.77.0/go.mod h1:fe6CaBFcYr7ftkRBbYjyrUy8itC20sEjLKdStNykiMw=
 code.cloudfoundry.org/dockerdriver v0.61.0 h1:5T5bv2dDXZi14o7bScOpk0RVzx3dGqCYP9a7HSh8nKk=
 code.cloudfoundry.org/dockerdriver v0.61.0/go.mod h1:PRGZ1LKjch2lbAubHQ/56YjMrYWWQAg/YMl49Yz6kb4=
-code.cloudfoundry.org/durationjson v0.55.0 h1:mLqyzmQzhW8ndO2+BxtnQNlqAvSNx+Gy/NqvOmAiU3g=
-code.cloudfoundry.org/durationjson v0.55.0/go.mod h1:PmXJRCLhBQ7h4aCyqm+mjgttoezGGjioxhNionx+Y9U=
+code.cloudfoundry.org/durationjson v0.56.0 h1:iveDob1PGSZ2VcArug6hmaD61Tp3ZMIr4jiO7VqXq/Y=
+code.cloudfoundry.org/durationjson v0.56.0/go.mod h1:XODFWMDfdIae7ZmbAmYr5X35mycKA0PYXgAJca8TXG8=
 code.cloudfoundry.org/eventhub v0.56.0 h1:7Tt8H4e8OZcRbKNDzmxGqdUjYekBwd+DHNH7fPeHtZw=
 code.cloudfoundry.org/eventhub v0.56.0/go.mod h1:0Ir7FCS0hBYsmwCE4H47Ae4L56NNYr26Fb7+qHekrxM=
 code.cloudfoundry.org/go-diodes v0.0.0-20251027221130-fc49a49e17eb h1:5QPiUNZ7hW2bHmrvUXZbE6sS5TnUwLVRGBWcjRZ8Xkk=
@@ -1394,8 +1394,8 @@ go.opentelemetry.io/otel/sdk/metric v1.37.0/go.mod h1:cNen4ZWfiD37l5NhS+Keb5RXVW
 go.opentelemetry.io/otel/trace v1.37.0 h1:HLdcFNbRQBE2imdSEgm/kwqmQj1Or1l/7bW6mxVK7z4=
 go.opentelemetry.io/otel/trace v1.37.0/go.mod h1:TlgrlQ+PtQO5XFerSPUYG0JSgGyryXewPGyayAWSBS0=
 go.opentelemetry.io/proto/otlp v1.0.0/go.mod h1:Sy6pihPLfYHkr3NkUbEhGHFhINUSI/v80hjKIs5JXpM=
-go.step.sm/crypto v0.72.0 h1:cwkxbmnN8jj8YWmoXdoGhaac81d2SwXguwmHN9KJxHw=
-go.step.sm/crypto v0.72.0/go.mod h1:EAy7MSOXxCvCaDAKJqz0bLdTSDdhpEM9xqye8XsfrM4=
+go.step.sm/crypto v0.73.0 h1:SNFpslZJa+kTNADpWYJJeMsQqzwDiuxFq0ei5OPLIUg=
+go.step.sm/crypto v0.73.0/go.mod h1:pw2MKw7aPgx3bVjVwYrKbpMIawLRwth/5cyhZf6QnBM=
 go.uber.org/automaxprocs v1.6.0 h1:O3y2/QNTOdbF+e/dpXNNW7Rx2hZ4sTIPyybbxyNqTUs=
 go.uber.org/automaxprocs v1.6.0/go.mod h1:ifeIMSnPZuznNm6jmdzmU3/bfk01Fe2fotchwEFJ8r8=
 go.yaml.in/yaml/v3 v3.0.4 h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=

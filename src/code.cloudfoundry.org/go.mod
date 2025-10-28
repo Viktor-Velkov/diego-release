@@ -25,7 +25,7 @@ require (
 	code.cloudfoundry.org/debugserver v0.73.0
 	code.cloudfoundry.org/diego-logging-client v0.77.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
-	code.cloudfoundry.org/durationjson v0.55.0
+	code.cloudfoundry.org/durationjson v0.56.0
 	code.cloudfoundry.org/eventhub v0.56.0
 	code.cloudfoundry.org/garden v0.0.0-20251015021552-f8762a7eb1ea
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
@@ -165,7 +165,7 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
-	go.step.sm/crypto v0.72.0 // indirect
+	go.step.sm/crypto v0.73.0 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/mod v0.29.0 // indirect
