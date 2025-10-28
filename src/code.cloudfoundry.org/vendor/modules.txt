@@ -1,12 +1,12 @@
 # cel.dev/expr v0.24.0
 ## explicit; go 1.22.0
 cel.dev/expr
-# code.cloudfoundry.org/archiver v0.50.0
+# code.cloudfoundry.org/archiver v0.51.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/archiver/compressor
 code.cloudfoundry.org/archiver/extractor
 code.cloudfoundry.org/archiver/extractor/test_helper
-# code.cloudfoundry.org/bytefmt v0.55.0
+# code.cloudfoundry.org/bytefmt v0.56.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/bytefmt
 # code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
@@ -22,11 +22,11 @@ code.cloudfoundry.org/cf-routing-test-helpers/tls
 # code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 ## explicit
 code.cloudfoundry.org/cf-tcp-router/utils
-# code.cloudfoundry.org/cfhttp/v2 v2.60.0
+# code.cloudfoundry.org/cfhttp/v2 v2.61.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/cfhttp/v2
 code.cloudfoundry.org/cfhttp/v2/handlers
-# code.cloudfoundry.org/clock v1.52.0
+# code.cloudfoundry.org/clock v1.53.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/clock
 code.cloudfoundry.org/clock/fakeclock
@@ -43,10 +43,10 @@ code.cloudfoundry.org/credhub-cli/credhub/credentials/generate
 code.cloudfoundry.org/credhub-cli/credhub/credentials/values
 code.cloudfoundry.org/credhub-cli/credhub/permissions
 code.cloudfoundry.org/credhub-cli/credhub/server
-# code.cloudfoundry.org/debugserver v0.72.0
+# code.cloudfoundry.org/debugserver v0.73.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/debugserver
-# code.cloudfoundry.org/diego-logging-client v0.76.0
+# code.cloudfoundry.org/diego-logging-client v0.77.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/diego-logging-client
 code.cloudfoundry.org/diego-logging-client/testhelpers
@@ -59,7 +59,7 @@ code.cloudfoundry.org/dockerdriver/utils
 # code.cloudfoundry.org/durationjson v0.55.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/durationjson
-# code.cloudfoundry.org/eventhub v0.55.0
+# code.cloudfoundry.org/eventhub v0.56.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/eventhub
 # code.cloudfoundry.org/garden v0.0.0-20251015021552-f8762a7eb1ea => ../garden
@@ -102,14 +102,14 @@ code.cloudfoundry.org/guardian/rundmc/cgroups
 code.cloudfoundry.org/guardian/rundmc/cgroups/fs
 code.cloudfoundry.org/guardian/rundmc/event
 code.cloudfoundry.org/guardian/rundmc/goci
-# code.cloudfoundry.org/lager/v3 v3.52.0
+# code.cloudfoundry.org/lager/v3 v3.53.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/lager/v3
 code.cloudfoundry.org/lager/v3/internal/truncate
 code.cloudfoundry.org/lager/v3/lagerctx
 code.cloudfoundry.org/lager/v3/lagerflags
 code.cloudfoundry.org/lager/v3/lagertest
-# code.cloudfoundry.org/localip v0.54.0
+# code.cloudfoundry.org/localip v0.55.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/localip
 # code.cloudfoundry.org/tlsconfig v0.37.0

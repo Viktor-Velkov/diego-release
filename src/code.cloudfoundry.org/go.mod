@@ -13,26 +13,26 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.50.0
-	code.cloudfoundry.org/bytefmt v0.55.0
+	code.cloudfoundry.org/archiver v0.51.0
+	code.cloudfoundry.org/bytefmt v0.56.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.58.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.60.0
-	code.cloudfoundry.org/clock v1.52.0
+	code.cloudfoundry.org/cfhttp/v2 v2.61.0
+	code.cloudfoundry.org/clock v1.53.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20251027231142-f720bbd35b00
-	code.cloudfoundry.org/debugserver v0.72.0
-	code.cloudfoundry.org/diego-logging-client v0.76.0
+	code.cloudfoundry.org/debugserver v0.73.0
+	code.cloudfoundry.org/diego-logging-client v0.77.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
 	code.cloudfoundry.org/durationjson v0.55.0
-	code.cloudfoundry.org/eventhub v0.55.0
+	code.cloudfoundry.org/eventhub v0.56.0
 	code.cloudfoundry.org/garden v0.0.0-20251015021552-f8762a7eb1ea
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.82.0
 	code.cloudfoundry.org/guardian v0.0.0-20251022022443-5e3f543dc2bd
-	code.cloudfoundry.org/lager/v3 v3.52.0
-	code.cloudfoundry.org/localip v0.54.0
+	code.cloudfoundry.org/lager/v3 v3.53.0
+	code.cloudfoundry.org/localip v0.55.0
 	code.cloudfoundry.org/tlsconfig v0.37.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
