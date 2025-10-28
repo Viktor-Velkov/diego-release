@@ -21,7 +21,7 @@ require (
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.60.0
 	code.cloudfoundry.org/clock v1.52.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20251020132013-870a4dda3a37
+	code.cloudfoundry.org/credhub-cli v0.0.0-20251027231142-f720bbd35b00
 	code.cloudfoundry.org/debugserver v0.72.0
 	code.cloudfoundry.org/diego-logging-client v0.76.0
 	code.cloudfoundry.org/dockerdriver v0.61.0
@@ -29,7 +29,7 @@ require (
 	code.cloudfoundry.org/eventhub v0.55.0
 	code.cloudfoundry.org/garden v0.0.0-20251015021552-f8762a7eb1ea
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
-	code.cloudfoundry.org/goshims v0.81.0
+	code.cloudfoundry.org/goshims v0.82.0
 	code.cloudfoundry.org/guardian v0.0.0-20251022022443-5e3f543dc2bd
 	code.cloudfoundry.org/lager/v3 v3.52.0
 	code.cloudfoundry.org/localip v0.54.0
@@ -67,7 +67,7 @@ require (
 	github.com/nats-io/nats-server/v2 v2.12.1
 	github.com/nats-io/nats.go v1.47.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
-	github.com/onsi/ginkgo/v2 v2.27.1
+	github.com/onsi/ginkgo/v2 v2.27.2
 	github.com/onsi/gomega v1.38.2
 	github.com/onsi/say v1.2.0
 	github.com/opencontainers/go-digest v1.0.0
@@ -95,7 +95,7 @@ require (
 require (
 	cel.dev/expr v0.24.0 // indirect
 	code.cloudfoundry.org/commandrunner v0.49.0 // indirect
-	code.cloudfoundry.org/go-diodes v0.0.0-20251020045843-c2c4393d1b2b // indirect
+	code.cloudfoundry.org/go-diodes v0.0.0-20251027221130-fc49a49e17eb // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
@@ -115,7 +115,7 @@ require (
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
-	github.com/cloudfoundry/socks5-proxy v0.2.157 // indirect
+	github.com/cloudfoundry/socks5-proxy v0.2.158 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20251008062332-ece9fc2bedb4 // indirect
 	github.com/cncf/xds/go v0.0.0-20251022180443-0feb69152e9f // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
