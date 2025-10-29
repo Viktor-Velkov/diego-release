@@ -16,8 +16,9 @@ import (
 	"sync"
 	"time"
 
+	loggingclient "code.cloudfoundry.org/diego-logging-client"
+
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/diego-ssh/authenticators"
 	"code.cloudfoundry.org/diego-ssh/cmd/ssh-proxy/config"
@@ -118,6 +119,9 @@ var _ = Describe("SSH proxy", Serial, func() {
 		u, err := url.Parse(fakeUAA.URL())
 		Expect(err).NotTo(HaveOccurred())
 
+		metricsPort, err := testIngressServer.Port()
+		Expect(err).NotTo(HaveOccurred())
+
 		u.Path = "/oauth/token"
 
 		sshProxyConfig = &config.SSHProxyConfig{}
@@ -142,8 +146,12 @@ var _ = Describe("SSH proxy", Serial, func() {
 		sshProxyConfig.CommunicationTimeout = durationjson.Duration(10 * time.Second)
 		sshProxyConfig.ConnectToInstanceAddress = false
 		sshProxyConfig.LagerConfig = lagerflags.DefaultLagerConfig()
-		sshProxyConfig.LoggregatorConfig = test_helpers.GetLoggregatorConfigWithMetronCerts()
-		sshProxyConfig.LoggregatorConfig.APIPort = metronIngressSetup.Port
+		sshProxyConfig.LoggregatorConfig = loggingclient.Config{
+			CACertPath: metronCAFile,
+			CertPath:   metronServerCertFile,
+			KeyPath:    metronServerKeyFile,
+			APIPort:    metricsPort,
+		}
 
 		expectedGetActualLRPRequest = &models.ActualLRPsRequest{
 			ProcessGuid:   processGuid,

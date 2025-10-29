@@ -3,11 +3,11 @@ package main_test
 import (
 	"encoding/json"
 	"fmt"
+	"path"
 	"runtime"
 	"testing"
 	"time"
 
-	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/diego-ssh/cmd/sshd/testrunner"
 	"code.cloudfoundry.org/diego-ssh/keys"
@@ -38,12 +38,12 @@ var (
 	privateKeyPem       string
 	publicAuthorizedKey string
 
-	testMetricsChan    chan *loggregator_v2.Envelope
-	signalMetricsChan  chan struct{}
-	metronIngressSetup *test_helpers.MetronIngressSetup
-	testIngressServer  *testhelpers.TestIngressServer
+	testMetricsChan   chan *loggregator_v2.Envelope
+	signalMetricsChan chan struct{}
+	testIngressServer *testhelpers.TestIngressServer
 
-	portAllocator portauthority.PortAllocator
+	portAllocator                                           portauthority.PortAllocator
+	metronCAFile, metronServerCertFile, metronServerKeyFile string
 )
 
 func TestSSHProxy(t *testing.T) {
@@ -120,12 +120,18 @@ var _ = BeforeEach(func() {
 	if runtime.GOOS == "windows" {
 		Skip("SSH not supported on Windows, and SSH proxy never runs on Windows anyway")
 	}
+	fixturesPath := "fixtures"
+
 	var err error
-	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	metronCAFile = path.Join(fixturesPath, "metron", "CA.crt")
+	metronServerCertFile = path.Join(fixturesPath, "metron", "metron.crt")
+	metronServerKeyFile = path.Join(fixturesPath, "metron", "metron.key")
+	testIngressServer, err = testhelpers.NewTestIngressServer(metronServerCertFile, metronServerKeyFile, metronCAFile)
 	Expect(err).NotTo(HaveOccurred())
-	testIngressServer = metronIngressSetup.Server
-	signalMetricsChan = metronIngressSetup.SignalMetricsChan
-	testMetricsChan = metronIngressSetup.TestMetricsChan
+	receiversChan := testIngressServer.Receivers()
+	testIngressServer.Start()
+
+	testMetricsChan, signalMetricsChan = testhelpers.TestMetricChan(receiversChan)
 
 	sshdAddress = fmt.Sprintf("127.0.0.1:%d", sshdPort)
 	sshdArgs := testrunner.Args{

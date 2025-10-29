@@ -12,9 +12,9 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"code.cloudfoundry.org/bbs/test_helpers"
+	loggingclient "code.cloudfoundry.org/diego-logging-client"
+
 	"code.cloudfoundry.org/fileserver/cmd/file-server/config"
-	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/lager/v3/lagerflags"
 	"code.cloudfoundry.org/tlsconfig"
 	"code.cloudfoundry.org/tlsconfig/certtest"
@@ -70,14 +70,18 @@ var _ = Describe("File server", func() {
 					LogLevel:   lagerflags.INFO,
 					TimeFormat: lagerflags.FormatUnixEpoch,
 				},
-				LoggregatorConfig: test_helpers.GetLoggregatorConfigWithMetronCerts(),
-				StaticDirectory:   servedDirectory,
-				ServerAddress:     fmt.Sprintf("localhost:%d", port),
+				LoggregatorConfig: loggingclient.Config{
+					CACertPath: metronCAFile,
+					CertPath:   metronServerCertFile,
+					KeyPath:    metronServerKeyFile,
+				},
+				StaticDirectory: servedDirectory,
+				ServerAddress:   fmt.Sprintf("localhost:%d", port),
 			}
 		})
 
 		JustBeforeEach(func() {
-			cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+			cfg.LoggregatorConfig.APIPort, _ = testIngressServer.Port()
 			configFile, err := os.CreateTemp("", "file_server-test-config")
 			Expect(err).NotTo(HaveOccurred())
 			configPath = configFile.Name()
@@ -118,7 +122,11 @@ var _ = Describe("File server", func() {
 					LogLevel:   lagerflags.INFO,
 					TimeFormat: lagerflags.FormatUnixEpoch,
 				},
-				LoggregatorConfig:  test_helpers.GetLoggregatorConfigWithMetronCerts(),
+				LoggregatorConfig: loggingclient.Config{
+					CACertPath: metronCAFile,
+					CertPath:   metronServerCertFile,
+					KeyPath:    metronServerKeyFile,
+				},
 				HTTPSServerEnabled: true,
 				StaticDirectory:    servedDirectory,
 				ServerAddress:      fmt.Sprintf("localhost:%d", port),
@@ -126,10 +134,10 @@ var _ = Describe("File server", func() {
 		})
 
 		JustBeforeEach(func() {
-			cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-			cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
-			cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
-			cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
+			cfg.LoggregatorConfig.APIPort, _ = testIngressServer.Port()
+			cfg.LoggregatorConfig.CACertPath = metronCAFile
+			cfg.LoggregatorConfig.CertPath = metronServerCertFile
+			cfg.LoggregatorConfig.KeyPath = metronServerKeyFile
 			configFile, err := os.CreateTemp("", "file_server-test-config")
 			Expect(err).NotTo(HaveOccurred())
 			configPath = configFile.Name()

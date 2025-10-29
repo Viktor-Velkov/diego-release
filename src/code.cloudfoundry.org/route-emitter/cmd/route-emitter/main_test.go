@@ -7,8 +7,8 @@ import (
 
 	"code.cloudfoundry.org/bbs"
 	"code.cloudfoundry.org/clock"
+	loggingclient "code.cloudfoundry.org/diego-logging-client"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
-	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/inigo/helpers/certauthority"
 	locketconfig "code.cloudfoundry.org/locket/cmd/locket/config"
 	locketrunner "code.cloudfoundry.org/locket/cmd/locket/testrunner"
@@ -28,7 +28,6 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/durationjson"
 	"code.cloudfoundry.org/lager/v3/lagerflags"
 	"code.cloudfoundry.org/lager/v3/lagertest"
@@ -165,11 +164,15 @@ var _ = Describe("Route Emitter", func() {
 			EnableTCPEmitter:             false,
 			EnableInternalEmitter:        false,
 			RegisterDirectInstanceRoutes: false,
-			LoggregatorConfig:            test_helpers.GetLoggregatorConfigWithMetronCerts(),
+			LoggregatorConfig: loggingclient.Config{
+				CACertPath: metronCAFile,
+				CertPath:   metronServerCertFile,
+				KeyPath:    metronServerKeyFile,
+			},
 		}
 		cfg.ClientLocketConfig = locketrunner.ClientLocketConfig()
 		cfg.ClientLocketConfig.LocketAddress = locketAddress
-		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
+		cfg.LoggregatorConfig.APIPort, _ = testIngressServer.Port()
 		for _, f := range modifyConfig {
 			f(&cfg)
 		}
@@ -330,10 +333,10 @@ var _ = Describe("Route Emitter", func() {
 			cfg.DatabaseConnectionString = sqlRunner.ConnectionString()
 			cfg.DatabaseDriver = sqlRunner.DriverName()
 			cfg.ListenAddress = routingAPILocketAddress
-			cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-			cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
-			cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
-			cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
+			cfg.LoggregatorConfig.APIPort, _ = testIngressServer.Port()
+			cfg.LoggregatorConfig.CACertPath = metronCAFile
+			cfg.LoggregatorConfig.CertPath = metronServerCertFile
+			cfg.LoggregatorConfig.KeyPath = metronServerKeyFile
 
 		})
 		routingAPILocketProcess = ginkgomon.Invoke(routingAPILocketRunner)
@@ -1063,10 +1066,10 @@ var _ = Describe("Route Emitter", func() {
 				cfg.DatabaseConnectionString = sqlRunner.ConnectionString()
 				cfg.DatabaseDriver = sqlRunner.DriverName()
 				cfg.ListenAddress = locketAddress
-				cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-				cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
-				cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
-				cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
+				cfg.LoggregatorConfig.APIPort, _ = testIngressServer.Port()
+				cfg.LoggregatorConfig.CACertPath = metronCAFile
+				cfg.LoggregatorConfig.CertPath = metronServerCertFile
+				cfg.LoggregatorConfig.KeyPath = metronServerKeyFile
 			})
 			locketProcess = ginkgomon.Invoke(locketRunner)
 			cfgs = append(cfgs, func(cfg *config.RouteEmitterConfig) {

@@ -6,13 +6,13 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path"
 	"testing"
 	"time"
 
 	"code.cloudfoundry.org/bbs/test_helpers"
 	"code.cloudfoundry.org/bbs/test_helpers/sqlrunner"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
-	"code.cloudfoundry.org/fixtures"
 	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
 	"code.cloudfoundry.org/locket/cmd/locket/config"
@@ -41,10 +41,10 @@ var (
 	locketServerCertFile  string
 	locketServerKeyFile   string
 
-	testMetricsChan    chan *loggregator_v2.Envelope
-	signalMetricsChan  chan struct{}
-	metronIngressSetup *test_helpers.MetronIngressSetup
-	testIngressServer  *testhelpers.TestIngressServer
+	testMetricsChan                                         chan *loggregator_v2.Envelope
+	signalMetricsChan                                       chan struct{}
+	testIngressServer                                       *testhelpers.TestIngressServer
+	metronCAFile, metronServerCertFile, metronServerKeyFile string
 )
 
 var bbsServer *ghttp.Server
@@ -77,12 +77,18 @@ var _ = SynchronizedAfterSuite(func() {
 var _ = BeforeEach(func() {
 	bbsServer = ghttp.NewUnstartedServer()
 	defer bbsServer.HTTPTestServer.StartTLS()
+	fixturesPath := "fixtures"
+
 	var err error
-	metronIngressSetup, err = test_helpers.StartMetronIngress()
+	metronCAFile = path.Join(fixturesPath, "metron", "CA.crt")
+	metronServerCertFile = path.Join(fixturesPath, "metron", "metron.crt")
+	metronServerKeyFile = path.Join(fixturesPath, "metron", "metron.key")
+	testIngressServer, err = testhelpers.NewTestIngressServer(metronServerCertFile, metronServerKeyFile, metronCAFile)
 	Expect(err).NotTo(HaveOccurred())
-	testIngressServer = metronIngressSetup.Server
-	signalMetricsChan = metronIngressSetup.SignalMetricsChan
-	testMetricsChan = metronIngressSetup.TestMetricsChan
+	receiversChan := testIngressServer.Receivers()
+	testIngressServer.Start()
+
+	testMetricsChan, signalMetricsChan = testhelpers.TestMetricChan(receiversChan)
 
 	node := GinkgoParallelProcess()
 	startPort := 1050 * node
@@ -121,10 +127,10 @@ var _ = BeforeEach(func() {
 		cfg.ListenAddress = locketAPILocation
 		cfg.DatabaseDriver = dbRunner.DriverName()
 		cfg.DatabaseConnectionString = dbRunner.ConnectionString()
-		cfg.LoggregatorConfig.APIPort = metronIngressSetup.Port
-		cfg.LoggregatorConfig.CACertPath = fixtures.Path("CA.crt")
-		cfg.LoggregatorConfig.CertPath = fixtures.Path("metron.crt")
-		cfg.LoggregatorConfig.KeyPath = fixtures.Path("metron.key")
+		cfg.LoggregatorConfig.APIPort, _ = testIngressServer.Port()
+		cfg.LoggregatorConfig.CACertPath = metronCAFile
+		cfg.LoggregatorConfig.CertPath = metronServerCertFile
+		cfg.LoggregatorConfig.KeyPath = metronServerKeyFile
 	})
 	locketProcess = ginkgomon.Invoke(locketRunner)
 })
