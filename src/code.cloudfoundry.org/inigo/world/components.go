@@ -1108,7 +1108,7 @@ func (maker commonComponentMaker) BBSServiceClient(logger lager.Logger) servicec
 	locketClient, err := locket.NewClient(logger, maker.locketClientConfig())
 	Expect(err).NotTo(HaveOccurred())
 
-	return serviceclient.NewServiceClient(locketClient, time.Duration(30)*time.Second)
+	return serviceclient.NewServiceClient(locketClient, time.Duration(300)*time.Second)
 }
 
 func (maker commonComponentMaker) BBSURL() string {
@@ -1466,8 +1466,8 @@ func (maker v1ComponentMaker) BBS(modifyConfigFuncs ...func(*bbsconfig.BBSConfig
 		ExpirePendingTaskDuration:   durationjson.Duration(30 * time.Minute),
 		ConvergeRepeatInterval:      durationjson.Duration(30 * time.Second),
 		KickTaskDuration:            durationjson.Duration(30 * time.Second),
-		LockTTL:                     durationjson.Duration(locket.DefaultSessionTTL),
-		LockRetryInterval:           durationjson.Duration(locket.RetryInterval),
+		LockTTL:                     durationjson.Duration(5 * time.Second),
+		LockRetryInterval:           durationjson.Duration(1 * time.Second),
 		ReportInterval:              durationjson.Duration(1 * time.Minute),
 		ConvergenceWorkers:          20,
 		UpdateWorkers:               1000,
