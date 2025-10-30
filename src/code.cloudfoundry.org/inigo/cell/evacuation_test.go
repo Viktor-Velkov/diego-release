@@ -104,8 +104,7 @@ var _ = Describe("Evacuation", func() {
 				config.ListenAddr = cellARepAddr
 				config.ListenAddrSecurable = cellARepSecureAddr
 				config.EvacuationTimeout = durationjson.Duration(30 * time.Second)
-			},
-		)
+			}, modifyFunRepLoggregatorConfig)
 
 		cellBRepRunner = componentMaker.RepN(1,
 			func(config *repconfig.RepConfig) {
@@ -113,7 +112,7 @@ var _ = Describe("Evacuation", func() {
 				config.ListenAddr = cellBRepAddr
 				config.ListenAddrSecurable = cellBRepSecureAddr
 				config.EvacuationTimeout = durationjson.Duration(30 * time.Second)
-			})
+			}, modifyFunRepLoggregatorConfig)
 
 		test_helper.CreateZipArchive(
 			filepath.Join(fileServerStaticDir, "lrp.zip"),

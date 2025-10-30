@@ -42,7 +42,7 @@ var _ = Describe("Network Environment Variables", func() {
 
 	JustBeforeEach(func() {
 		ifritRuntime = ginkgomon.Invoke(grouper.NewParallel(os.Kill, grouper.Members{
-			{Name: "rep", Runner: componentMaker.Rep(modifyRepConfig)},
+			{Name: "rep", Runner: componentMaker.Rep(modifyRepConfig, modifyFunRepLoggregatorConfig)},
 			{Name: "auctioneer", Runner: componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig)},
 			{Name: "router", Runner: componentMaker.Router()},
 			{Name: "route-emitter", Runner: componentMaker.RouteEmitter(modifyFunRouteEmitterLoggregatorConfig)},

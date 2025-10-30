@@ -87,12 +87,12 @@ var _ = Describe("Convergence to desired state", func() {
 			var initialInstanceGuids []string
 
 			BeforeEach(func() {
-				rep = ginkgomon.Invoke(componentMaker.Rep())
+				rep = ginkgomon.Invoke(componentMaker.Rep(modifyFunRepLoggregatorConfig))
 
 				By("restarting the bbs with smaller convergeRepeatInterval")
 				ginkgomon.Interrupt(bbsProcess)
 				bbsProcess = ginkgomon.Invoke(componentMaker.BBS(
-					overrideConvergenceRepeatInterval,
+					overrideConvergenceRepeatInterval, modifyFuncBBSLoggregatorConfig,
 				))
 
 				By("creating and ActualLRP")
@@ -165,7 +165,7 @@ var _ = Describe("Convergence to desired state", func() {
 				By("restarting the bbs with smaller convergeRepeatInterval")
 				ginkgomon.Interrupt(bbsProcess)
 				bbsProcess = ginkgomon.Invoke(componentMaker.BBS(
-					overrideConvergenceRepeatInterval,
+					overrideConvergenceRepeatInterval, modifyFuncBBSLoggregatorConfig,
 				))
 			})
 
@@ -180,7 +180,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 				Context("and then a rep come up", func() {
 					BeforeEach(func() {
-						rep = ginkgomon.Invoke(componentMaker.Rep())
+						rep = ginkgomon.Invoke(componentMaker.Rep(modifyFunRepLoggregatorConfig))
 					})
 
 					It("eventually brings the LRP up", func() {
@@ -203,7 +203,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 		Context("when a rep is running with no auctioneer", func() {
 			BeforeEach(func() {
-				rep = ginkgomon.Invoke(componentMaker.Rep())
+				rep = ginkgomon.Invoke(componentMaker.Rep(modifyFunRepLoggregatorConfig))
 			})
 
 			Context("and an LRP is desired", func() {
@@ -217,7 +217,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 				Context("and then an auctioneer comes up", func() {
 					BeforeEach(func() {
-						auctioneer = ginkgomon.Invoke(componentMaker.Auctioneer())
+						auctioneer = ginkgomon.Invoke(componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig))
 					})
 
 					It("eventually brings it up", func() {
@@ -230,7 +230,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 		Context("when an auctioneer is running with no rep", func() {
 			BeforeEach(func() {
-				auctioneer = ginkgomon.Invoke(componentMaker.Auctioneer())
+				auctioneer = ginkgomon.Invoke(componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig))
 			})
 
 			Context("and an LRP is desired", func() {
@@ -244,7 +244,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 				Context("and the rep come up", func() {
 					BeforeEach(func() {
-						rep = ginkgomon.Invoke(componentMaker.Rep())
+						rep = ginkgomon.Invoke(componentMaker.Rep(modifyFunRepLoggregatorConfig))
 					})
 
 					It("eventually brings it up", func() {
