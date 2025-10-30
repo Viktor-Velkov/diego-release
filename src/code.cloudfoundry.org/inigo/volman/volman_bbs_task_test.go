@@ -36,13 +36,16 @@ var _ = Describe("Tasks", func() {
 			{Name: "initial-services", Runner: grouper.NewParallel(os.Kill, grouper.Members{
 				{Name: "sql", Runner: componentMaker.SQL()},
 			})},
-			{Name: "locket", Runner: componentMaker.Locket()},
-			{Name: "bbs", Runner: componentMaker.BBS()},
+			{Name: "locket", Runner: componentMaker.Locket(modifyFuncLocketLoggregatorConfig)},
+			{Name: "bbs", Runner: componentMaker.BBS(modifyFuncBBSLoggregatorConfig)},
 		}))
 
 		cellProcess = ginkgomon.Invoke(grouper.NewParallel(os.Interrupt, grouper.Members{
 			{Name: "file-server", Runner: fileServerRunner},
-			{Name: "rep", Runner: componentMaker.Rep(func(config *repconfig.RepConfig) { config.MemoryMB = "1024" })},
+			{Name: "rep", Runner: componentMaker.Rep(func(config *repconfig.RepConfig) {
+				config.MemoryMB = "1024"
+				config.LoggregatorConfig = setupMetronConfig(config.LoggregatorConfig)
+			})},
 			{Name: "auctioneer", Runner: componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig)},
 		}))
 

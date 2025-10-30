@@ -12,7 +12,7 @@ import (
 
 	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/clock"
-	loggingclient "code.cloudfoundry.org/diego-logging-client"
+	diego_logging_client "code.cloudfoundry.org/diego-logging-client"
 	"code.cloudfoundry.org/dockerdriver"
 	"code.cloudfoundry.org/dockerdriver/driverhttp"
 	dockerdriverutils "code.cloudfoundry.org/dockerdriver/utils"
@@ -376,7 +376,12 @@ func initializeExecutor(logger lager.Logger, config executorinit.ExecutorConfig)
 	var err error
 	var executorClient executor.Client
 	defaultRootFS := ""
-	metronClient, err := loggingclient.NewIngressClient(loggingclient.Config{})
+	metronClient, err := diego_logging_client.NewIngressClient(diego_logging_client.Config{
+		APIPort:    metricsPort,
+		CACertPath: metronCAFile,
+		CertPath:   metronServerCertFile,
+		KeyPath:    metronServerKeyFile,
+	})
 	Expect(err).NotTo(HaveOccurred())
 	rootFSes := map[string]string{
 		"somestack": defaultRootFS,
