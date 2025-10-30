@@ -27,10 +27,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.61.0
 	code.cloudfoundry.org/durationjson v0.56.0
 	code.cloudfoundry.org/eventhub v0.56.0
-	code.cloudfoundry.org/garden v0.0.0-20251015021552-f8762a7eb1ea
+	code.cloudfoundry.org/garden v0.0.0-20251029021825-d47b35eadfbb
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.82.0
-	code.cloudfoundry.org/guardian v0.0.0-20251022022443-5e3f543dc2bd
+	code.cloudfoundry.org/guardian v0.0.0-20251029022604-19cf7323e527
 	code.cloudfoundry.org/lager/v3 v3.53.0
 	code.cloudfoundry.org/localip v0.55.0
 	code.cloudfoundry.org/tlsconfig v0.37.0
@@ -172,6 +172,6 @@ require (
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/tools v0.38.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20251022142026-3a174f9686a8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20251022142026-3a174f9686a8 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20251029180050-ab9386a59fda // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251029180050-ab9386a59fda // indirect
 )
