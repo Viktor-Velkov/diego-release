@@ -1469,6 +1469,7 @@ func (maker v1ComponentMaker) BBS(modifyConfigFuncs ...func(*bbsconfig.BBSConfig
 		LockTTL:                     durationjson.Duration(5 * time.Second),
 		LockRetryInterval:           durationjson.Duration(1 * time.Second),
 		ReportInterval:              durationjson.Duration(1 * time.Minute),
+		DBConnectionTimeout:         durationjson.Duration(30 * time.Second),
 		ConvergenceWorkers:          20,
 		UpdateWorkers:               1000,
 		TaskCallbackWorkers:         1000,
