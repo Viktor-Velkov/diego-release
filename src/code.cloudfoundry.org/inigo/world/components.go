@@ -24,7 +24,7 @@ import (
 	"code.cloudfoundry.org/bbs/serviceclient"
 	"code.cloudfoundry.org/bbs/test_helpers"
 	cfhttp "code.cloudfoundry.org/cfhttp/v2"
-	loggingclient "code.cloudfoundry.org/diego-logging-client"
+	diego_logging_client "code.cloudfoundry.org/diego-logging-client"
 	sshproxyconfig "code.cloudfoundry.org/diego-ssh/cmd/ssh-proxy/config"
 	"code.cloudfoundry.org/diego-ssh/keys"
 	"code.cloudfoundry.org/dockerdriver"
@@ -384,7 +384,7 @@ type ComponentMaker interface {
 	SSHProxy(modifyConfigFuncs ...func(*sshproxyconfig.SSHProxyConfig)) ifrit.Runner
 	Setup()
 	Teardown()
-	VolmanClient(logger lager.Logger) (volman.Manager, ifrit.Runner)
+	VolmanClient(logger lager.Logger, metricsPort int, metronCAFile string, metronServerCertFile string, metronServerKeyFile string) (volman.Manager, ifrit.Runner)
 	VolmanDriver(logger lager.Logger) (ifrit.Runner, dockerdriver.Driver)
 }
 
@@ -1115,11 +1115,16 @@ func (maker commonComponentMaker) BBSURL() string {
 	return "https://" + maker.addresses.BBS
 }
 
-func (maker commonComponentMaker) VolmanClient(logger lager.Logger) (volman.Manager, ifrit.Runner) {
+func (maker commonComponentMaker) VolmanClient(logger lager.Logger, metricsPort int, metronCAFile string, metronServerCertFile string, metronServerKeyFile string) (volman.Manager, ifrit.Runner) {
 	driverConfig := volmanclient.NewDriverConfig()
 	driverConfig.DriverPaths = []string{path.Join(maker.volmanDriverConfigDir, fmt.Sprintf("node-%d", GinkgoParallelProcess()))}
 
-	metronClient, err := loggingclient.NewIngressClient(loggingclient.Config{})
+	metronClient, err := diego_logging_client.NewIngressClient(diego_logging_client.Config{
+		APIPort:    metricsPort,
+		CACertPath: metronCAFile,
+		CertPath:   metronServerCertFile,
+		KeyPath:    metronServerKeyFile,
+	})
 	Expect(err).NotTo(HaveOccurred())
 	return volmanclient.NewServer(logger, metronClient, driverConfig)
 }
@@ -1469,6 +1474,7 @@ func (maker v1ComponentMaker) BBS(modifyConfigFuncs ...func(*bbsconfig.BBSConfig
 		LockTTL:                     durationjson.Duration(5 * time.Second),
 		LockRetryInterval:           durationjson.Duration(1 * time.Second),
 		ReportInterval:              durationjson.Duration(1 * time.Minute),
+		DBConnectionTimeout:         durationjson.Duration(30 * time.Second),
 		ConvergenceWorkers:          20,
 		UpdateWorkers:               1000,
 		TaskCallbackWorkers:         1000,

@@ -114,7 +114,7 @@ var _ = Describe("Convergence to desired state", func() {
 				Eventually(runningLRPsPresencePoller(models.ActualLRP_Suspect)).Should(HaveLen(2))
 
 				By("bringing back the original rep")
-				rep = ginkgomon.Invoke(componentMaker.Rep())
+				rep = ginkgomon.Invoke(componentMaker.Rep(modifyFunRepLoggregatorConfig))
 
 				Eventually(runningLRPsPoller).Should(HaveLen(2))
 				Eventually(helloWorldInstancePoller).Should(Equal([]string{"0", "1"}))
@@ -133,7 +133,7 @@ var _ = Describe("Convergence to desired state", func() {
 
 				BeforeEach(func() {
 					firstActualLRPs = runningLRPsPoller()
-					rep2 = ginkgomon.Invoke(componentMaker.RepN(1))
+					rep2 = ginkgomon.Invoke(componentMaker.RepN(1, modifyFunRepLoggregatorConfig))
 				})
 
 				AfterEach(func() {

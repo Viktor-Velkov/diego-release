@@ -14,6 +14,7 @@ import (
 	auctioneerconfig "code.cloudfoundry.org/auctioneer/cmd/auctioneer/config"
 	bbsconfig "code.cloudfoundry.org/bbs/cmd/bbs/config"
 	fileserverconfig "code.cloudfoundry.org/fileserver/cmd/file-server/config"
+	locketconfig "code.cloudfoundry.org/locket/cmd/locket/config"
 	repconfig "code.cloudfoundry.org/rep/cmd/rep/config"
 	routeemitterconfig "code.cloudfoundry.org/route-emitter/cmd/route-emitter/config"
 
@@ -65,7 +66,9 @@ var (
 	modifyFunRepLoggregatorConfig                           func(cfg *repconfig.RepConfig)
 	modifyFunFileServerLoggregatorConfig                    func(cfg *fileserverconfig.FileServerConfig)
 	modifyFuncBBSLoggregatorConfig                          func(cfg *bbsconfig.BBSConfig)
+	modifyFuncLocketLoggregatorConfig                       func(cfg *locketconfig.LocketConfig)
 	metronCAFile, metronServerCertFile, metronServerKeyFile string
+	metricsPort                                             int
 )
 
 var _ = SynchronizedBeforeSuite(func() []byte {
@@ -141,8 +144,13 @@ var _ = BeforeEach(func() {
 	Expect(err).NotTo(HaveOccurred())
 	receiversChan := testIngressServer.Receivers()
 	testIngressServer.Start()
+	metricsPort, _ = testIngressServer.Port()
 
 	testMetricsChan, signalMetricsChan = testhelpers.TestMetricChan(receiversChan)
+
+	modifyFuncLocketLoggregatorConfig = func(cfg *locketconfig.LocketConfig) {
+		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
+	}
 
 	modifyFuncBBSLoggregatorConfig = func(cfg *bbsconfig.BBSConfig) {
 		cfg.LoggregatorConfig = setupMetronConfig(cfg.LoggregatorConfig)
@@ -174,7 +182,7 @@ var _ = BeforeEach(func() {
 	driverPluginsPath = path.Join(componentMaker.VolmanDriverConfigDir(), fmt.Sprintf("node-%d", GinkgoParallelProcess()))
 	dockerdriver.WriteDriverSpec(logger, driverPluginsPath, "deaddriver", "json", []byte(`{"Name":"deaddriver","Addr":"https://127.0.0.1:1111"}`))
 
-	volmanClient, driverSyncer = componentMaker.VolmanClient(logger)
+	volmanClient, driverSyncer = componentMaker.VolmanClient(logger, metricsPort, metronCAFile, metronServerCertFile, metronServerKeyFile)
 	driverSyncerProcess = ginkgomon.Invoke(driverSyncer)
 })
 
@@ -188,6 +196,9 @@ var _ = AfterEach(func() {
 		"%d containers failed to be destroyed!",
 		len(destroyContainerErrors),
 	)
+
+	testIngressServer.Stop()
+	close(signalMetricsChan)
 
 	os.Remove(filepath.Join(driverPluginsPath, "deaddriver.json"))
 })

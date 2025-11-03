@@ -41,8 +41,8 @@ var _ = Describe("LRPs with volume mounts", func() {
 				{Name: "sql", Runner: componentMaker.SQL()},
 				{Name: "nats", Runner: componentMaker.NATS()},
 			})},
-			{Name: "locket", Runner: componentMaker.Locket()},
-			{Name: "bbs", Runner: componentMaker.BBS()},
+			{Name: "locket", Runner: componentMaker.Locket(modifyFuncLocketLoggregatorConfig)},
+			{Name: "bbs", Runner: componentMaker.BBS(modifyFuncBBSLoggregatorConfig)},
 		}))
 
 		logger = lager.NewLogger("test")

@@ -306,7 +306,7 @@ exit 0
 			))
 
 			cellProcess = ginkgomon.Invoke(grouper.NewParallel(os.Interrupt, grouper.Members{
-				{Name: "rep", Runner: componentMaker.Rep()},
+				{Name: "rep", Runner: componentMaker.Rep(modifyFunRepLoggregatorConfig)},
 			}))
 		})
 
@@ -330,7 +330,7 @@ exit 0
 
 			Context("and then an auctioneer come up", func() {
 				BeforeEach(func() {
-					auctioneerProcess = ginkgomon.Invoke(componentMaker.Auctioneer())
+					auctioneerProcess = ginkgomon.Invoke(componentMaker.Auctioneer(modifyFunAuctioneerLoggregatorConfig))
 				})
 
 				AfterEach(func() {
