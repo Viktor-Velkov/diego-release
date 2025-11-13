@@ -19,30 +19,25 @@ local_end_ref=$(get_end_ref_from_range "${version_range}")
 GO_MOD_LOCATION="src/code.cloudfoundry.org/go.mod";
 BLOBS_LOCATION="config/blobs.yml";
 
-get_non_bot_commits "${local_start_ref}" "${local_end_ref}"
-echo ""
+display_non_bot_commits "${local_start_ref}" "${local_end_ref}"
 
 START_REF_CNBAPPLIFECYCLE=$(git rev-parse "${local_start_ref}:src/cnbapplifecycle")
 END_REF_CNBAPPLIFECYCLE=$(git rev-parse "${local_end_ref}:src/cnbapplifecycle")
 pushd src/cnbapplifecycle > /dev/null
-  get_non_bot_commits "${START_REF_CNBAPPLIFECYCLE}" "${END_REF_CNBAPPLIFECYCLE}" "cnbapplifecycle"
+  display_non_bot_commits "${START_REF_CNBAPPLIFECYCLE}" "${END_REF_CNBAPPLIFECYCLE}" "cnbapplifecycle"
 popd > /dev/null
-echo ""
 
 for repo in bbs buildpackapplifecycle cacheddownloader executor locket rep; do
   START_REF_REPO=$(git rev-parse "${local_start_ref}:src/code.cloudfoundry.org/${repo}")
   END_REF_REPO=$(git rev-parse "${local_end_ref}:src/code.cloudfoundry.org/${repo}")
   pushd src/code.cloudfoundry.org/${repo} > /dev/null
-    get_non_bot_commits "${START_REF_REPO}" "${END_REF_REPO}" "${repo}"
+    display_non_bot_commits "${START_REF_REPO}" "${END_REF_REPO}" "${repo}"
   popd > /dev/null
-  echo ""
 done
 
 display_blob_change_info "${local_start_ref}" "${local_end_ref}" "${BLOBS_LOCATION}"
-echo ""
 
 display_go_mod_diff "${local_start_ref}" "${local_end_ref}" "${GO_MOD_LOCATION}"
-echo ""
 
 for repo in cacheddownloader ; do 
   START_REF_REPO=$(git rev-parse "${local_start_ref}:src/code.cloudfoundry.org/${repo}")
@@ -50,7 +45,6 @@ for repo in cacheddownloader ; do
   pushd src/code.cloudfoundry.org/${repo} > /dev/null
   display_go_mod_diff "${START_REF_REPO}" "${END_REF_REPO}" "go.mod" "${repo}"
   popd > /dev/null
-  echo ""
 done
 
 START_REF_CNBAPPLIFECYCLE=$(git rev-parse "${local_start_ref}:src/cnbapplifecycle")
@@ -58,4 +52,3 @@ END_REF_CNBAPPLIFECYCLE=$(git rev-parse "${local_end_ref}:src/cnbapplifecycle")
 pushd src/cnbapplifecycle > /dev/null
   display_go_mod_diff "${START_REF_CNBAPPLIFECYCLE}" "${END_REF_CNBAPPLIFECYCLE}" "go.mod" "cnbapplifecycle"
 popd > /dev/null
-echo ""
