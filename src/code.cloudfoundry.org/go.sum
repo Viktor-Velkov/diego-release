@@ -600,8 +600,8 @@ code.cloudfoundry.org/bytefmt v0.57.0 h1:aIEsL1Gm1uZIX//g2i0r1f9PVLYCpBPFn/dHEyx
 code.cloudfoundry.org/bytefmt v0.57.0/go.mod h1:z2PooTd9shTfkDak4rOuhTQ2I1C+0UMXHd5L3bM3vyo=
 code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3 h1:SproHrcDI7MG25Smabm75/l4SkvvfUkEAvQOu7NSUKM=
 code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3/go.mod h1:0jlSZ/0cP6YdlPxYgS5VAocLErClDVeTnMQ7DciFhx0=
-code.cloudfoundry.org/certsplitter v0.59.0 h1:o7Lep/NURqgv65Z5B1CKGepPzPV1mwCiWWALaFRhAwA=
-code.cloudfoundry.org/certsplitter v0.59.0/go.mod h1:GiG2ANTdRtMHIYAcyVYQinSMU5nhfOnqT+qZRVoZ1Y4=
+code.cloudfoundry.org/certsplitter v0.60.0 h1:fUflqE5Iic1+cZgX9pCoJziDTS7VY+ENNEcrBUPNb0g=
+code.cloudfoundry.org/certsplitter v0.60.0/go.mod h1:roApinY7u1Q2fKGVZ52HInv1AIpAC5BkV0tTzL78/rI=
 code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7 h1:P2B7KEUrPxJBM3MTi4JKmOphjzsumPj1GaLwfLIPAMU=
 code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7/go.mod h1:c8+Jkun1Pj3R6FTb13Jm4kJ40D0ufQyUBNtt6IxikZ4=
 code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e h1:2isOYvCh98phAnuhREG+oZgaCrGNBxcQQ9S1qrTk/FE=

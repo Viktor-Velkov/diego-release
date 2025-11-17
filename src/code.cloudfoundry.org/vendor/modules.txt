@@ -13,7 +13,7 @@ code.cloudfoundry.org/bytefmt
 ## explicit; go 1.21
 code.cloudfoundry.org/cacheddownloader
 code.cloudfoundry.org/cacheddownloader/cacheddownloaderfakes
-# code.cloudfoundry.org/certsplitter v0.59.0
+# code.cloudfoundry.org/certsplitter v0.60.0
 ## explicit; go 1.24.0
 code.cloudfoundry.org/certsplitter/cmd/certsplitter
 # code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7

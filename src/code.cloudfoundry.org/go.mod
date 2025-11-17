@@ -15,7 +15,7 @@ require (
 	code.cloudfoundry.org/archiver v0.53.0
 	code.cloudfoundry.org/bytefmt v0.57.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.59.0
+	code.cloudfoundry.org/certsplitter v0.60.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.62.0
