@@ -8,6 +8,7 @@ import (
 	"github.com/opencontainers/cgroups"
 	"github.com/opencontainers/cgroups/fs"
 	"github.com/opencontainers/cgroups/fs2"
+	"github.com/opencontainers/runc/libcontainer/configs"
 )
 
 type CPUCgrouper struct {
@@ -69,7 +70,7 @@ func readCPUstatsFromPath(path string) (cgroups.Stats, error) {
 	stats := &cgroups.Stats{}
 
 	if cgroups.IsCgroup2UnifiedMode() {
-		cgroupManager, err := fs2.NewManager(&cgroups.Cgroup{}, path)
+		cgroupManager, err := fs2.NewManager(&configs.Cgroup{}, path)
 		if err != nil {
 			return cgroups.Stats{}, err
 		}
