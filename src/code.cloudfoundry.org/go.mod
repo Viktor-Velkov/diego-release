@@ -12,27 +12,27 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.53.0
-	code.cloudfoundry.org/bytefmt v0.57.0
+	code.cloudfoundry.org/archiver v0.54.0
+	code.cloudfoundry.org/bytefmt v0.58.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.60.0
+	code.cloudfoundry.org/certsplitter v0.61.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.62.0
-	code.cloudfoundry.org/clock v1.54.0
+	code.cloudfoundry.org/cfhttp/v2 v2.63.0
+	code.cloudfoundry.org/clock v1.55.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20251117141034-5ba9bfaa2649
-	code.cloudfoundry.org/debugserver v0.75.0
+	code.cloudfoundry.org/debugserver v0.76.0
 	code.cloudfoundry.org/diego-logging-client v0.79.0
-	code.cloudfoundry.org/dockerdriver v0.63.0
-	code.cloudfoundry.org/durationjson v0.57.0
-	code.cloudfoundry.org/eventhub v0.57.0
+	code.cloudfoundry.org/dockerdriver v0.64.0
+	code.cloudfoundry.org/durationjson v0.58.0
+	code.cloudfoundry.org/eventhub v0.58.0
 	code.cloudfoundry.org/garden v0.0.0-20251117183014-1c6cc747dfab
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.85.0
 	code.cloudfoundry.org/guardian v0.0.0-20251117183646-b0149ab26b8c
 	code.cloudfoundry.org/lager/v3 v3.54.0
-	code.cloudfoundry.org/localip v0.56.0
-	code.cloudfoundry.org/tlsconfig v0.39.0
+	code.cloudfoundry.org/localip v0.57.0
+	code.cloudfoundry.org/tlsconfig v0.40.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.39.6
@@ -85,7 +85,7 @@ require (
 	golang.org/x/oauth2 v0.33.0
 	golang.org/x/sys v0.38.0
 	golang.org/x/time v0.14.0
-	google.golang.org/grpc v1.76.0
+	google.golang.org/grpc v1.77.0
 	google.golang.org/protobuf v1.36.10
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
