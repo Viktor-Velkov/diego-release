@@ -64,6 +64,7 @@ files:
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/ec2rolecreds/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/endpointcreds/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/endpointcreds/internal/client/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/logincreds/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/processcreds/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/ssocreds/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/credentials/stscreds/*.go # gosub
@@ -93,6 +94,9 @@ files:
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/ecrpublic/types/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/internal/presigned-url/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/signin/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/signin/internal/endpoints/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/signin/types/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/sso/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/sso/internal/endpoints/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/aws-sdk-go-v2/service/sso/types/*.go # gosub
