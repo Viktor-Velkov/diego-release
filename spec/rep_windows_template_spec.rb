@@ -8,7 +8,7 @@ require 'bosh/template/test'
 describe 'rep' do
   let(:release_path) { File.join(File.dirname(__FILE__), '..') }
   let(:release) { Bosh::Template::Test::ReleaseDir.new(release_path) }
-  let(:job) { release.job('rep') }
+  let(:job) { release.job('rep_windows') }
 
   let(:deployment_manifest_fragment) do
     {
@@ -121,32 +121,6 @@ describe 'rep' do
       it 'is configurable' do
         deployment_manifest_fragment['diego']['rep']['sidecar_rootfs'] = 'cflinuxfs4'
         expect(JSON.parse(rendered_template)['sidecar_root_fs']).to eq('cflinuxfs4')
-      end
-    end
-  end
-
-  describe 'setup_mounted_data_dirs.erb' do
-    let(:template) { job.template('bin/setup_mounted_data_dirs') }
-   
-    context 'checks the max_containers value' do 
-      it 'raises an error if max_containers is <= 0' do
-        deployment_manifest_fragment['diego']['rep']['max_containers'] = -10
-        expect do 
-          rendered_template
-        end.to raise_error(/The max_containers prop should be a positive integer/)
-      end
-    end
-  end
-
-  describe 'volume_mounted_files.erb' do
-    let(:template) { job.template('bin/volume_mounted_files') }
-
-    context 'checks the max_containers value' do
-      it 'raises an error if max_containers is <= 0' do
-        deployment_manifest_fragment['diego']['rep']['max_containers'] = -10
-        expect do
-          rendered_template
-        end.to raise_error(/The max_containers prop should be a positive integer/)
       end
     end
   end

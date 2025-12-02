@@ -52,7 +52,10 @@ properties:
   diego.rep.preloaded_rootfses:
     description: "Array of name:absolute_path pairs representing root filesystems preloaded onto the underlying garden"
   diego.rep.sidecar_rootfs_path:
-    description: "absolute_path representing the root filesystem used for sidecar processes (ie. '/var/vcap/packages/cflinuxfs4/rootfs.tar'). Must be one of the preloaded_rootfses paths. Leaving the default empty string is ok, as it will then select the first of he preloaded_rootfses"
+    description: "absolute_path representing the root filesystem used for sidecar processes (ie. '/var/vcap/packages/cflinuxfs4/rootfs.tar'). Must be one of the preloaded_rootfses paths. If provided, this value will take precidence over diego.rep.sidecar_rootfs. If this property is set to an empty string and diego.rep.sidecar_rootfs is set to an empty string, then rep will then select the first of the preloaded_rootfses."
+    default: ""
+  diego.rep.sidecar_rootfs:
+    description: "Name of the stack to use for sidecar processes. The rep will prefer stacks in the diego.rep.extra_root_fs_dir location over those provided via diego.rep.preloaded_rootfses. If diego.rep.sidecar_rootfs_path is provided, then this property is ignored.  If this property is set to an empty string and diego.rep.sidecar_rootfs_path is set to an empty string, then rep will then select the first of the preloaded_rootfses."
     default: ""
   diego.rep.extra_root_fs_dir:
     description: "dir to scan for extra rootfs to be loaded by rep"
