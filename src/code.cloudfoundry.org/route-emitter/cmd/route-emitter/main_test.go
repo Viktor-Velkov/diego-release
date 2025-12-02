@@ -480,8 +480,8 @@ var _ = Describe("Route Emitter", func() {
 			cfgs = append(cfgs, func(cfg *config.RouteEmitterConfig) {
 				cfg.EnableTCPEmitter = true
 			})
-			expectedTcpRouteMapping = apimodels.NewTcpRouteMapping("", 5222, "some-ip", 62003, -1, "", nil, 120, apimodels.ModificationTag{})
-			notExpectedTcpRouteMapping = apimodels.NewTcpRouteMapping("", 1883, "some-ip-1", 62003, -1, "", nil, 120, apimodels.ModificationTag{})
+			expectedTcpRouteMapping = apimodels.NewTcpRouteMapping("", 5222, "some-ip", 62003, -1, "", nil, 120, apimodels.ModificationTag{}, false, "")
+			notExpectedTcpRouteMapping = apimodels.NewTcpRouteMapping("", 1883, "some-ip-1", 62003, -1, "", nil, 120, apimodels.ModificationTag{}, false, "")
 			expectedTcpRouteMapping.RouterGroupGuid = routerGUID
 			notExpectedTcpRouteMapping.RouterGroupGuid = routerGUID
 			cellID = ""
@@ -718,7 +718,7 @@ var _ = Describe("Route Emitter", func() {
 							By("unblocking the sync loop")
 							close(blkChannel)
 
-							expectedTcpRouteMapping = apimodels.NewTcpRouteMapping(routerGUID, 5222, "some-ip", 5222, -1, "", nil, 120, apimodels.ModificationTag{})
+							expectedTcpRouteMapping = apimodels.NewTcpRouteMapping(routerGUID, 5222, "some-ip", 5222, -1, "", nil, 120, apimodels.ModificationTag{}, false, "")
 
 							Eventually(routingAPIClient.TcpRouteMappings, 5*time.Second).Should(
 								ContainElement(matchTCPRouteMapping(expectedTcpRouteMapping)),
@@ -952,7 +952,7 @@ var _ = Describe("Route Emitter", func() {
 						By("unblocking the sync loop")
 						close(blkChannel)
 
-						expectedTcpRouteMapping = apimodels.NewTcpRouteMapping(routerGUID, 5222, "some-ip", 5222, -1, "", nil, 120, apimodels.ModificationTag{})
+						expectedTcpRouteMapping = apimodels.NewTcpRouteMapping(routerGUID, 5222, "some-ip", 5222, -1, "", nil, 120, apimodels.ModificationTag{}, false, "")
 
 						Eventually(routingAPIClient.TcpRouteMappings, 5*time.Second).Should(
 							ContainElement(matchTCPRouteMapping(expectedTcpRouteMapping)),
