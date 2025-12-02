@@ -27,8 +27,8 @@ describe 'rep' do
             'client_keepalive_timeout' => 22
           },
           'preloaded_rootfses' => %w[
-            cflinuxfs3:/var/vcap/packages/cflinuxfs3/rootfs.tar
-            cflinuxfs4:/var/vcap/packages/cflinuxfs4/rootfs.tar
+            cflinuxfs3
+            cflinuxfs4
           ]
         }
       },
@@ -88,39 +88,6 @@ describe 'rep' do
       it 'configures the rep to exclude them' do
         deployment_manifest_fragment['loggregator']['app_metric_exclusion_filter']= %w[absolute_entitlement absolute_usage]
         expect(JSON.parse(rendered_template)['loggregator']['loggregator_app_metric_exclusion_filter']).to eq(%w[absolute_entitlement absolute_usage])
-      end
-    end
-
-    context 'extra_root_fs_dir' do
-      it 'is set to /var/vcap/store/rootfses by default' do
-        expect(JSON.parse(rendered_template)['extra_root_fs_dir']).to eq('/var/vcap/store/rootfses')
-      end
-
-      it 'is configurable' do
-        deployment_manifest_fragment['diego']['rep']['extra_root_fs_dir'] = '/var/meow/vcap/meow'
-        expect(JSON.parse(rendered_template)['extra_root_fs_dir']).to eq('/var/meow/vcap/meow')
-      end
-    end
-
-    context 'sidecar_root_fs_path' do
-      it 'is empty by default' do
-        expect(JSON.parse(rendered_template)['sidecar_root_fs_path']).to eq('')
-      end
-
-      it 'is configurable' do
-        deployment_manifest_fragment['diego']['rep']['sidecar_rootfs_path'] = '/var/meow/vcap/meow'
-        expect(JSON.parse(rendered_template)['sidecar_root_fs_path']).to eq('/var/meow/vcap/meow')
-      end
-    end
-
-    context 'sidecar_root_fs' do
-      it 'is empty by default' do
-        expect(JSON.parse(rendered_template)['sidecar_root_fs']).to eq('')
-      end
-
-      it 'is configurable' do
-        deployment_manifest_fragment['diego']['rep']['sidecar_rootfs'] = 'cflinuxfs4'
-        expect(JSON.parse(rendered_template)['sidecar_root_fs']).to eq('cflinuxfs4')
       end
     end
   end
