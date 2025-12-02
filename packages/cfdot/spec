@@ -102,6 +102,7 @@ files:
   - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/encoding/json/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/encoding/xml/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/endpoints/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/endpoints/private/rulesfn/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/internal/sync/singleflight/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/io/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/aws/smithy-go/logging/*.go # gosub
