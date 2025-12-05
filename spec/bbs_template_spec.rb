@@ -105,8 +105,8 @@ describe 'bbs' do
       it 'uses default timeout values when not specified' do
         rendered_template_json = JSON.parse(rendered_template)
         expect(rendered_template_json['db_connection_timeout']).to eq('30s')
-        expect(rendered_template_json['db_read_timeout']).to eq('30s')
-        expect(rendered_template_json['db_write_timeout']).to eq('600s')
+        expect(rendered_template_json['db_read_timeout']).to eq('60s')
+        expect(rendered_template_json['db_write_timeout']).to eq('60s')
       end
     end
 
