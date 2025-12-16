@@ -11,26 +11,26 @@ replace (
 
 require (
 	code.cloudfoundry.org/archiver v0.55.0
-	code.cloudfoundry.org/bytefmt v0.58.0
+	code.cloudfoundry.org/bytefmt v0.59.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.61.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.63.0
-	code.cloudfoundry.org/clock v1.55.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20251210001818-b949b0e73b17
-	code.cloudfoundry.org/debugserver v0.77.0
-	code.cloudfoundry.org/diego-logging-client v0.82.0
+	code.cloudfoundry.org/cfhttp/v2 v2.64.0
+	code.cloudfoundry.org/clock v1.56.0
+	code.cloudfoundry.org/credhub-cli v0.0.0-20251215140710-93274ab0250e
+	code.cloudfoundry.org/debugserver v0.78.0
+	code.cloudfoundry.org/diego-logging-client v0.83.0
 	code.cloudfoundry.org/dockerdriver v0.66.0
 	code.cloudfoundry.org/durationjson v0.58.0
 	code.cloudfoundry.org/eventhub v0.58.0
 	code.cloudfoundry.org/garden v0.0.0-20251210022550-6e36fe55e273
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
-	code.cloudfoundry.org/goshims v0.85.0
+	code.cloudfoundry.org/goshims v0.86.0
 	code.cloudfoundry.org/guardian v0.0.0-20251210023407-f1ea28dbe0ea
-	code.cloudfoundry.org/lager/v3 v3.55.0
-	code.cloudfoundry.org/localip v0.57.0
-	code.cloudfoundry.org/tlsconfig v0.41.0
+	code.cloudfoundry.org/lager/v3 v3.56.0
+	code.cloudfoundry.org/localip v0.58.0
+	code.cloudfoundry.org/tlsconfig v0.42.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.41.0
@@ -132,7 +132,7 @@ require (
 	github.com/godbus/dbus/v5 v5.2.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-tpm v0.9.7 // indirect
-	github.com/google/pprof v0.0.0-20251208000136-3d256cb9ff16 // indirect
+	github.com/google/pprof v0.0.0-20251213031049-b05bdaca462f // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.8.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -169,6 +169,6 @@ require (
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/text v0.32.0 // indirect
 	golang.org/x/tools v0.40.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20251202230838-ff82c1b0f217 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20251213004720-97cd9d5aeac2 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251213004720-97cd9d5aeac2 // indirect
 )
