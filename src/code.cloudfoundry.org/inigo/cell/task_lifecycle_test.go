@@ -274,7 +274,7 @@ exit 0
 					taskToCreate.EgressRules = []*models.SecurityGroupRule{
 						{
 							Protocol:     models.TCPProtocol,
-							Destinations: []string{"9.0.0.0-89.255.255.255", "90.0.0.0-94.0.0.0"},
+							Destinations: []string{"0.0.0.0-9.255.255.255", "11.0.0.0-254.255.255.255"},
 							Ports:        []uint32{80, 443},
 						},
 						{
