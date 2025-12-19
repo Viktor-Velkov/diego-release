@@ -50,8 +50,8 @@ var _ = Describe("Security groups", func() {
 			Eventually(EndpointCurler("http://" + RouteForGuid(allowedCallerGuid) + "/env")).Should(Equal(http.StatusOK))
 		})
 
-		It("should allow access to an internal IP", func() {
-			endpoint := "/curl?url=http://" + gorouterLBIP + ":80"
+		It("should allow access to example.com", func() {
+			endpoint := "/curl?url=http://www.example.com:80"
 			urlToProxyThroughDisallowedCaller := "http://" + RouteForGuid(disallowedCallerGuid) + endpoint
 			urlToProxyThroughAllowedCaller := "http://" + RouteForGuid(allowedCallerGuid) + endpoint
 
@@ -60,11 +60,11 @@ var _ = Describe("Security groups", func() {
 			Expect(err).NotTo(HaveOccurred())
 			Expect(resp.StatusCode).To(Equal(http.StatusInternalServerError))
 
-			By("asserting that opening up the security group rule allows us to call into the internal IP")
+			By("asserting that opening up the security group rule allows us to call example.com")
 			resp, err = http.Get(urlToProxyThroughAllowedCaller)
 			Expect(err).NotTo(HaveOccurred())
 			// Any reply from the gorouter indicates that the application security group is in place
-			Expect(resp.StatusCode).To(Equal(http.StatusBadRequest))
+			Expect(resp.StatusCode).To(Equal(http.StatusOK))
 		})
 	})
 
@@ -95,7 +95,7 @@ var _ = Describe("Security groups", func() {
 			}
 		})
 
-		It("should allow access to an internal IP", func() {
+		It("should allow access to example.com", func() {
 			Expect(bbsClient.DesireTask(logger, traceID, allowedTaskGuid, domain, allowedTask)).To(Succeed())
 			Expect(bbsClient.DesireTask(logger, traceID, disallowedTaskGuid, domain, disallowedTask)).To(Succeed())
 
@@ -107,7 +107,7 @@ var _ = Describe("Security groups", func() {
 			Expect(err).NotTo(HaveOccurred())
 			Expect(task.Failed).To(Equal(true))
 
-			By("asserting that opening up the security group rule allows us to call into the internal IP")
+			By("asserting that opening up the security group rule allows us to call to example.com")
 			task, err = bbsClient.TaskByGuid(logger, traceID, allowedTaskGuid)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(task.Failed).To(Equal(false))
