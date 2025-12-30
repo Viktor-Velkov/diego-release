@@ -20,14 +20,14 @@ require (
 	code.cloudfoundry.org/clock v1.56.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20251215140710-93274ab0250e
 	code.cloudfoundry.org/debugserver v0.79.0
-	code.cloudfoundry.org/diego-logging-client v0.84.0
-	code.cloudfoundry.org/dockerdriver v0.67.0
+	code.cloudfoundry.org/diego-logging-client v0.85.0
+	code.cloudfoundry.org/dockerdriver v0.68.0
 	code.cloudfoundry.org/durationjson v0.59.0
 	code.cloudfoundry.org/eventhub v0.59.0
 	code.cloudfoundry.org/garden v0.0.0-20251217022801-f5e0d83c4fa9
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.86.0
-	code.cloudfoundry.org/guardian v0.0.0-20251219220715-f3131da607a4
+	code.cloudfoundry.org/guardian v0.0.0-20251224023430-9cc1277d05e6
 	code.cloudfoundry.org/lager/v3 v3.56.0
 	code.cloudfoundry.org/localip v0.58.0
 	code.cloudfoundry.org/tlsconfig v0.42.0
@@ -55,7 +55,7 @@ require (
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/hashicorp/errwrap v1.1.0
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/jackc/pgx/v5 v5.7.6
+	github.com/jackc/pgx/v5 v5.8.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kr/pty v1.1.8
 	github.com/lib/pq v1.10.9
@@ -82,7 +82,7 @@ require (
 	golang.org/x/oauth2 v0.34.0
 	golang.org/x/sys v0.39.0
 	golang.org/x/time v0.14.0
-	google.golang.org/grpc v1.77.0
+	google.golang.org/grpc v1.78.0
 	google.golang.org/protobuf v1.36.11
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -129,9 +129,9 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v1.3.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
-	github.com/godbus/dbus/v5 v5.2.1 // indirect
+	github.com/godbus/dbus/v5 v5.2.2 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/go-tpm v0.9.7 // indirect
+	github.com/google/go-tpm v0.9.8 // indirect
 	github.com/google/pprof v0.0.0-20251213031049-b05bdaca462f // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/hashicorp/go-version v1.8.0 // indirect
