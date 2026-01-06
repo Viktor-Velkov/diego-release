@@ -10,7 +10,7 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.57.0
+	code.cloudfoundry.org/archiver v0.58.0
 	code.cloudfoundry.org/bytefmt v0.60.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.63.0
