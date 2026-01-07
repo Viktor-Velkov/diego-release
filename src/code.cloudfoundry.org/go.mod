@@ -24,10 +24,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.69.0
 	code.cloudfoundry.org/durationjson v0.60.0
 	code.cloudfoundry.org/eventhub v0.60.0
-	code.cloudfoundry.org/garden v0.0.0-20251217022801-f5e0d83c4fa9
+	code.cloudfoundry.org/garden v0.0.0-20260107023026-c1405e3f9a7c
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.86.0
-	code.cloudfoundry.org/guardian v0.0.0-20260105203757-786a3fbf8928
+	code.cloudfoundry.org/guardian v0.0.0-20260107023704-fd60faae10e9
 	code.cloudfoundry.org/lager/v3 v3.57.0
 	code.cloudfoundry.org/localip v0.59.0
 	code.cloudfoundry.org/tlsconfig v0.42.0
@@ -90,7 +90,7 @@ require (
 
 require (
 	cel.dev/expr v0.25.1 // indirect
-	code.cloudfoundry.org/commandrunner v0.53.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.54.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20251217145408-467f62baff7d // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
