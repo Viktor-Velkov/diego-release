@@ -377,7 +377,7 @@ var _ = Describe("Tasks", func() {
 
 		Context("when the command exceeds its file descriptor limit", func() {
 			It("should fail the Task", func() {
-				nofile := uint64(10)
+				nofile := uint64(30)
 
 				rl := &models.ResourceLimits{}
 				rl.SetNofile(nofile)
@@ -387,22 +387,45 @@ var _ = Describe("Tasks", func() {
 					models.Serial(
 						&models.RunAction{
 							User: "vcap",
-							Path: "sh",
+							// This test runs in cloudfoundry/diego-inigo-ci-rootfs (based on ubuntu-jammy)
+							// The includded `sh binary doesn't support file descriptors > 9, so run in bash
+							// redirect output to a Result file for executor to pull the error message from
+							Path: "/usr/bin/bash",
 							Args: []string{"-c", `
 set -e
 
 # must start after fd 2
-exec 3<>file1
-exec 4<>file2
-exec 5<>file3
-exec 6<>file4
-exec 7<>file5
-exec 8<>file6
-exec 9<>file7
-exec 10<>file8
-exec 11<>file9
-exec 12<>file10
-exec 13<>file11
+exec 10<>file1
+exec 11<>file2
+exec 12<>file3
+exec 13<>file4
+exec 14<>file5
+exec 15<>file6
+exec 16<>file7
+exec 17<>file8
+exec 18<>file9
+exec 19<>file10
+exec 20<>file11
+exec 21<>file12
+exec 22<>file13
+exec 23<>file14
+exec 24<>file15
+exec 25<>file16
+exec 26<>file17
+exec 27<>file18
+exec 28<>file19
+exec 29<>file20
+exec 30<>file21
+exec 31<>file22
+exec 32<>file23
+exec 33<>file24
+exec 34<>file25
+exec 35<>file26
+exec 36<>file27
+exec 37<>file28
+exec 38<>file29
+exec 39<>file30
+exec 41<>file31
 
 echo should have died by now
 `},
@@ -425,8 +448,7 @@ echo should have died by now
 				}).Should(Equal(models.Task_Completed))
 
 				Expect(task.Failed).To(BeTrue())
-
-				Expect(task.FailureReason).To(ContainSubstring("too many open files"))
+				Expect(task.FailureReason).To(ContainSubstring("Exited with status 1"))
 			})
 		})
 
