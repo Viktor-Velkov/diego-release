@@ -17,20 +17,58 @@ import (
 
 const ECR_REPO_REGEX = `[a-zA-Z0-9][a-zA-Z0-9_-]*\.dkr\.ecr(-fips)?\.[a-zA-Z0-9][a-zA-Z0-9_-]*\.amazonaws\.com(\.cn)?[^ ]*`
 
+//go:generate counterfeiter -o fakes/fake_ecr_client.go . ECRClient
+type ECRClient interface {
+	GetAuthorizationToken(ctx context.Context, params *ecr.GetAuthorizationTokenInput, optFns ...func(*ecr.Options)) (*ecr.GetAuthorizationTokenOutput, error)
+}
+
 //go:generate counterfeiter -o fakes/fake_ecrhelper.go . ECRHelper
 type ECRHelper interface {
 	IsECRRepo(registryURL string) (bool, error)
 	GetECRCredentials(registryURL string, username string, password string) (string, string, error)
 }
 
+type ClientFactory func(ctx context.Context, region, username, password string, useFIPS bool) (ECRClient, error)
+
+func DefaultClientFactory(ctx context.Context, region, username, password string, useFIPS bool) (ECRClient, error) {
+	opts := []func(*config.LoadOptions) error{
+		config.WithRegion(region),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(username, password, "")),
+	}
+
+	if useFIPS {
+		opts = append(opts, config.WithUseFIPSEndpoint(aws.FIPSEndpointStateEnabled))
+	}
+
+	cfg, err := config.LoadDefaultConfig(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return ecr.NewFromConfig(cfg), nil
+}
+
 type ecrHelper struct {
+	ecrClientFactory ClientFactory
 }
 
 func NewECRHelper() ECRHelper {
-	return ecrHelper{}
+	return &ecrHelper{
+		ecrClientFactory: DefaultClientFactory,
+	}
 }
 
-func (h ecrHelper) IsECRRepo(registryURL string) (bool, error) {
+func NewECRHelperWithFactory(factory ClientFactory) ECRHelper {
+	if factory == nil {
+		factory = DefaultClientFactory
+	}
+
+	return &ecrHelper{
+		ecrClientFactory: factory,
+	}
+}
+
+func (h *ecrHelper) IsECRRepo(registryURL string) (bool, error) {
 	rECRRepo, err := regexp.Compile(ECR_REPO_REGEX)
 	if err != nil {
 		return false, err
@@ -41,7 +79,7 @@ func (h ecrHelper) IsECRRepo(registryURL string) (bool, error) {
 	return isECR, nil
 }
 
-func (h ecrHelper) GetECRCredentials(registryURL string, username string, password string) (string, string, error) {
+func (h *ecrHelper) GetECRCredentials(registryURL string, username string, password string) (string, string, error) {
 	rootFSURL, err := url.Parse(registryURL)
 	if err != nil {
 		return "", "", err
@@ -53,16 +91,11 @@ func (h ecrHelper) GetECRCredentials(registryURL string, username string, passwo
 	if err != nil {
 		return "", "", err
 	}
-	cfg, err := config.LoadDefaultConfig(
-		context.TODO(), config.WithRegion(registry.Region),
-		config.WithUseFIPSEndpoint(aws.FIPSEndpointStateEnabled),
-		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(username, password, "")),
-	)
+
+	ecrClient, err := h.ecrClientFactory(context.TODO(), registry.Region, username, password, registry.FIPS)
 	if err != nil {
 		return "", "", err
 	}
-
-	ecrClient := ecr.NewFromConfig(cfg)
 
 	input := &ecr.GetAuthorizationTokenInput{}
 	output, err := ecrClient.GetAuthorizationToken(context.TODO(), input)
