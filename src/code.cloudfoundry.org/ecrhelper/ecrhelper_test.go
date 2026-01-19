@@ -63,6 +63,7 @@ var _ = Describe("Ecrhelper", func() {
 			encodedToken := base64.StdEncoding.EncodeToString([]byte(validAuthToken))
 
 			fakeECRClient = &fakes.FakeECRClient{}
+			useFIPSEndpoint = false
 			ecrHelper = ecrhelper.NewECRHelperWithFactory(func(ctx context.Context, region, username, password string, useFIPS bool) (ecrhelper.ECRClient, error) {
 				useFIPSEndpoint = useFIPS
 				return fakeECRClient, nil
