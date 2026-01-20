@@ -50,15 +50,16 @@ func (fake *FakeECRHelper) GetECRCredentials(arg1 string, arg2 string, arg3 stri
 		arg2 string
 		arg3 string
 	}{arg1, arg2, arg3})
+	stub := fake.GetECRCredentialsStub
+	fakeReturns := fake.getECRCredentialsReturns
 	fake.recordInvocation("GetECRCredentials", []interface{}{arg1, arg2, arg3})
 	fake.getECRCredentialsMutex.Unlock()
-	if fake.GetECRCredentialsStub != nil {
-		return fake.GetECRCredentialsStub(arg1, arg2, arg3)
+	if stub != nil {
+		return stub(arg1, arg2, arg3)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2, ret.result3
 	}
-	fakeReturns := fake.getECRCredentialsReturns
 	return fakeReturns.result1, fakeReturns.result2, fakeReturns.result3
 }
 
@@ -116,15 +117,16 @@ func (fake *FakeECRHelper) IsECRRepo(arg1 string) (bool, error) {
 	fake.isECRRepoArgsForCall = append(fake.isECRRepoArgsForCall, struct {
 		arg1 string
 	}{arg1})
+	stub := fake.IsECRRepoStub
+	fakeReturns := fake.isECRRepoReturns
 	fake.recordInvocation("IsECRRepo", []interface{}{arg1})
 	fake.isECRRepoMutex.Unlock()
-	if fake.IsECRRepoStub != nil {
-		return fake.IsECRRepoStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.isECRRepoReturns
 	return fakeReturns.result1, fakeReturns.result2
 }
 
@@ -176,10 +178,6 @@ func (fake *FakeECRHelper) IsECRRepoReturnsOnCall(i int, result1 bool, result2 e
 func (fake *FakeECRHelper) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getECRCredentialsMutex.RLock()
-	defer fake.getECRCredentialsMutex.RUnlock()
-	fake.isECRRepoMutex.RLock()
-	defer fake.isECRRepoMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
