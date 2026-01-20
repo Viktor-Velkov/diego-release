@@ -10,26 +10,26 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.59.0
-	code.cloudfoundry.org/bytefmt v0.61.0
+	code.cloudfoundry.org/archiver v0.60.0
+	code.cloudfoundry.org/bytefmt v0.62.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.64.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.66.0
-	code.cloudfoundry.org/clock v1.58.0
+	code.cloudfoundry.org/cfhttp/v2 v2.67.0
+	code.cloudfoundry.org/clock v1.59.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20251215140710-93274ab0250e
-	code.cloudfoundry.org/debugserver v0.81.0
-	code.cloudfoundry.org/diego-logging-client v0.87.0
-	code.cloudfoundry.org/dockerdriver v0.70.0
-	code.cloudfoundry.org/durationjson v0.61.0
-	code.cloudfoundry.org/eventhub v0.61.0
+	code.cloudfoundry.org/debugserver v0.82.0
+	code.cloudfoundry.org/diego-logging-client v0.88.0
+	code.cloudfoundry.org/dockerdriver v0.71.0
+	code.cloudfoundry.org/durationjson v0.62.0
+	code.cloudfoundry.org/eventhub v0.62.0
 	code.cloudfoundry.org/garden v0.0.0-20260114023242-b0c72d3d55e3
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
-	code.cloudfoundry.org/goshims v0.87.0
+	code.cloudfoundry.org/goshims v0.88.0
 	code.cloudfoundry.org/guardian v0.0.0-20260114024131-2da481271a23
-	code.cloudfoundry.org/lager/v3 v3.58.0
-	code.cloudfoundry.org/localip v0.60.0
+	code.cloudfoundry.org/lager/v3 v3.59.0
+	code.cloudfoundry.org/localip v0.61.0
 	code.cloudfoundry.org/tlsconfig v0.43.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
@@ -91,7 +91,7 @@ require (
 require (
 	cel.dev/expr v0.25.1 // indirect
 	code.cloudfoundry.org/commandrunner v0.55.0 // indirect
-	code.cloudfoundry.org/go-diodes v0.0.0-20260112063157-4b000d565325 // indirect
+	code.cloudfoundry.org/go-diodes v0.0.0-20260119094648-9c5f37160881 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/BurntSushi/toml v1.6.0 // indirect
@@ -111,7 +111,7 @@ require (
 	github.com/aws/smithy-go v1.24.0 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
-	github.com/cloudfoundry/socks5-proxy v0.2.164 // indirect
+	github.com/cloudfoundry/socks5-proxy v0.2.165 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20251217143644-d1670a435f2a // indirect
 	github.com/cncf/xds/go v0.0.0-20251210132809-ee656c7534f5 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
@@ -140,7 +140,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/klauspost/compress v1.18.2 // indirect
+	github.com/klauspost/compress v1.18.3 // indirect
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/minio/highwayhash v1.0.4-0.20251030100505-070ab1a87a76 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
