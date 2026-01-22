@@ -166,7 +166,7 @@ var _ = Describe("RoutingAPIEmitter", func() {
 			BeforeEach(func() {
 				routingApiClient.DeleteTcpRouteMappingsReturns(errors.New("unauthorized"))
 				routingEvents = routingtable.TCPRouteMappings{
-					Unregistrations: []apimodels.TcpRouteMapping{apimodels.NewTcpRouteMapping("123", 61000, "some-ip-1", 62003, 0, "", nil, int(ttl), apimodels.ModificationTag{}, false, "")},
+					Unregistrations: []apimodels.TcpRouteMapping{apimodels.NewTcpRouteMapping("123", 61000, "some-ip-1", 62003, 0, "", nil, nil, int(ttl), apimodels.ModificationTag{}, false, "")},
 				}
 			})
 
