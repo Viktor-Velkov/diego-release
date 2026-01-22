@@ -42,7 +42,7 @@ var _ = Describe("RoutingAPIEmitter", func() {
 		}
 
 		expectedRoutingEvents = routingtable.TCPRouteMappings{
-			Registrations: []apimodels.TcpRouteMapping{apimodels.NewTcpRouteMapping("123", 61000, "some-ip-1", 62003, 0, "", nil, int(ttl), apimodels.ModificationTag{}, false, "")},
+			Registrations: []apimodels.TcpRouteMapping{apimodels.NewTcpRouteMapping("123", 61000, "some-ip-1", 62003, 0, "", nil, nil, int(ttl), apimodels.ModificationTag{}, false, "")},
 		}
 
 		token := &oauth2.Token{
