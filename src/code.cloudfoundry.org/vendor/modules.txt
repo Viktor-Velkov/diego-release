@@ -33,7 +33,7 @@ code.cloudfoundry.org/clock/fakeclock
 # code.cloudfoundry.org/commandrunner v0.55.0
 ## explicit; go 1.24.9
 code.cloudfoundry.org/commandrunner
-# code.cloudfoundry.org/credhub-cli v0.0.0-20251215140710-93274ab0250e
+# code.cloudfoundry.org/credhub-cli v0.0.0-20260120220531-8a8e945863b2
 ## explicit; go 1.24.9
 code.cloudfoundry.org/credhub-cli/credhub
 code.cloudfoundry.org/credhub-cli/credhub/auth
@@ -62,7 +62,7 @@ code.cloudfoundry.org/durationjson
 # code.cloudfoundry.org/eventhub v0.62.0
 ## explicit; go 1.24.9
 code.cloudfoundry.org/eventhub
-# code.cloudfoundry.org/garden v0.0.0-20260114023242-b0c72d3d55e3 => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20260121023424-879cfc366958 => ../garden
 ## explicit; go 1.24.9
 code.cloudfoundry.org/garden
 code.cloudfoundry.org/garden/client
@@ -89,7 +89,7 @@ code.cloudfoundry.org/goshims/filepathshim
 code.cloudfoundry.org/goshims/http_wrap
 code.cloudfoundry.org/goshims/osshim
 code.cloudfoundry.org/goshims/osshim/os_fake
-# code.cloudfoundry.org/guardian v0.0.0-20260114024131-2da481271a23 => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20260121024111-7225277b5229 => ../guardian
 ## explicit; go 1.24.9
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -298,7 +298,7 @@ github.com/cloudfoundry/socks5-proxy
 # github.com/cloudfoundry/sonde-go v0.0.0-20251217143644-d1670a435f2a
 ## explicit; go 1.23
 github.com/cloudfoundry/sonde-go/events
-# github.com/cncf/xds/go v0.0.0-20251210132809-ee656c7534f5
+# github.com/cncf/xds/go v0.0.0-20260121142036-a486691bba94
 ## explicit; go 1.24
 github.com/cncf/xds/go/udpa/annotations
 github.com/cncf/xds/go/xds/annotations/v3
@@ -758,7 +758,7 @@ github.com/vishvananda/netns
 # github.com/vito/go-sse v1.1.3
 ## explicit; go 1.24
 github.com/vito/go-sse/sse
-# go.step.sm/crypto v0.75.0
+# go.step.sm/crypto v0.76.0
 ## explicit; go 1.24.0
 go.step.sm/crypto/fingerprint
 go.step.sm/crypto/internal/bcrypt_pbkdf
@@ -884,10 +884,10 @@ golang.org/x/tools/internal/stdlib
 golang.org/x/tools/internal/typeparams
 golang.org/x/tools/internal/typesinternal
 golang.org/x/tools/internal/versions
-# google.golang.org/genproto/googleapis/api v0.0.0-20260114163908-3f89685c29c3
+# google.golang.org/genproto/googleapis/api v0.0.0-20260120221211-b8f7ae30c516
 ## explicit; go 1.24.0
 google.golang.org/genproto/googleapis/api/expr/v1alpha1
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20260114163908-3f89685c29c3
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20260120221211-b8f7ae30c516
 ## explicit; go 1.24.0
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.78.0

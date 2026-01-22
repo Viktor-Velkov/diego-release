@@ -18,16 +18,16 @@ require (
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.67.0
 	code.cloudfoundry.org/clock v1.59.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20251215140710-93274ab0250e
+	code.cloudfoundry.org/credhub-cli v0.0.0-20260120220531-8a8e945863b2
 	code.cloudfoundry.org/debugserver v0.82.0
 	code.cloudfoundry.org/diego-logging-client v0.88.0
 	code.cloudfoundry.org/dockerdriver v0.71.0
 	code.cloudfoundry.org/durationjson v0.62.0
 	code.cloudfoundry.org/eventhub v0.62.0
-	code.cloudfoundry.org/garden v0.0.0-20260114023242-b0c72d3d55e3
+	code.cloudfoundry.org/garden v0.0.0-20260121023424-879cfc366958
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.88.0
-	code.cloudfoundry.org/guardian v0.0.0-20260114024131-2da481271a23
+	code.cloudfoundry.org/guardian v0.0.0-20260121024111-7225277b5229
 	code.cloudfoundry.org/lager/v3 v3.59.0
 	code.cloudfoundry.org/localip v0.61.0
 	code.cloudfoundry.org/tlsconfig v0.43.0
@@ -113,7 +113,7 @@ require (
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.165 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20251217143644-d1670a435f2a // indirect
-	github.com/cncf/xds/go v0.0.0-20251210132809-ee656c7534f5 // indirect
+	github.com/cncf/xds/go v0.0.0-20260121142036-a486691bba94 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
 	github.com/containers/ocicrypt v1.2.1 // indirect
 	github.com/containers/storage v1.59.1 // indirect
@@ -161,7 +161,7 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
-	go.step.sm/crypto v0.75.0 // indirect
+	go.step.sm/crypto v0.76.0 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/mod v0.32.0 // indirect
@@ -169,6 +169,6 @@ require (
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/text v0.33.0 // indirect
 	golang.org/x/tools v0.41.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260114163908-3f89685c29c3 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260114163908-3f89685c29c3 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260120221211-b8f7ae30c516 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260120221211-b8f7ae30c516 // indirect
 )
