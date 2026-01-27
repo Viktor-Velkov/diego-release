@@ -18,10 +18,10 @@ require (
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.67.0
 	code.cloudfoundry.org/clock v1.59.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20260120220531-8a8e945863b2
-	code.cloudfoundry.org/debugserver v0.82.0
-	code.cloudfoundry.org/diego-logging-client v0.88.0
-	code.cloudfoundry.org/dockerdriver v0.71.0
+	code.cloudfoundry.org/credhub-cli v0.0.0-20260126140202-2a7d9013060a
+	code.cloudfoundry.org/debugserver v0.83.0
+	code.cloudfoundry.org/diego-logging-client v0.89.0
+	code.cloudfoundry.org/dockerdriver v0.72.0
 	code.cloudfoundry.org/durationjson v0.62.0
 	code.cloudfoundry.org/eventhub v0.62.0
 	code.cloudfoundry.org/garden v0.0.0-20260121023424-879cfc366958
@@ -30,7 +30,7 @@ require (
 	code.cloudfoundry.org/guardian v0.0.0-20260121024111-7225277b5229
 	code.cloudfoundry.org/lager/v3 v3.59.0
 	code.cloudfoundry.org/localip v0.61.0
-	code.cloudfoundry.org/tlsconfig v0.43.0
+	code.cloudfoundry.org/tlsconfig v0.44.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.41.1
@@ -150,7 +150,7 @@ require (
 	github.com/moby/sys/user v0.4.0 // indirect
 	github.com/moby/sys/userns v0.1.0 // indirect
 	github.com/nats-io/jwt/v2 v2.8.0 // indirect
-	github.com/nats-io/nkeys v0.4.12 // indirect
+	github.com/nats-io/nkeys v0.4.14 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/opencontainers/cgroups v0.0.6 // indirect
 	github.com/opencontainers/runtime-spec v1.3.0 // indirect
@@ -169,6 +169,6 @@ require (
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/text v0.33.0 // indirect
 	golang.org/x/tools v0.41.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260120221211-b8f7ae30c516 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260120221211-b8f7ae30c516 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260126211449-d11affda4bed // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260126211449-d11affda4bed // indirect
 )
