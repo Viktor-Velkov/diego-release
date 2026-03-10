@@ -10,27 +10,27 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.63.0
-	code.cloudfoundry.org/bytefmt v0.65.0
+	code.cloudfoundry.org/archiver v0.64.0
+	code.cloudfoundry.org/bytefmt v0.66.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.67.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.70.0
-	code.cloudfoundry.org/clock v1.62.0
+	code.cloudfoundry.org/clock v1.63.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260309130112-afd4aa9f371a
-	code.cloudfoundry.org/debugserver v0.87.0
-	code.cloudfoundry.org/diego-logging-client v0.94.0
-	code.cloudfoundry.org/dockerdriver v0.78.0
-	code.cloudfoundry.org/durationjson v0.65.0
-	code.cloudfoundry.org/eventhub v0.65.0
+	code.cloudfoundry.org/debugserver v0.88.0
+	code.cloudfoundry.org/diego-logging-client v0.95.0
+	code.cloudfoundry.org/dockerdriver v0.79.0
+	code.cloudfoundry.org/durationjson v0.66.0
+	code.cloudfoundry.org/eventhub v0.66.0
 	code.cloudfoundry.org/garden v0.0.0-20260304024058-46dd12e5cd10
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.94.0
 	code.cloudfoundry.org/guardian v0.0.0-20260304024757-b2a02a8878e6
-	code.cloudfoundry.org/lager/v3 v3.62.0
-	code.cloudfoundry.org/localip v0.64.0
-	code.cloudfoundry.org/tlsconfig v0.46.0
+	code.cloudfoundry.org/lager/v3 v3.63.0
+	code.cloudfoundry.org/localip v0.65.0
+	code.cloudfoundry.org/tlsconfig v0.47.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.41.3
@@ -62,7 +62,7 @@ require (
 	github.com/lib/pq v1.11.2
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
-	github.com/nats-io/nats-server/v2 v2.12.4
+	github.com/nats-io/nats-server/v2 v2.12.5
 	github.com/nats-io/nats.go v1.49.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 	github.com/onsi/ginkgo/v2 v2.28.1
@@ -163,7 +163,6 @@ require (
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.step.sm/crypto v0.76.2 // indirect
-	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/mod v0.33.0 // indirect
 	golang.org/x/net v0.51.0 // indirect
