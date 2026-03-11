@@ -16,7 +16,7 @@ require (
 	code.cloudfoundry.org/certsplitter v0.67.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.70.0
+	code.cloudfoundry.org/cfhttp/v2 v2.71.0
 	code.cloudfoundry.org/clock v1.63.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260309130112-afd4aa9f371a
 	code.cloudfoundry.org/debugserver v0.88.0
@@ -24,10 +24,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.79.0
 	code.cloudfoundry.org/durationjson v0.66.0
 	code.cloudfoundry.org/eventhub v0.66.0
-	code.cloudfoundry.org/garden v0.0.0-20260304024058-46dd12e5cd10
+	code.cloudfoundry.org/garden v0.0.0-20260311024225-613a89da1275
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.94.0
-	code.cloudfoundry.org/guardian v0.0.0-20260304024757-b2a02a8878e6
+	code.cloudfoundry.org/guardian v0.0.0-20260311025007-475c35f2e0a1
 	code.cloudfoundry.org/lager/v3 v3.63.0
 	code.cloudfoundry.org/localip v0.65.0
 	code.cloudfoundry.org/tlsconfig v0.47.0
@@ -164,10 +164,10 @@ require (
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.step.sm/crypto v0.76.2 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/mod v0.33.0 // indirect
+	golang.org/x/mod v0.34.0 // indirect
 	golang.org/x/net v0.51.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 	golang.org/x/tools v0.42.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260226221140-a57be14db171 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260226221140-a57be14db171 // indirect
