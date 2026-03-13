@@ -59,6 +59,27 @@ cache_dir=${garden_shared_dir}/download_cache
 mkdir -p "$cache_dir"
 chown -R vcap:vcap $cache_dir
 
+# Invalidate download cache when extraction-relevant config changes.
+# The cf-pcap flag changes how archived files are extracted (xattrs
+# preservation), so a flag change requires re-extraction. Removing
+# saved_cache.json causes RecoverState() to treat this as a first boot,
+# which clears all cached files.
+cache_config_marker=/var/vcap/data/rep/cache_config
+current_cache_config="enable_cf_pcap=<%= p("diego.rep.enable_cf_pcap", false) %>"
+
+if [ -f "$cache_config_marker" ]; then
+  previous_cache_config=$(cat "$cache_config_marker")
+else
+  previous_cache_config=""
+fi
+
+if [ "$current_cache_config" != "$previous_cache_config" ]; then
+  rm -f "${cache_dir}/saved_cache.json"
+fi
+
+echo "$current_cache_config" > "$cache_config_marker"
+chown vcap:vcap "$cache_config_marker"
+
 trusted_certs_dir=${garden_shared_dir}/trusted_certs
 rm -rf "$trusted_certs_dir"
 <% if_p("containers.trusted_ca_certificates") do %>
