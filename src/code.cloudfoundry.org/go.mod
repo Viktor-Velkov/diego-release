@@ -13,7 +13,7 @@ require (
 	code.cloudfoundry.org/archiver v0.65.0
 	code.cloudfoundry.org/bytefmt v0.67.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.67.0
+	code.cloudfoundry.org/certsplitter v0.68.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
 	code.cloudfoundry.org/cfhttp/v2 v2.72.0
@@ -24,10 +24,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.80.0
 	code.cloudfoundry.org/durationjson v0.67.0
 	code.cloudfoundry.org/eventhub v0.67.0
-	code.cloudfoundry.org/garden v0.0.0-20260311024225-613a89da1275
+	code.cloudfoundry.org/garden v0.0.0-20260318024418-0ddea73e969e
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.95.0
-	code.cloudfoundry.org/guardian v0.0.0-20260313200351-f0a8fe21e456
+	code.cloudfoundry.org/guardian v0.0.0-20260318025245-1b062a144fe6
 	code.cloudfoundry.org/lager/v3 v3.64.0
 	code.cloudfoundry.org/localip v0.66.0
 	code.cloudfoundry.org/tlsconfig v0.48.0
@@ -59,7 +59,7 @@ require (
 	github.com/jackc/pgx/v5 v5.8.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kr/pty v1.1.8
-	github.com/lib/pq v1.11.2
+	github.com/lib/pq v1.12.0
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
 	github.com/nats-io/nats-server/v2 v2.12.5
@@ -83,7 +83,7 @@ require (
 	golang.org/x/oauth2 v0.36.0
 	golang.org/x/sys v0.42.0
 	golang.org/x/time v0.15.0
-	google.golang.org/grpc v1.79.2
+	google.golang.org/grpc v1.79.3
 	google.golang.org/protobuf v1.36.11
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -91,7 +91,7 @@ require (
 
 require (
 	cel.dev/expr v0.25.1 // indirect
-	code.cloudfoundry.org/commandrunner v0.58.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.59.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20260209061029-a81ffbc46978 // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
@@ -150,7 +150,7 @@ require (
 	github.com/moby/sys/reexec v0.1.0 // indirect
 	github.com/moby/sys/user v0.4.0 // indirect
 	github.com/moby/sys/userns v0.1.0 // indirect
-	github.com/nats-io/jwt/v2 v2.8.0 // indirect
+	github.com/nats-io/jwt/v2 v2.8.1 // indirect
 	github.com/nats-io/nkeys v0.4.15 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/opencontainers/cgroups v0.0.6 // indirect
@@ -162,13 +162,13 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
-	go.step.sm/crypto v0.76.2 // indirect
+	go.step.sm/crypto v0.77.1 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/mod v0.34.0 // indirect
 	golang.org/x/net v0.52.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/text v0.35.0 // indirect
 	golang.org/x/tools v0.43.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260316180232-0b37fe3546d5 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260316180232-0b37fe3546d5 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260319201613-d00831a3d3e7 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260319201613-d00831a3d3e7 // indirect
 )
