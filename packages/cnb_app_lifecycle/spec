@@ -69,6 +69,7 @@ files:
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/ec2rolecreds/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/endpointcreds/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/endpointcreds/internal/client/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/logincreds/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/processcreds/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/ssocreds/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/credentials/stscreds/*.go # gosub
@@ -98,6 +99,9 @@ files:
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/ecrpublic/types/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/internal/presigned-url/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/signin/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/signin/internal/endpoints/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/signin/types/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/sso/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/sso/internal/endpoints/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/aws-sdk-go-v2/service/sso/types/*.go # gosub
@@ -117,6 +121,7 @@ files:
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/encoding/json/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/encoding/xml/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/endpoints/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/aws/smithy-go/endpoints/private/rulesfn/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/internal/sync/singleflight/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/io/*.go # gosub
   - cnbapplifecycle/vendor/github.com/aws/smithy-go/logging/*.go # gosub
@@ -211,34 +216,14 @@ files:
   - cnbapplifecycle/vendor/github.com/docker/distribution/registry/storage/cache/memory/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker-credential-helpers/client/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker-credential-helpers/credentials/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/blkiodev/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/build/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/checkpoint/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/common/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/container/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/events/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/api/types/filters/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/image/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/mount/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/network/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/api/types/registry/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/storage/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/strslice/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/swarm/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/swarm/runtime/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/system/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/time/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/api/types/versions/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/api/types/volume/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/docker/client/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/internal/lazyregexp/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/pkg/homedir/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/pkg/ioutils/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/pkg/jsonmessage/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/docker/registry/*.go # gosub
-  - cnbapplifecycle/vendor/github.com/docker/go-connections/nat/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/go-connections/sockets/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/go-connections/tlsconfig/*.go # gosub
   - cnbapplifecycle/vendor/github.com/docker/go-metrics/*.go # gosub
@@ -310,6 +295,27 @@ files:
   - cnbapplifecycle/vendor/github.com/moby/buildkit/util/stack/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/buildkit/util/suggest/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/docker-image-spec/specs-go/v1/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/blkiodev/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/build/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/checkpoint/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/common/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/container/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/events/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/image/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/jsonstream/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/mount/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/network/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/plugin/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/registry/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/storage/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/swarm/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/system/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/api/types/volume/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/client/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/client/internal/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/client/internal/timestamp/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/client/pkg/versions/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/sys/atomicwriter/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/sys/sequential/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/term/*.go # gosub
@@ -343,25 +349,27 @@ files:
   - cnbapplifecycle/vendor/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/request/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/semconv/*.go # gosub
-  - cnbapplifecycle/vendor/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/semconvutil/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/attribute/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/attribute/internal/*.go # gosub
+  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/attribute/internal/xxhash/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/baggage/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/codes/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/internal/baggage/*.go # gosub
+  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/internal/errorhandler/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/internal/global/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/metric/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/metric/embedded/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/metric/noop/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/propagation/*.go # gosub
-  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/semconv/v1.20.0/*.go # gosub
-  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/semconv/v1.26.0/*.go # gosub
-  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/semconv/v1.34.0/*.go # gosub
+  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/semconv/v1.37.0/*.go # gosub
+  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/semconv/v1.40.0/*.go # gosub
+  - cnbapplifecycle/vendor/go.opentelemetry.io/otel/semconv/v1.40.0/httpconv/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/trace/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/trace/embedded/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/trace/internal/telemetry/*.go # gosub
   - cnbapplifecycle/vendor/go.opentelemetry.io/otel/trace/noop/*.go # gosub
+  - cnbapplifecycle/vendor/go.yaml.in/yaml/v2/*.go # gosub
   - cnbapplifecycle/vendor/golang.org/x/crypto/blowfish/*.go # gosub
   - cnbapplifecycle/vendor/golang.org/x/crypto/chacha20/*.go # gosub
   - cnbapplifecycle/vendor/golang.org/x/crypto/chacha20/*.s # gosub
