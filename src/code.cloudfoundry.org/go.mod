@@ -19,9 +19,9 @@ require (
 	code.cloudfoundry.org/cfhttp/v2 v2.72.0
 	code.cloudfoundry.org/clock v1.64.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260323130242-4632577e239e
-	code.cloudfoundry.org/debugserver v0.89.0
-	code.cloudfoundry.org/diego-logging-client v0.97.0
-	code.cloudfoundry.org/dockerdriver v0.80.0
+	code.cloudfoundry.org/debugserver v0.90.0
+	code.cloudfoundry.org/diego-logging-client v0.98.0
+	code.cloudfoundry.org/dockerdriver v0.81.0
 	code.cloudfoundry.org/durationjson v0.67.0
 	code.cloudfoundry.org/eventhub v0.67.0
 	code.cloudfoundry.org/garden v0.0.0-20260318024418-0ddea73e969e
@@ -30,7 +30,7 @@ require (
 	code.cloudfoundry.org/guardian v0.0.0-20260318025245-1b062a144fe6
 	code.cloudfoundry.org/lager/v3 v3.64.0
 	code.cloudfoundry.org/localip v0.66.0
-	code.cloudfoundry.org/tlsconfig v0.48.0
+	code.cloudfoundry.org/tlsconfig v0.49.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.41.4
