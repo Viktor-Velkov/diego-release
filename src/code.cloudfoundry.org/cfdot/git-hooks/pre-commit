@@ -1,1 +1,2 @@
-../scripts/generate-cfdot-documentation
+#!/bin/bash
+"$(dirname "$0")/../scripts/generate-cfdot-documentation"
