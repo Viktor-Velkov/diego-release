@@ -40,6 +40,7 @@ files:
   - code.cloudfoundry.org/executor/depot/steps/*.go # gosub
   - code.cloudfoundry.org/executor/depot/transformer/*.go # gosub
   - code.cloudfoundry.org/executor/depot/uploader/*.go # gosub
+  - code.cloudfoundry.org/executor/envoyconfig/*.go # gosub
   - code.cloudfoundry.org/executor/gardenhealth/*.go # gosub
   - code.cloudfoundry.org/executor/guidgen/*.go # gosub
   - code.cloudfoundry.org/executor/initializer/*.go # gosub
@@ -211,7 +212,6 @@ files:
   - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/proto/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/protoc-gen-gogo/descriptor/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/sortkeys/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/any/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/duration/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/struct/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/wrappers/*.go # gosub

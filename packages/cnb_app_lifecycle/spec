@@ -260,6 +260,7 @@ files:
   - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/mutate/*.go # gosub
   - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/partial/*.go # gosub
   - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/remote/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/remote/internal/authchallenge/*.go # gosub
   - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/remote/transport/*.go # gosub
   - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/static/*.go # gosub
   - cnbapplifecycle/vendor/github.com/google/go-containerregistry/pkg/v1/stream/*.go # gosub
@@ -314,6 +315,7 @@ files:
   - cnbapplifecycle/vendor/github.com/moby/moby/api/types/volume/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/moby/client/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/moby/client/internal/*.go # gosub
+  - cnbapplifecycle/vendor/github.com/moby/moby/client/internal/mod/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/moby/client/internal/timestamp/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/moby/client/pkg/versions/*.go # gosub
   - cnbapplifecycle/vendor/github.com/moby/sys/atomicwriter/*.go # gosub
