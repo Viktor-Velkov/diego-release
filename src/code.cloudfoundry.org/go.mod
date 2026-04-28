@@ -10,27 +10,27 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.67.0
-	code.cloudfoundry.org/bytefmt v0.69.0
+	code.cloudfoundry.org/archiver v0.68.0
+	code.cloudfoundry.org/bytefmt v0.70.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
-	code.cloudfoundry.org/certsplitter v0.71.0
+	code.cloudfoundry.org/certsplitter v0.72.0
 	code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
 	code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-	code.cloudfoundry.org/cfhttp/v2 v2.74.0
-	code.cloudfoundry.org/clock v1.67.0
-	code.cloudfoundry.org/credhub-cli v0.0.0-20260420130056-7d96fd093179
-	code.cloudfoundry.org/debugserver v0.93.0
-	code.cloudfoundry.org/diego-logging-client v0.102.0
-	code.cloudfoundry.org/dockerdriver v0.85.0
-	code.cloudfoundry.org/durationjson v0.69.0
-	code.cloudfoundry.org/eventhub v0.69.0
+	code.cloudfoundry.org/cfhttp/v2 v2.75.0
+	code.cloudfoundry.org/clock v1.68.0
+	code.cloudfoundry.org/credhub-cli v0.0.0-20260427130137-96647328890b
+	code.cloudfoundry.org/debugserver v0.94.0
+	code.cloudfoundry.org/diego-logging-client v0.103.0
+	code.cloudfoundry.org/dockerdriver v0.86.0
+	code.cloudfoundry.org/durationjson v0.70.0
+	code.cloudfoundry.org/eventhub v0.70.0
 	code.cloudfoundry.org/garden v0.0.0-20260415024759-5d3f072af7f8
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.97.0
-	code.cloudfoundry.org/guardian v0.0.0-20260415140931-2bcb75659170
-	code.cloudfoundry.org/lager/v3 v3.66.0
-	code.cloudfoundry.org/localip v0.68.0
-	code.cloudfoundry.org/tlsconfig v0.51.0
+	code.cloudfoundry.org/guardian v0.0.0-20260422025303-bf052dd60ebf
+	code.cloudfoundry.org/lager/v3 v3.67.0
+	code.cloudfoundry.org/localip v0.69.0
+	code.cloudfoundry.org/tlsconfig v0.52.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.41.6
@@ -57,15 +57,13 @@ require (
 	github.com/hashicorp/errwrap v1.1.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/jackc/pgx/v5 v5.9.2
-	github.com/jinzhu/gorm v1.9.16
 	github.com/kr/pty v1.1.8
-	github.com/lib/pq v1.12.3
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
-	github.com/nats-io/nats-server/v2 v2.12.7
+	github.com/nats-io/nats-server/v2 v2.12.8
 	github.com/nats-io/nats.go v1.51.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
-	github.com/onsi/ginkgo/v2 v2.28.1
+	github.com/onsi/ginkgo/v2 v2.28.2
 	github.com/onsi/gomega v1.39.1
 	github.com/onsi/say v1.2.0
 	github.com/opencontainers/go-digest v1.0.0
@@ -87,12 +85,15 @@ require (
 	google.golang.org/protobuf v1.36.11
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
+	gorm.io/driver/mysql v1.6.0
+	gorm.io/driver/postgres v1.6.0
+	gorm.io/gorm v1.31.1
 )
 
 require (
 	cel.dev/expr v0.25.1 // indirect
 	code.cloudfoundry.org/commandrunner v0.61.0 // indirect
-	code.cloudfoundry.org/go-diodes v0.0.0-20260209061029-a81ffbc46978 // indirect
+	code.cloudfoundry.org/go-diodes v0.0.0-20260427153419-57aa1b10ab4c // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/BurntSushi/toml v1.6.0 // indirect
@@ -109,7 +110,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.30.16 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.20 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.42.0 // indirect
-	github.com/aws/smithy-go v1.25.0 // indirect
+	github.com/aws/smithy-go v1.25.1 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.173 // indirect
@@ -141,6 +142,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.18.5 // indirect
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/minio/highwayhash v1.0.4 // indirect
@@ -162,13 +164,13 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/vishvananda/netlink v1.3.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
-	go.step.sm/crypto v0.77.2 // indirect
+	go.step.sm/crypto v0.77.7 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/mod v0.35.0 // indirect
 	golang.org/x/net v0.53.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/text v0.36.0 // indirect
 	golang.org/x/tools v0.44.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260420184626-e10c466a9529 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260420184626-e10c466a9529 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260427160629-7cedc36a6bc4 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260427160629-7cedc36a6bc4 // indirect
 )
