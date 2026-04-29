@@ -13,3 +13,12 @@ processes:
     end
     %>
     open_files: <%= p('limits.open_files') %>
+<% if p('diego.bbs.gogc') != "" || p('diego.bbs.gomemlimit') != "" %>
+  env:
+  <% if p('diego.bbs.gogc') != "" %>
+    GOGC: '<%= p('diego.bbs.gogc') %>'
+  <% end %>
+  <% if p('diego.bbs.gomemlimit') != "" %>
+    GOMEMLIMIT: '<%= p('diego.bbs.gomemlimit') %>'
+  <% end %>
+<% end %>
