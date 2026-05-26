@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"time"
 
 	"code.cloudfoundry.org/durationjson"
@@ -24,20 +25,60 @@ import (
 	"github.com/tedsuo/ifrit/grouper"
 )
 
+// Cross-platform build configuration
+func getBuildConfig() (goos, goarch, binSuffix string) {
+	// Build for the target platform (Linux containers on Linux/macOS, Windows containers on Windows)
+	if runtime.GOOS == "windows" {
+		return "windows", "amd64", ".exe"
+	}
+	return "linux", "amd64", ""
+}
+
+// Cross-platform shell command configuration  
+func getShellCommand(command string) (shell string, args []string) {
+	if runtime.GOOS == "windows" {
+		return "cmd", []string{"/C", command}
+	}
+	return "sh", []string{"-c", command}
+}
+
+// Cross-platform temp directory
+func getTempDir() string {
+	if runtime.GOOS == "windows" {
+		return "C:\\temp"
+	}
+	return "/tmp"
+}
+
+// Cross-platform file permissions (noop on Windows)
+func setExecutablePermissions(path string) error {
+	if runtime.GOOS == "windows" {
+		return nil // Windows doesn't use Unix permissions
+	}
+	return os.Chmod(path, 0755)
+}
+
 func buildFakeApp() (string, string) {
 	// Build the fake app from the assets directory
 	fakeAppPath := filepath.Join(".", "assets", "fake_app")
 
 	// Create temporary output file
 	tempDir := world.TempDirWithParent("", "fake-app-build")
-	binPath := filepath.Join(tempDir, "fake-app")
+	goos, goarch, binSuffix := getBuildConfig()
+	binPath := filepath.Join(tempDir, "fake-app"+binSuffix)
 
-	cmd := exec.Command("go", "build", "-a", "-tags", "netgo", "-ldflags", "-extldflags=-static", "-o", binPath)
+	buildFlags := []string{"build", "-a", "-o", binPath}
+	// Only add static linking flags for Linux builds
+	if goos == "linux" {
+		buildFlags = append(buildFlags, "-tags", "netgo", "-ldflags", "-extldflags=-static")
+	}
+
+	cmd := exec.Command("go", buildFlags...)
 	cmd.Dir = fakeAppPath // Set working directory to the source directory
 	cmd.Env = append(os.Environ(),
 		"CGO_ENABLED=0",
-		"GOOS=linux",
-		"GOARCH=amd64")
+		"GOOS="+goos,
+		"GOARCH="+goarch)
 
 	err := cmd.Run()
 	Expect(err).NotTo(HaveOccurred())
@@ -47,38 +88,47 @@ func buildFakeApp() (string, string) {
 
 func buildFakeProxy() string {
 	dir := world.TempDirWithParent(suiteTempDir, "fake-proxy")
-	err := os.Chmod(dir, 0777)
-	Expect(err).NotTo(HaveOccurred())
+	// Set directory permissions (no-op on Windows)
+	setExecutablePermissions(dir)
 
 	// Build the fake proxy from the assets directory
 	fakeProxyPath := filepath.Join(".", "assets", "fake_proxy")
 
 	// Create temporary build output file
-	tempBinPath := filepath.Join(dir, "fake-proxy-temp")
+	goos, goarch, binSuffix := getBuildConfig()
+	tempBinPath := filepath.Join(dir, "fake-proxy-temp"+binSuffix)
 
-	cmd := exec.Command("go", "build", "-a", "-tags", "netgo", "-ldflags", "-extldflags=-static", "-o", tempBinPath)
+	buildFlags := []string{"build", "-a", "-o", tempBinPath}
+	// Only add static linking flags for Linux builds
+	if goos == "linux" {
+		buildFlags = append(buildFlags, "-tags", "netgo", "-ldflags", "-extldflags=-static")
+	}
+
+	cmd := exec.Command("go", buildFlags...)
 	cmd.Dir = fakeProxyPath // Set working directory to the source directory
 	cmd.Env = append(os.Environ(),
 		"CGO_ENABLED=0",
-		"GOOS=linux",
-		"GOARCH=amd64")
+		"GOOS="+goos,
+		"GOARCH="+goarch)
 
-	_, err = cmd.CombinedOutput()
+	_, err := cmd.CombinedOutput()
 	Expect(err).NotTo(HaveOccurred())
 
-	envoyPath := filepath.Join(dir, "envoy")
+	// Copy to envoy name (for compatibility with rep expectations)
+	envoyPath := filepath.Join(dir, "envoy"+binSuffix)
 	srcFile, err := os.Open(tempBinPath)
 	Expect(err).NotTo(HaveOccurred())
 	defer srcFile.Close()
 
-	newEnvoy, err := os.OpenFile(envoyPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755)
+	newEnvoy, err := os.OpenFile(envoyPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	Expect(err).NotTo(HaveOccurred())
 	defer newEnvoy.Close()
 
 	_, err = io.Copy(newEnvoy, srcFile)
 	Expect(err).NotTo(HaveOccurred())
 
-	err = os.Chmod(envoyPath, 0755)
+	// Set executable permissions (no-op on Windows)
+	err = setExecutablePermissions(envoyPath)
 	Expect(err).NotTo(HaveOccurred())
 
 	// Verify the fake-proxy binary was created correctly
@@ -115,11 +165,12 @@ var _ = Describe("Codependency", Serial, func() {
 			fakeAppContents, err := os.ReadFile(fakeAppPath)
 			Expect(err).NotTo(HaveOccurred())
 
+			_, _, binSuffix := getBuildConfig()
 			archive_helper.CreateZipArchive(
 				filepath.Join(fileServerStaticDir, "lrp.zip"),
 				[]archive_helper.ArchiveFile{
 					{
-						Name: "fake-app",
+						Name: "fake-app" + binSuffix,
 						Body: string(fakeAppContents),
 						Mode: 0755,
 					},
@@ -172,23 +223,30 @@ var _ = Describe("Codependency", Serial, func() {
 		func(processToExit string, exitCode int) {
 			fakeProxyDir = buildFakeProxy()
 
+			// Get cross-platform configuration
+			_, _, binSuffix := getBuildConfig()
+			tempDir := getTempDir()
+			monitorShell, monitorArgs := getShellCommand("exit 0")
+			mainShell, mainArgs := getShellCommand(fmt.Sprintf("PORT=8080 %s%cfake-app%s", tempDir, filepath.Separator, binSuffix))
+			sidecarShell, sidecarArgs := getShellCommand(fmt.Sprintf("PORT=8081 %s%cfake-app%s", tempDir, filepath.Separator, binSuffix))
+
 			// Construct DesiredLRP
 			lrp := helpers.DefaultLRPCreateRequest(componentMaker.Addresses(), processGuid, "log-guid", 1)
 			lrp.Setup = models.WrapAction(&models.DownloadAction{
 				User: "vcap",
 				From: fmt.Sprintf("http://%s/v1/static/%s", componentMaker.Addresses().FileServer, "lrp.zip"),
-				To:   "/tmp",
+				To:   tempDir,
 			})
 			lrp.Monitor = models.WrapAction(&models.RunAction{
 				User: "vcap",
-				Path: "sh",
-				Args: []string{"-c", "exit 0"},
+				Path: monitorShell,
+				Args: monitorArgs,
 			})
 
 			lrp.Action = models.WrapAction(&models.RunAction{
 				User: "vcap",
-				Path: "sh",
-				Args: []string{"-c", "PORT=8080 /tmp/fake-app"},
+				Path: mainShell,
+				Args: mainArgs,
 			})
 			lrp.Ports = []uint32{8080, 8081}
 
@@ -196,8 +254,8 @@ var _ = Describe("Codependency", Serial, func() {
 				{
 					Action: models.WrapAction(&models.RunAction{
 						User: "vcap",
-						Path: "sh",
-						Args: []string{"-c", "PORT=8081 /tmp/fake-app"},
+						Path: sidecarShell,
+						Args: sidecarArgs,
 					}),
 					MemoryMb: 128,
 				},
