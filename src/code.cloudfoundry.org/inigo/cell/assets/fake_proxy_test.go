@@ -40,17 +40,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
 
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
-
 		// Wait for proxy to start listening on port 61001
 		Eventually(func() error {
 			client := &http.Client{Timeout: 1 * time.Second}
@@ -78,17 +67,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		command := exec.Command(proxyPath)
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
-
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
 
 		// Wait for proxy to start listening on port 61001
 		Eventually(func() error {
@@ -136,17 +114,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
 
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
-
 		// Wait for proxy to start
 		Eventually(func() error {
 			client := &http.Client{Timeout: 1 * time.Second}
@@ -191,17 +158,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		command := exec.Command(fakeProxyPath)
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
-
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
 
 		// Wait for proxy to start listening
 		Eventually(func() error {

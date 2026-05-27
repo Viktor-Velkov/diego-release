@@ -85,17 +85,6 @@ var _ = Describe("Fake App Exit Behavior", Serial, func() {
 			session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 			Expect(err).NotTo(HaveOccurred())
 
-			// Ensure cleanup on test completion
-			defer func() {
-				if session.ExitCode() == -1 { // Process still running
-					session.Kill()
-				}
-				// On Windows, add extra cleanup time
-				if runtime.GOOS == "windows" {
-					time.Sleep(100 * time.Millisecond)
-				}
-			}()
-
 			// Wait for server to start
 			Eventually(func() error {
 				client := &http.Client{Timeout: 1 * time.Second}
@@ -125,17 +114,6 @@ var _ = Describe("Fake App Exit Behavior", Serial, func() {
 			session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 			Expect(err).NotTo(HaveOccurred())
 
-			// Ensure cleanup on test completion
-			defer func() {
-				if session.ExitCode() == -1 { // Process still running
-					session.Kill()
-				}
-				// On Windows, add extra cleanup time
-				if runtime.GOOS == "windows" {
-					time.Sleep(100 * time.Millisecond)
-				}
-			}()
-
 			// Wait for server to start
 			Eventually(func() error {
 				client := &http.Client{Timeout: 1 * time.Second}
@@ -164,17 +142,6 @@ var _ = Describe("Fake App Exit Behavior", Serial, func() {
 			command.Env = append(command.Env, "PORT=28092")
 			session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 			Expect(err).NotTo(HaveOccurred())
-
-			// Ensure cleanup on test completion
-			defer func() {
-				if session.ExitCode() == -1 { // Process still running
-					session.Kill()
-				}
-				// On Windows, add extra cleanup time
-				if runtime.GOOS == "windows" {
-					time.Sleep(100 * time.Millisecond)
-				}
-			}()
 
 			// Wait for app to start listening
 			Eventually(func() error {
