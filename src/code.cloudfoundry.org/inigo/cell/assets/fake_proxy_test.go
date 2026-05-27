@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -27,10 +26,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 
 	AfterEach(func() {
 		gexec.CleanupBuildArtifacts()
-		// On Windows, add a small delay to ensure ports are released
-		if runtime.GOOS == "windows" {
-			time.Sleep(500 * time.Millisecond)
-		}
 	})
 
 	// Helper function for normal exit codes
@@ -39,17 +34,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		command := exec.Command(proxyPath)
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
-
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
 
 		// Wait for proxy to start listening on port 61001
 		Eventually(func() error {
@@ -79,17 +63,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
 
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
-
 		// Wait for proxy to start listening on port 61001
 		Eventually(func() error {
 			client := &http.Client{Timeout: 1 * time.Second}
@@ -112,7 +85,7 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 
 		// Verify SIGABRT simulation exit code (panic results in exit code 2)
 		actualExitCode := session.ExitCode()
-		Expect(actualExitCode).To(Equal(2),
+		Expect(actualExitCode).To(Equal(2), 
 			fmt.Sprintf("Expected panic exit code 2 for SIGABRT simulation, got %d", actualExitCode))
 	}
 
@@ -135,17 +108,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		command := exec.Command(fakeProxyPath)
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
-
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
 
 		// Wait for proxy to start
 		Eventually(func() error {
@@ -192,17 +154,6 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).NotTo(HaveOccurred())
 
-		// Ensure cleanup on test completion
-		defer func() {
-			if session.ExitCode() == -1 { // Process still running
-				session.Kill()
-			}
-			// On Windows, add extra cleanup time
-			if runtime.GOOS == "windows" {
-				time.Sleep(100 * time.Millisecond)
-			}
-		}()
-
 		// Wait for proxy to start listening
 		Eventually(func() error {
 			client := &http.Client{Timeout: 1 * time.Second}
@@ -217,13 +168,7 @@ var _ = Describe("Fake Proxy Exit Behavior", Serial, func() {
 		// Send SIGTERM to simulate natural shutdown
 		session.Terminate()
 
-		// Cross-platform exit code handling
-		if runtime.GOOS == "windows" {
-			// Windows doesn't have SIGTERM, process exits naturally
-			Eventually(session, 10*time.Second).Should(gexec.Exit(42))
-		} else {
-			// Unix systems: SIGTERM results in exit code 143 (128 + 15)
-			Eventually(session, 10*time.Second).Should(gexec.Exit(143))
-		}
+		// Should exit with code 42
+		Eventually(session, 10*time.Second).Should(gexec.Exit(143))
 	})
 })
