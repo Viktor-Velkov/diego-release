@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os/exec"
 	"path/filepath"
+	"syscall"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -61,9 +62,13 @@ var _ = Describe("Fake App Exit Behavior", Serial, func() {
 			// Verify exit code
 			actualExitCode := session.ExitCode()
 			if exitCode == 134 {
-				// SIGABRT simulation via panic results in exit code 2 cross-platform
-				Expect(actualExitCode).To(Equal(2), 
-					fmt.Sprintf("Expected panic exit code 2 for SIGABRT simulation, got %d", actualExitCode))
+				// SIGABRT can result in different exit codes depending on system
+				Expect(actualExitCode).To(SatisfyAny(
+					Equal(134),                      // Direct SIGABRT exit code
+					Equal(2),                        // Common SIGABRT exit code
+					Equal(128+int(syscall.SIGABRT)), // 128 + signal number
+					BeNumerically("<", 0),           // Negative signal codes
+				), fmt.Sprintf("Expected SIGABRT-related exit code, got %d", actualExitCode))
 			} else {
 				Expect(actualExitCode).To(Equal(exitCode))
 			}

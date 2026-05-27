@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"syscall"
 	"time"
 )
 
@@ -35,9 +36,7 @@ func main() {
 		go func() {
 			time.Sleep(ExitDelay)
 			if exitCode == SigabrtExitCode {
-				// Simulate SIGABRT behavior cross-platform
-				// Use panic to simulate abnormal termination (similar to SIGABRT)
-				panic("simulated SIGABRT exit")
+				syscall.Kill(syscall.Getpid(), syscall.SIGABRT)
 			} else {
 				os.Exit(exitCode)
 			}
