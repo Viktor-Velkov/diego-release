@@ -15,6 +15,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"time"
 
 	"code.cloudfoundry.org/bbs"
@@ -133,10 +134,29 @@ func main() {
 	preloadedRootFSesWithVersions := rep.StackPathMap(preloadedRootFSes).StackVersionList()
 	extraRootFSesWithVersions := extraRootFSes.StackVersionList()
 
+	// Silk-daemon needs ~60s to fully initialize for CNI operations. GetRootFSSizes
+	// (inside Initialize) creates a Garden container that triggers the silk CNI
+	// plugin's 'up' action; if silk-daemon is not yet ready this fails and would
+	// crash rep, causing a ~53s Monit restart cycle. Retry until silk is ready.
 	executorClient, containerMetricsProvider, executorMembers, err := executorinit.Initialize(logger, repConfig.ExecutorConfig, repConfig.CellID, repConfig.Zone, rootFSMap, sidecarRootFSPath, metronClient, clock)
-	if err != nil {
-		logger.Error("failed-to-initialize-executor", err)
-		os.Exit(1)
+	for attempt := 1; err != nil; attempt++ {
+		// Non-transient errors (e.g. bad config, permission denied) indicate a
+		// real misconfiguration that retrying will not fix; exit immediately so
+		// Monit surfaces the root cause rather than masking it with retry noise.
+		if !isTransientSilkError(err) {
+			logger.Error("failed-to-initialize-executor-genuine-error", err)
+			os.Exit(1)
+		}
+		// 60 attempts × 2 s = 120 s budget for silk-daemon to become ready.
+		// If silk is still not up after that, give up and let Monit restart rep;
+		// something is genuinely wrong with the network stack on this cell.
+		if attempt > 60 {
+			logger.Error("failed-to-initialize-executor-timeout", err)
+			os.Exit(1)
+		}
+		logger.Error("failed-to-initialize-executor-retrying", err, lager.Data{"attempt": attempt})
+		time.Sleep(2 * time.Second)
+		executorClient, containerMetricsProvider, executorMembers, err = executorinit.Initialize(logger, repConfig.ExecutorConfig, repConfig.CellID, repConfig.Zone, rootFSMap, sidecarRootFSPath, metronClient, clock)
 	}
 	defer executorClient.Cleanup(logger)
 
@@ -446,4 +466,10 @@ func verifyCertificate(serverCertFile string) error {
 	}
 
 	return errors.New("invalid SAN metadata. certificate needs to contain 127.0.0.1 for IP SAN metadata.")
+}
+
+func isTransientSilkError(err error) bool {
+	return errors.Is(err, syscall.ECONNREFUSED) ||
+		errors.Is(err, syscall.ENOENT) ||
+		errors.Is(err, syscall.ECONNRESET)
 }
