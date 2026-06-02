@@ -20,14 +20,14 @@ require (
 	code.cloudfoundry.org/clock v1.72.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260601130146-10715408e47d
 	code.cloudfoundry.org/debugserver v0.99.0
-	code.cloudfoundry.org/diego-logging-client v0.108.0
+	code.cloudfoundry.org/diego-logging-client v0.109.0
 	code.cloudfoundry.org/dockerdriver v0.91.0
 	code.cloudfoundry.org/durationjson v0.74.0
 	code.cloudfoundry.org/eventhub v0.74.0
 	code.cloudfoundry.org/garden v0.0.0-20260527025323-7fe1cefbd6e8
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.100.0
-	code.cloudfoundry.org/guardian v0.0.0-20260601200948-f8d2c4635d0d
+	code.cloudfoundry.org/guardian v0.0.0-20260602111117-de2a0ef7e66c
 	code.cloudfoundry.org/lager/v3 v3.71.0
 	code.cloudfoundry.org/localip v0.73.0
 	code.cloudfoundry.org/tlsconfig v0.57.0
@@ -110,7 +110,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.30.19 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.42.3 // indirect
-	github.com/aws/smithy-go v1.26.0 // indirect
+	github.com/aws/smithy-go v1.27.0 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.176 // indirect
@@ -152,8 +152,8 @@ require (
 	github.com/moby/sys/reexec v0.1.0 // indirect
 	github.com/moby/sys/user v0.4.0 // indirect
 	github.com/moby/sys/userns v0.1.0 // indirect
-	github.com/nats-io/jwt/v2 v2.8.1 // indirect
-	github.com/nats-io/nkeys v0.4.15 // indirect
+	github.com/nats-io/jwt/v2 v2.8.2 // indirect
+	github.com/nats-io/nkeys v0.4.16 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/opencontainers/cgroups v0.0.6 // indirect
 	github.com/opencontainers/runtime-spec v1.3.0 // indirect
