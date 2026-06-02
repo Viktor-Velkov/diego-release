@@ -614,12 +614,12 @@ code.cloudfoundry.org/commandrunner v0.64.0 h1:fRV1rgXffAHd8kAKcgCRqaQy7Kh4FWurv
 code.cloudfoundry.org/commandrunner v0.64.0/go.mod h1:Im7uhyI9Q39+Q34U6JOOB/kgIlA8GDJZ+JV8rHXMM2s=
 code.cloudfoundry.org/credhub-cli v0.0.0-20260601130146-10715408e47d h1:5a0FQGBx1qNhlbr+HlOfAgE1IRAHHuSrImZSChVJdA0=
 code.cloudfoundry.org/credhub-cli v0.0.0-20260601130146-10715408e47d/go.mod h1:aUbXC6IRXF7jRgoybPRNTcmjPxYTkszv6kC3ghwnn5E=
-code.cloudfoundry.org/debugserver v0.98.0 h1:Dngw0FvRYt1CapcK7qVBMM96wJ6BVR7RL0jq6xH2q10=
-code.cloudfoundry.org/debugserver v0.98.0/go.mod h1:IH9tfHuBfels0NyfvwwISaGhwByEh808WaGdVEDKHAc=
+code.cloudfoundry.org/debugserver v0.99.0 h1:pWnAMh/Prg6Gm8RVht0xsNx5hOoT74TjFIh83x5jVU8=
+code.cloudfoundry.org/debugserver v0.99.0/go.mod h1:xCyCSqe1tjweb4XR/AZyhfSIELY9oBbjyjXRQBNQxMc=
 code.cloudfoundry.org/diego-logging-client v0.108.0 h1:1GE1m5SLU+M797ny1MFgmFNGM2U21mDurEJgqICxd54=
 code.cloudfoundry.org/diego-logging-client v0.108.0/go.mod h1:MnNMVeDhBNFvhdWit/et4L70vHQn3xLw3DfjFbQCofA=
-code.cloudfoundry.org/dockerdriver v0.90.0 h1:A5gumaV4u76nnnLCjZDmofluBFOwcz4Bf0K8B2Tv00o=
-code.cloudfoundry.org/dockerdriver v0.90.0/go.mod h1:nZex1+1plThq0h19Mw+GSDqxkq7r5w/cJJ5unwR6DNk=
+code.cloudfoundry.org/dockerdriver v0.91.0 h1:p4ETFl3Bp49MpEVH68yiD/Jn69dtP9kzpEKGE02J61M=
+code.cloudfoundry.org/dockerdriver v0.91.0/go.mod h1:KSZi9wdZ34bta9bMr5ui+hpj0fY+u0dAJPVsKzwrBbc=
 code.cloudfoundry.org/durationjson v0.74.0 h1:zZlyTMbIRGH12ZePBRpRCTNo13DuOftjfsLCsBdXyxQ=
 code.cloudfoundry.org/durationjson v0.74.0/go.mod h1:SPry6fbwk/91n57885QZi2ce+fAE8ExEDwxLoA78hOo=
 code.cloudfoundry.org/eventhub v0.74.0 h1:uh1220rLC0fhDffnMe40jfn9JaQ9rn2XBpz3Pyd2nAg=
@@ -634,8 +634,8 @@ code.cloudfoundry.org/lager/v3 v3.71.0 h1:Jm2vkbp2daadOwWrDWmdRqFN0lPy6fkEicAEP1
 code.cloudfoundry.org/lager/v3 v3.71.0/go.mod h1:4ZEDdXpEDs64bd5kTxQwQMCNeWSFd+5bnL9UeDObNug=
 code.cloudfoundry.org/localip v0.73.0 h1:ur3oXK07F5AKuh5Dsu5fKXMUnvdd/b/8qZZCSPFDuTs=
 code.cloudfoundry.org/localip v0.73.0/go.mod h1:hEP7bJh6SHbmX21DyGW6r2+Xs9jK8xmrQobY9G5clgg=
-code.cloudfoundry.org/tlsconfig v0.56.0 h1:e14srEFrmPLKZ72Ypt9UHU0ugeUNwPbEMNfQKPW4RFE=
-code.cloudfoundry.org/tlsconfig v0.56.0/go.mod h1:ndDtw7ix5kZp8GR/AO/7E6BrhGaAA7HJ49Gkl8hkO/g=
+code.cloudfoundry.org/tlsconfig v0.57.0 h1:Kq+K4FNb/jDZxJ7E+l619c7ekDrNV6EYv3r6AszRMOU=
+code.cloudfoundry.org/tlsconfig v0.57.0/go.mod h1:C7+gD2NiT/00LliHJOGJhpjO9myczswc3uvv2++payw=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 filippo.io/edwards25519 v1.2.0 h1:crnVqOiS4jqYleHd9vaKZ+HKtHfllngJIiOpNpoJsjo=
 filippo.io/edwards25519 v1.2.0/go.mod h1:xzAOLCNug/yB62zG1bQ8uziwrIqIuxhctzJT18Q77mc=
