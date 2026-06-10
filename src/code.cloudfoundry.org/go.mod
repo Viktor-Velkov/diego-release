@@ -3,7 +3,8 @@ module code.cloudfoundry.org
 go 1.26.3
 
 replace (
-	code.cloudfoundry.org/db-helpers => /Users/gf009738/workspace/diego-db-helpers
+	code.cloudfoundry.org/bbs => ./bbs
+	code.cloudfoundry.org/diego-db-helpers => /Users/gf009738/workspace/diego-db-helpers
 	code.cloudfoundry.org/garden => ../garden
 	code.cloudfoundry.org/grootfs => ../grootfs
 	code.cloudfoundry.org/guardian => ../guardian
@@ -11,8 +12,8 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/db-helpers v0.1.0
 	code.cloudfoundry.org/archiver v0.74.0
+	code.cloudfoundry.org/bbs v0.0.0
 	code.cloudfoundry.org/bytefmt v0.76.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 	code.cloudfoundry.org/certsplitter v0.75.0
@@ -22,6 +23,7 @@ require (
 	code.cloudfoundry.org/clock v1.74.0
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260608130158-4f39f88ded1d
 	code.cloudfoundry.org/debugserver v0.101.0
+	code.cloudfoundry.org/diego-db-helpers v0.1.0
 	code.cloudfoundry.org/diego-logging-client v0.111.0
 	code.cloudfoundry.org/dockerdriver v0.93.0
 	code.cloudfoundry.org/durationjson v0.76.0
@@ -50,7 +52,6 @@ require (
 	github.com/fsnotify/fsnotify v1.10.1
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-sql-driver/mysql v1.10.0
-	github.com/go-test/deep v1.1.1
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/golang/protobuf v1.5.4
@@ -58,7 +59,6 @@ require (
 	github.com/gopacket/gopacket v1.6.1
 	github.com/hashicorp/errwrap v1.1.0
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/jackc/pgx/v5 v5.10.0
 	github.com/kr/pty v1.1.8
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/moby/term v0.5.2
@@ -133,6 +133,7 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v1.3.3 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
+	github.com/go-test/deep v1.1.1 // indirect
 	github.com/godbus/dbus/v5 v5.2.2 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/go-tpm v0.9.8 // indirect
@@ -142,6 +143,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/pgx/v5 v5.10.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
