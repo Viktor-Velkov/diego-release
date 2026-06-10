@@ -43,6 +43,12 @@ code.cloudfoundry.org/credhub-cli/credhub/credentials/generate
 code.cloudfoundry.org/credhub-cli/credhub/credentials/values
 code.cloudfoundry.org/credhub-cli/credhub/permissions
 code.cloudfoundry.org/credhub-cli/credhub/server
+# code.cloudfoundry.org/db-helpers v0.1.0 => /Users/gf009738/workspace/diego-db-helpers
+## explicit; go 1.26
+code.cloudfoundry.org/db-helpers/guidprovider
+code.cloudfoundry.org/db-helpers/sqldb/helpers
+code.cloudfoundry.org/db-helpers/sqldb/helpers/monitor
+code.cloudfoundry.org/db-helpers/testhelpers/sqlrunner
 # code.cloudfoundry.org/debugserver v0.101.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/debugserver
@@ -1018,6 +1024,7 @@ gorm.io/gorm/logger
 gorm.io/gorm/migrator
 gorm.io/gorm/schema
 gorm.io/gorm/utils
+# code.cloudfoundry.org/db-helpers => /Users/gf009738/workspace/diego-db-helpers
 # code.cloudfoundry.org/garden => ../garden
 # code.cloudfoundry.org/grootfs => ../grootfs
 # code.cloudfoundry.org/guardian => ../guardian

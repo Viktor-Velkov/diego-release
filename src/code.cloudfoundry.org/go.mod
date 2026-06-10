@@ -3,6 +3,7 @@ module code.cloudfoundry.org
 go 1.26.3
 
 replace (
+	code.cloudfoundry.org/db-helpers => /Users/gf009738/workspace/diego-db-helpers
 	code.cloudfoundry.org/garden => ../garden
 	code.cloudfoundry.org/grootfs => ../grootfs
 	code.cloudfoundry.org/guardian => ../guardian
@@ -10,6 +11,7 @@ replace (
 )
 
 require (
+	code.cloudfoundry.org/db-helpers v0.1.0
 	code.cloudfoundry.org/archiver v0.74.0
 	code.cloudfoundry.org/bytefmt v0.76.0
 	code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
