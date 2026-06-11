@@ -7,18 +7,17 @@ import (
 	"net/http"
 	"time"
 
-	bbsmodels "code.cloudfoundry.org/bbs/models"
 	cfhttp "code.cloudfoundry.org/cfhttp/v2"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/tlsconfig"
 	"github.com/tedsuo/rata"
 )
 
-// Client is the auctioneer client interface.
-// Also available as code.cloudfoundry.org/bbs/models.AuctioneerClient.
-//
 //go:generate counterfeiter -o auctioneerfakes/fake_client.go . Client
-type Client = bbsmodels.AuctioneerClient
+type Client interface {
+	RequestLRPAuctions(logger lager.Logger, traceID string, lrpStart []*LRPStartRequest) error
+	RequestTaskAuctions(logger lager.Logger, traceID string, tasks []*TaskStartRequest) error
+}
 
 const ClientRetryCount = 3
 
