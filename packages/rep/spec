@@ -11,12 +11,10 @@ files:
   - code.cloudfoundry.org/vendor/cel.dev/expr/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/archiver/compressor/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/archiver/extractor/*.go # gosub
-  - code.cloudfoundry.org/bbs/*.go # gosub
-  - code.cloudfoundry.org/bbs/encryption/*.go # gosub
-  - code.cloudfoundry.org/bbs/events/*.go # gosub
-  - code.cloudfoundry.org/bbs/format/*.go # gosub
-  - code.cloudfoundry.org/bbs/models/*.go # gosub
-  - code.cloudfoundry.org/bbs/trace/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/bbs/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/bbs/format/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/bbs/models/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/bbs/trace/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/bytefmt/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/cacheddownloader/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/cfhttp/v2/*.go # gosub
@@ -64,7 +62,7 @@ files:
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/internal/truncate/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/lagerflags/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/localip/*.go # gosub
-  - code.cloudfoundry.org/locket/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/*.go # gosub
   - code.cloudfoundry.org/locket/lock/*.go # gosub
   - code.cloudfoundry.org/locket/metrics/helpers/*.go # gosub
   - code.cloudfoundry.org/locket/models/*.go # gosub
@@ -212,10 +210,7 @@ files:
   - code.cloudfoundry.org/vendor/github.com/envoyproxy/protoc-gen-validate/validate/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/envoyproxy/protoc-gen-validate/validate/*.h # gosub
   - code.cloudfoundry.org/vendor/github.com/ghodss/yaml/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/gogoproto/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/proto/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/protoc-gen-gogo/descriptor/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/gogo/protobuf/sortkeys/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/duration/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/struct/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/golang/protobuf/ptypes/wrappers/*.go # gosub
@@ -233,7 +228,6 @@ files:
   - code.cloudfoundry.org/vendor/github.com/tedsuo/ifrit/http_server/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/tedsuo/ifrit/sigmon/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/tedsuo/rata/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/vito/go-sse/sse/*.go # gosub
   - code.cloudfoundry.org/vendor/golang.org/x/net/context/*.go # gosub
   - code.cloudfoundry.org/vendor/golang.org/x/net/http/httpguts/*.go # gosub
   - code.cloudfoundry.org/vendor/golang.org/x/net/http2/*.go # gosub
