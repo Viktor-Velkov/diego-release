@@ -22,7 +22,8 @@ func driver() string {
 }
 
 func UseMySQL() bool {
-	return driver() == mysqlFlavor || driver() == mysql8Flavor
+	d := driver()
+	return d == mysqlFlavor || d == mysql8Flavor
 }
 
 func UsePostgres() bool {

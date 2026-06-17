@@ -13,7 +13,7 @@
 [submodule "src/code.cloudfoundry.org/locket"]
 	path = src/code.cloudfoundry.org/locket
 	url = https://github.com/cloudfoundry/locket
-	branch = fix/use-connectparams-from-diego-db-helpers
+	branch = main
 [submodule "src/code.cloudfoundry.org/rep"]
 	path = src/code.cloudfoundry.org/rep
 	url = https://github.com/cloudfoundry/rep
