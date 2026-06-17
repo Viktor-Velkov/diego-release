@@ -1,7 +1,7 @@
 [submodule "src/code.cloudfoundry.org/bbs"]
 	path = src/code.cloudfoundry.org/bbs
 	url = https://github.com/cloudfoundry/bbs
-	branch = detangle-submodule-deps
+	branch = main
 [submodule "src/code.cloudfoundry.org/cacheddownloader"]
 	path = src/code.cloudfoundry.org/cacheddownloader
 	url = https://github.com/cloudfoundry/cacheddownloader
@@ -13,7 +13,7 @@
 [submodule "src/code.cloudfoundry.org/locket"]
 	path = src/code.cloudfoundry.org/locket
 	url = https://github.com/cloudfoundry/locket
-	branch = detangle-submodule-deps
+	branch = fix/use-connectparams-from-diego-db-helpers
 [submodule "src/code.cloudfoundry.org/rep"]
 	path = src/code.cloudfoundry.org/rep
 	url = https://github.com/cloudfoundry/rep
