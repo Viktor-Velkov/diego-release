@@ -67,7 +67,8 @@ datadir=C:\\var\\vcap\\data\\mysql
 ssl-cert=$certFile
 ssl-key=$keyFile
 ssl-ca=$caFile
-max_connections=1000"
+max_connections=1000
+mysql_native_password=ON"
 
   Restart-Service Mysql
 }
