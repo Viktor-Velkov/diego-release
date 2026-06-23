@@ -1,39 +1,57 @@
 # cel.dev/expr v0.25.2
 ## explicit; go 1.23.0
 cel.dev/expr
-# code.cloudfoundry.org/archiver v0.75.0
+# code.cloudfoundry.org/archiver v0.76.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/archiver/compressor
 code.cloudfoundry.org/archiver/extractor
 code.cloudfoundry.org/archiver/extractor/test_helper
-# code.cloudfoundry.org/bytefmt v0.77.0
+# code.cloudfoundry.org/bbs v1.6.0
+## explicit; go 1.26.2
+code.cloudfoundry.org/bbs
+code.cloudfoundry.org/bbs/cmd/bbs/config
+code.cloudfoundry.org/bbs/cmd/bbs/testrunner
+code.cloudfoundry.org/bbs/db/sqldb/helpers
+code.cloudfoundry.org/bbs/events
+code.cloudfoundry.org/bbs/events/eventfakes
+code.cloudfoundry.org/bbs/fake_bbs
+code.cloudfoundry.org/bbs/handlers/middleware
+code.cloudfoundry.org/bbs/serviceclient
+code.cloudfoundry.org/bbs/test_helpers
+code.cloudfoundry.org/bbs/test_helpers/sqlrunner
+code.cloudfoundry.org/bbs/trace
+# code.cloudfoundry.org/bbs/encryption v1.7.0
+## explicit; go 1.26.2
+code.cloudfoundry.org/bbs/encryption
+# code.cloudfoundry.org/bbs/format v1.7.0
+## explicit; go 1.26.2
+code.cloudfoundry.org/bbs/format
+# code.cloudfoundry.org/bbs/models v1.6.0
+## explicit; go 1.26.2
+code.cloudfoundry.org/bbs/models
+code.cloudfoundry.org/bbs/models/test/model_helpers
+# code.cloudfoundry.org/bytefmt v0.78.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/bytefmt
 # code.cloudfoundry.org/cacheddownloader v0.0.0-20250312193827-23c030d5e4f3
 ## explicit; go 1.21
 code.cloudfoundry.org/cacheddownloader
 code.cloudfoundry.org/cacheddownloader/cacheddownloaderfakes
-# code.cloudfoundry.org/certsplitter v0.76.0
+# code.cloudfoundry.org/certsplitter v0.77.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/certsplitter/cmd/certsplitter
-# code.cloudfoundry.org/cf-routing-test-helpers v0.0.0-20250228152907-f87c227cf5e7
-## explicit
-code.cloudfoundry.org/cf-routing-test-helpers/tls
-# code.cloudfoundry.org/cf-tcp-router v0.0.0-20250228153011-2de6b290768e
-## explicit
-code.cloudfoundry.org/cf-tcp-router/utils
-# code.cloudfoundry.org/cfhttp/v2 v2.82.0
+# code.cloudfoundry.org/cfhttp/v2 v2.83.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/cfhttp/v2
 code.cloudfoundry.org/cfhttp/v2/handlers
-# code.cloudfoundry.org/clock v1.75.0
+# code.cloudfoundry.org/clock v1.76.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/clock
 code.cloudfoundry.org/clock/fakeclock
-# code.cloudfoundry.org/commandrunner v0.66.0
+# code.cloudfoundry.org/commandrunner v0.67.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/commandrunner
-# code.cloudfoundry.org/credhub-cli v0.0.0-20260615130246-5a953b5cfb54
+# code.cloudfoundry.org/credhub-cli v0.0.0-20260622130231-57c8cb0f1d6e
 ## explicit; go 1.25.7
 code.cloudfoundry.org/credhub-cli/credhub
 code.cloudfoundry.org/credhub-cli/credhub/auth
@@ -43,26 +61,31 @@ code.cloudfoundry.org/credhub-cli/credhub/credentials/generate
 code.cloudfoundry.org/credhub-cli/credhub/credentials/values
 code.cloudfoundry.org/credhub-cli/credhub/permissions
 code.cloudfoundry.org/credhub-cli/credhub/server
-# code.cloudfoundry.org/debugserver v0.102.0
+# code.cloudfoundry.org/debugserver v0.103.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/debugserver
-# code.cloudfoundry.org/diego-logging-client v0.112.0
+# code.cloudfoundry.org/diego-db-helpers v0.5.0
+## explicit; go 1.26.0
+code.cloudfoundry.org/diego-db-helpers/sqldb/helpers
+code.cloudfoundry.org/diego-db-helpers/sqldb/helpers/monitor
+code.cloudfoundry.org/diego-db-helpers/testhelpers/sqlrunner
+# code.cloudfoundry.org/diego-logging-client v0.113.0
 ## explicit; go 1.25.8
 code.cloudfoundry.org/diego-logging-client
 code.cloudfoundry.org/diego-logging-client/testhelpers
-# code.cloudfoundry.org/dockerdriver v0.94.0
+# code.cloudfoundry.org/dockerdriver v0.95.0
 ## explicit; go 1.25.8
 code.cloudfoundry.org/dockerdriver
 code.cloudfoundry.org/dockerdriver/dockerdriverfakes
 code.cloudfoundry.org/dockerdriver/driverhttp
 code.cloudfoundry.org/dockerdriver/utils
-# code.cloudfoundry.org/durationjson v0.77.0
+# code.cloudfoundry.org/durationjson v0.78.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/durationjson
-# code.cloudfoundry.org/eventhub v0.77.0
+# code.cloudfoundry.org/eventhub v0.78.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/eventhub
-# code.cloudfoundry.org/garden v0.0.0-20260615182558-dd88c014d8c3 => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20260617020226-a9e754564bb5 => ../garden
 ## explicit; go 1.25.0
 code.cloudfoundry.org/garden
 code.cloudfoundry.org/garden/client
@@ -75,7 +98,7 @@ code.cloudfoundry.org/garden/server/bomberman
 code.cloudfoundry.org/garden/server/streamer
 code.cloudfoundry.org/garden/server/timebomb
 code.cloudfoundry.org/garden/transport
-# code.cloudfoundry.org/go-diodes v0.0.0-20260615142411-472d6bcdb3c6
+# code.cloudfoundry.org/go-diodes v0.0.0-20260622134745-74c0e1643bdd
 ## explicit; go 1.25.0
 code.cloudfoundry.org/go-diodes
 # code.cloudfoundry.org/go-loggregator/v9 v9.2.1
@@ -83,13 +106,13 @@ code.cloudfoundry.org/go-diodes
 code.cloudfoundry.org/go-loggregator/v9
 code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2
 code.cloudfoundry.org/go-loggregator/v9/runtimeemitter
-# code.cloudfoundry.org/goshims v0.103.0
+# code.cloudfoundry.org/goshims v0.104.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/goshims/filepathshim
 code.cloudfoundry.org/goshims/http_wrap
 code.cloudfoundry.org/goshims/osshim
 code.cloudfoundry.org/goshims/osshim/os_fake
-# code.cloudfoundry.org/guardian v0.0.0-20260615183112-52475cbb9ab6 => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20260617020628-23df023654fd => ../guardian
 ## explicit; go 1.26.3
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -102,16 +125,38 @@ code.cloudfoundry.org/guardian/rundmc/cgroups
 code.cloudfoundry.org/guardian/rundmc/cgroups/fs
 code.cloudfoundry.org/guardian/rundmc/event
 code.cloudfoundry.org/guardian/rundmc/goci
-# code.cloudfoundry.org/lager/v3 v3.74.0
+# code.cloudfoundry.org/lager/v3 v3.75.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/lager/v3
 code.cloudfoundry.org/lager/v3/internal/truncate
 code.cloudfoundry.org/lager/v3/lagerctx
 code.cloudfoundry.org/lager/v3/lagerflags
 code.cloudfoundry.org/lager/v3/lagertest
-# code.cloudfoundry.org/localip v0.76.0
+# code.cloudfoundry.org/localip v0.77.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/localip
+# code.cloudfoundry.org/locket v1.3.0
+## explicit; go 1.26.0
+code.cloudfoundry.org/locket
+code.cloudfoundry.org/locket/cmd/locket/certauthority
+code.cloudfoundry.org/locket/cmd/locket/config
+code.cloudfoundry.org/locket/cmd/locket/testrunner
+code.cloudfoundry.org/locket/jointlock
+code.cloudfoundry.org/locket/lock
+code.cloudfoundry.org/locket/lockheldmetrics
+code.cloudfoundry.org/locket/metrics/helpers
+code.cloudfoundry.org/locket/metrics/helpers/helpersfakes
+code.cloudfoundry.org/locket/models
+code.cloudfoundry.org/locket/models/modelsfakes
+# code.cloudfoundry.org/routing-api v0.2.0
+## explicit; go 1.26.4
+code.cloudfoundry.org/routing-api
+code.cloudfoundry.org/routing-api/config
+code.cloudfoundry.org/routing-api/fake_routing_api
+code.cloudfoundry.org/routing-api/models
+code.cloudfoundry.org/routing-api/trace
+code.cloudfoundry.org/routing-api/uaaclient
+code.cloudfoundry.org/routing-api/uaaclient/fakes
 # code.cloudfoundry.org/tlsconfig v0.60.0
 ## explicit; go 1.25.8
 code.cloudfoundry.org/tlsconfig
@@ -270,9 +315,6 @@ github.com/awslabs/amazon-ecr-credential-helper/ecr-login/version
 # github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f
 ## explicit
 github.com/bmizerany/pat
-# github.com/cactus/go-statsd-client v3.1.1-0.20161031215955-d8eabe07bc70+incompatible
-## explicit
-github.com/cactus/go-statsd-client/statsd
 # github.com/cespare/xxhash/v2 v2.3.0
 ## explicit; go 1.11
 github.com/cespare/xxhash/v2
@@ -282,26 +324,15 @@ github.com/cloudfoundry-community/go-uaa
 github.com/cloudfoundry-community/go-uaa/passwordcredentials
 # github.com/cloudfoundry/dropsonde v1.1.0
 ## explicit; go 1.18
-github.com/cloudfoundry/dropsonde
-github.com/cloudfoundry/dropsonde/emitter
-github.com/cloudfoundry/dropsonde/envelope_sender
-github.com/cloudfoundry/dropsonde/envelopes
-github.com/cloudfoundry/dropsonde/factories
-github.com/cloudfoundry/dropsonde/instrumented_handler
-github.com/cloudfoundry/dropsonde/instrumented_round_tripper
-github.com/cloudfoundry/dropsonde/log_sender
-github.com/cloudfoundry/dropsonde/logs
 github.com/cloudfoundry/dropsonde/metric_sender
-github.com/cloudfoundry/dropsonde/metricbatcher
 github.com/cloudfoundry/dropsonde/metrics
-github.com/cloudfoundry/dropsonde/runtime_stats
 # github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851
 ## explicit; go 1.21.0
 github.com/cloudfoundry/go-socks5
-# github.com/cloudfoundry/socks5-proxy v0.2.178
+# github.com/cloudfoundry/socks5-proxy v0.2.179
 ## explicit; go 1.25.0
 github.com/cloudfoundry/socks5-proxy
-# github.com/cloudfoundry/sonde-go v0.0.0-20260526083715-66f310f13c26
+# github.com/cloudfoundry/sonde-go v0.0.0-20260622134720-d7b012c5b9c4
 ## explicit; go 1.23
 github.com/cloudfoundry/sonde-go/events
 # github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2
@@ -375,7 +406,7 @@ github.com/coreos/go-systemd/v22/dbus
 # github.com/creack/pty v1.1.24
 ## explicit; go 1.18
 github.com/creack/pty
-# github.com/cyphar/filepath-securejoin v0.6.1
+# github.com/cyphar/filepath-securejoin v0.7.0
 ## explicit; go 1.18
 github.com/cyphar/filepath-securejoin
 github.com/cyphar/filepath-securejoin/internal/consts
@@ -553,12 +584,6 @@ github.com/jackc/pgx/v5/stdlib
 ## explicit; go 1.19
 github.com/jackc/puddle/v2
 github.com/jackc/puddle/v2/internal/genstack
-# github.com/jinzhu/inflection v1.0.0
-## explicit
-github.com/jinzhu/inflection
-# github.com/jinzhu/now v1.1.5
-## explicit; go 1.12
-github.com/jinzhu/now
 # github.com/klauspost/compress v1.18.6
 ## explicit; go 1.24
 github.com/klauspost/compress/flate
@@ -636,7 +661,7 @@ github.com/nats-io/nuid
 # github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
 ## explicit
 github.com/nu7hatch/gouuid
-# github.com/onsi/ginkgo/v2 v2.31.0
+# github.com/onsi/ginkgo/v2 v2.32.0
 ## explicit; go 1.25.0
 github.com/onsi/ginkgo/v2
 github.com/onsi/ginkgo/v2/config
@@ -683,8 +708,8 @@ github.com/onsi/gomega/types
 # github.com/onsi/say v1.2.0
 ## explicit; go 1.18
 github.com/onsi/say
-# github.com/opencontainers/cgroups v0.0.6
-## explicit; go 1.23.0
+# github.com/opencontainers/cgroups v0.0.7
+## explicit; go 1.24.0
 github.com/opencontainers/cgroups
 github.com/opencontainers/cgroups/devices/config
 github.com/opencontainers/cgroups/fs
@@ -885,10 +910,10 @@ golang.org/x/tools/internal/stdlib
 golang.org/x/tools/internal/typeparams
 golang.org/x/tools/internal/typesinternal
 golang.org/x/tools/internal/versions
-# google.golang.org/genproto/googleapis/api v0.0.0-20260615183401-62b3387ff324
+# google.golang.org/genproto/googleapis/api v0.0.0-20260622175928-b703f567277d
 ## explicit; go 1.25.0
 google.golang.org/genproto/googleapis/api/expr/v1alpha1
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20260615183401-62b3387ff324
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20260622175928-b703f567277d
 ## explicit; go 1.25.0
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.81.1
@@ -1001,23 +1026,6 @@ gopkg.in/yaml.v2
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
-# gorm.io/driver/mysql v1.6.0
-## explicit; go 1.18
-gorm.io/driver/mysql
-# gorm.io/driver/postgres v1.6.0
-## explicit; go 1.20
-gorm.io/driver/postgres
-# gorm.io/gorm v1.31.1
-## explicit; go 1.18
-gorm.io/gorm
-gorm.io/gorm/callbacks
-gorm.io/gorm/clause
-gorm.io/gorm/internal/lru
-gorm.io/gorm/internal/stmt_store
-gorm.io/gorm/logger
-gorm.io/gorm/migrator
-gorm.io/gorm/schema
-gorm.io/gorm/utils
 # code.cloudfoundry.org/garden => ../garden
 # code.cloudfoundry.org/grootfs => ../grootfs
 # code.cloudfoundry.org/guardian => ../guardian
