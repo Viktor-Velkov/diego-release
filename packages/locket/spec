@@ -22,16 +22,16 @@ files:
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/internal/truncate/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/lagerflags/*.go # gosub
-  - code.cloudfoundry.org/locket/*.go # gosub
-  - code.cloudfoundry.org/locket/cmd/locket/*.go # gosub
-  - code.cloudfoundry.org/locket/cmd/locket/config/*.go # gosub
-  - code.cloudfoundry.org/locket/db/*.go # gosub
-  - code.cloudfoundry.org/locket/expiration/*.go # gosub
-  - code.cloudfoundry.org/locket/grpcserver/*.go # gosub
-  - code.cloudfoundry.org/locket/handlers/*.go # gosub
-  - code.cloudfoundry.org/locket/metrics/*.go # gosub
-  - code.cloudfoundry.org/locket/metrics/helpers/*.go # gosub
-  - code.cloudfoundry.org/locket/models/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/cmd/locket/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/cmd/locket/config/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/db/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/expiration/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/grpcserver/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/handlers/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/metrics/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/metrics/helpers/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/locket/models/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/tlsconfig/*.go # gosub
   - code.cloudfoundry.org/vendor/filippo.io/edwards25519/*.go # gosub
   - code.cloudfoundry.org/vendor/filippo.io/edwards25519/field/*.go # gosub

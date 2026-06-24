@@ -1,22 +1,6 @@
-[submodule "src/code.cloudfoundry.org/bbs"]
-	path = src/code.cloudfoundry.org/bbs
-	url = https://github.com/cloudfoundry/bbs
-	branch = main
-[submodule "src/code.cloudfoundry.org/locket"]
-	path = src/code.cloudfoundry.org/locket
-	url = https://github.com/cloudfoundry/locket
-	branch = main
 [submodule "src/code.cloudfoundry.org/garden"]
 	path = src/garden
 	url = https://github.com/cloudfoundry/garden
-[submodule "src/code.cloudfoundry.org/routing-info"]
-	path = src/code.cloudfoundry.org/routing-info
-	url = https://github.com/cloudfoundry-incubator/routing-info
-	branch = main
-[submodule "src/code.cloudfoundry.org/routing-api"]
-	path = src/code.cloudfoundry.org/routing-api
-	url = https://github.com/cloudfoundry-incubator/routing-api
-	branch = main
 [submodule "src/code.cloudfoundry.org/guardian"]
 	path = src/guardian
 	url = https://github.com/cloudfoundry/guardian
@@ -45,8 +29,4 @@
 [submodule "src/grootfs"]
 	path = src/grootfs
 	url = https://github.com/cloudfoundry/grootfs
-	branch = main
-[submodule "src/cnbapplifecycle"]
-	path = src/cnbapplifecycle
-	url = https://github.com/cloudfoundry/cnbapplifecycle
 	branch = main
