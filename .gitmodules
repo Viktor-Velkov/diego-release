@@ -2,25 +2,9 @@
 	path = src/code.cloudfoundry.org/bbs
 	url = https://github.com/cloudfoundry/bbs
 	branch = main
-[submodule "src/code.cloudfoundry.org/cacheddownloader"]
-	path = src/code.cloudfoundry.org/cacheddownloader
-	url = https://github.com/cloudfoundry/cacheddownloader
-	branch = main
-[submodule "src/code.cloudfoundry.org/executor"]
-	path = src/code.cloudfoundry.org/executor
-	url = https://github.com/cloudfoundry/executor
-	branch = main
 [submodule "src/code.cloudfoundry.org/locket"]
 	path = src/code.cloudfoundry.org/locket
 	url = https://github.com/cloudfoundry/locket
-	branch = main
-[submodule "src/code.cloudfoundry.org/rep"]
-	path = src/code.cloudfoundry.org/rep
-	url = https://github.com/cloudfoundry/rep
-	branch = main
-[submodule "src/code.cloudfoundry.org/buildpackapplifecycle"]
-	path = src/code.cloudfoundry.org/buildpackapplifecycle
-	url = https://github.com/cloudfoundry/buildpackapplifecycle
 	branch = main
 [submodule "src/code.cloudfoundry.org/garden"]
 	path = src/garden
