@@ -1,6 +1,8 @@
 package routingtable_test
 
 import (
+	"encoding/json"
+
 	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/route-emitter/routingtable"
 	"code.cloudfoundry.org/routing-info/tcp_routes"
@@ -47,6 +49,49 @@ var _ = Describe("LRP Utils", func() {
 
 			Expect(hashA).To(Equal(hashB))
 			Expect(hashA).NotTo(Equal(hashC))
+		})
+	})
+
+	Describe("HashWithOptions", func() {
+		It("treats semantically identical JSON options as equal regardless of key order", func() {
+			routeAlpha := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`{"b":2,"a":1}`),
+			}
+			routeBeta := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`{"a":1,"b":2}`),
+			}
+			Expect(routeAlpha.HashWithOptions()).To(Equal(routeBeta.HashWithOptions()))
+		})
+
+		It("distinguishes routes with different option values", func() {
+			routeAlpha := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`{"loadbalancing":"hash"}`),
+			}
+			routeBeta := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`{"loadbalancing":"round-robin"}`),
+			}
+			Expect(routeAlpha.HashWithOptions()).NotTo(Equal(routeBeta.HashWithOptions()))
+		})
+
+		It("distinguishes a route with options from one without", func() {
+			withOptions := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`{"loadbalancing":"hash"}`),
+			}
+			withoutOptions := routingtable.Route{
+				Hostname: "foo.example.com",
+			}
+			Expect(withOptions.HashWithOptions()).NotTo(Equal(withoutOptions.HashWithOptions()))
+		})
+
+		It("treats nil and empty options as equal", func() {
+			withNil := routingtable.Route{Hostname: "foo.example.com", Options: nil}
+			withEmpty := routingtable.Route{Hostname: "foo.example.com", Options: json.RawMessage{}}
+			Expect(withNil.HashWithOptions()).To(Equal(withEmpty.HashWithOptions()))
 		})
 	})
 

@@ -1,6 +1,7 @@
 package routingtable_test
 
 import (
+	"encoding/json"
 	"fmt"
 
 	mfakes "code.cloudfoundry.org/diego-logging-client/testhelpers"
@@ -643,6 +644,128 @@ var _ = Describe("RoutingTable", func() {
 						UnregistrationMessages: []routingtable.RegistryMessage{
 							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname1, LogGUID: logGuid, RouteServiceUrl: "https://rs.example.com"}, false),
 							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname2, LogGUID: logGuid, RouteServiceUrl: "https://rs.example.com"}, false),
+						},
+					}
+					Expect(messagesToEmit).To(MatchMessagesToEmit(expected))
+				})
+			})
+		})
+
+		Context("when there is an existing routing key with options", func() {
+			var desiredLRP *models.DesiredLRP
+
+			createDesiredLRPWithOptions := func(options json.RawMessage) *models.DesiredLRP {
+				routingInfo := cfroutes.CFRoutes{
+					{
+						Hostnames: []string{hostname1, hostname2},
+						Port:      key.ContainerPort,
+						Options:   options,
+					},
+				}.RoutingInfo()
+				routes := models.Routes{}
+				for k, v := range routingInfo {
+					routes[k] = v
+				}
+				return createDesiredLRPWithRoutes(key.ProcessGUID, 3, routes, logGuid, *currentTag, runInfo)
+			}
+
+			BeforeEach(func() {
+				tempTable := routingtable.NewRoutingTable(false, false, fakeMetronClient)
+				desiredLRP = createDesiredLRPWithOptions(json.RawMessage(`{"loadbalancing":"hash"}`))
+				tempTable.SetRoutes(logger, nil, desiredLRP)
+				lrp := createActualLRP(key, endpoint1, domain)
+				tempTable.AddEndpoint(logger, lrp)
+				table.Swap(logger, tempTable, domains)
+			})
+
+			Context("when only options change in an event", func() {
+				BeforeEach(func() {
+					afterDesiredLRP := createDesiredLRPWithOptions(json.RawMessage(`{"loadbalancing":"round-robin"}`))
+					afterDesiredLRP.ModificationTag.Index++
+					_, messagesToEmit = table.SetRoutes(logger, desiredLRP, afterDesiredLRP)
+				})
+
+				It("registers the updated route without unregistering the old one", func() {
+					expected := routingtable.MessagesToEmit{
+						RegistrationMessages: []routingtable.RegistryMessage{
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname1, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname2, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+						},
+					}
+					Expect(messagesToEmit).To(MatchMessagesToEmit(expected))
+				})
+			})
+
+			Context("when only options change during sync", func() {
+				BeforeEach(func() {
+					tempTable := routingtable.NewRoutingTable(false, false, fakeMetronClient)
+					afterDesiredLRP := createDesiredLRPWithOptions(json.RawMessage(`{"loadbalancing":"round-robin"}`))
+					tempTable.SetRoutes(logger, nil, afterDesiredLRP)
+					lrp := createActualLRP(key, endpoint1, domain)
+					tempTable.AddEndpoint(logger, lrp)
+					_, messagesToEmit = table.Swap(logger, tempTable, domains)
+				})
+
+				It("registers the updated route without unregistering the old one", func() {
+					expected := routingtable.MessagesToEmit{
+						RegistrationMessages: []routingtable.RegistryMessage{
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname1, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname2, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+						},
+					}
+					Expect(messagesToEmit).To(MatchMessagesToEmit(expected))
+				})
+			})
+
+			Context("when options change and endpoints change simultaneously during sync", func() {
+				BeforeEach(func() {
+					tempTable := routingtable.NewRoutingTable(false, false, fakeMetronClient)
+					afterDesiredLRP := createDesiredLRPWithOptions(json.RawMessage(`{"loadbalancing":"round-robin"}`))
+					tempTable.SetRoutes(logger, nil, afterDesiredLRP)
+					lrp := createActualLRP(key, endpoint2, domain)
+					tempTable.AddEndpoint(logger, lrp)
+					_, messagesToEmit = table.Swap(logger, tempTable, domains)
+				})
+
+				It("registers the new endpoint with new options and unregisters the old endpoint with old options", func() {
+					expected := routingtable.MessagesToEmit{
+						RegistrationMessages: []routingtable.RegistryMessage{
+							routingtable.RegistryMessageFor(endpoint2, routingtable.Route{Hostname: hostname1, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+							routingtable.RegistryMessageFor(endpoint2, routingtable.Route{Hostname: hostname2, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+						},
+						UnregistrationMessages: []routingtable.RegistryMessage{
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname1, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"hash"}`)}, false),
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname2, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"hash"}`)}, false),
+						},
+					}
+					Expect(messagesToEmit).To(MatchMessagesToEmit(expected))
+				})
+			})
+
+			Context("when options change and a hostname is removed in the same event", func() {
+				BeforeEach(func() {
+					routingInfo := cfroutes.CFRoutes{
+						{
+							Hostnames: []string{hostname1},
+							Port:      key.ContainerPort,
+							Options:   json.RawMessage(`{"loadbalancing":"round-robin"}`),
+						},
+					}.RoutingInfo()
+					routes := models.Routes{}
+					for k, v := range routingInfo {
+						routes[k] = v
+					}
+					afterDesiredLRP := createDesiredLRPWithRoutes(key.ProcessGUID, 3, routes, logGuid, *newerTag, runInfo)
+					_, messagesToEmit = table.SetRoutes(logger, desiredLRP, afterDesiredLRP)
+				})
+
+				It("registers hostname1 with new options and unregisters hostname2 without a gap", func() {
+					expected := routingtable.MessagesToEmit{
+						RegistrationMessages: []routingtable.RegistryMessage{
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname1, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"round-robin"}`)}, false),
+						},
+						UnregistrationMessages: []routingtable.RegistryMessage{
+							routingtable.RegistryMessageFor(endpoint1, routingtable.Route{Hostname: hostname2, LogGUID: logGuid, Options: json.RawMessage(`{"loadbalancing":"hash"}`)}, false),
 						},
 					}
 					Expect(messagesToEmit).To(MatchMessagesToEmit(expected))
