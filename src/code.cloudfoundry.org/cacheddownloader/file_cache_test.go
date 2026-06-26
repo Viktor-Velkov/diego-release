@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"code.cloudfoundry.org/cacheddownloader"
@@ -767,6 +768,48 @@ var _ = Describe("FileCache", func() {
 							"/testdir/fileLink.txt",
 						))
 					})
+				})
+			})
+
+			Context("when removing the cached tarball fails", func() {
+				var expandedDir string
+
+				BeforeEach(func() {
+					if runtime.GOOS == "windows" || os.Getuid() == 0 {
+						Skip("cannot simulate a permission-denied removal as root or on windows")
+					}
+				})
+
+				JustBeforeEach(func() {
+					Expect(file.Close()).To(Succeed())
+
+					// Pre-create the extraction target so the tar extractor's
+					// (idempotent) directory creation succeeds even once cacheDir
+					// is locked down, leaving only the tarball's own removal to fail.
+					entry := cache.Entries[cacheKey]
+					expandedDir = entry.FilePath + ".d"
+					Expect(os.MkdirAll(expandedDir, 0755)).To(Succeed())
+					Expect(os.Chmod(cacheDir, 0555)).To(Succeed())
+
+					dir, cacheInfoType, getErr = cache.GetDirectory(logger, cacheKey)
+				})
+
+				AfterEach(func() {
+					Expect(os.Chmod(cacheDir, 0755)).To(Succeed())
+				})
+
+				It("still returns the directory without error", func() {
+					Expect(getErr).NotTo(HaveOccurred())
+					Expect(dir).To(Equal(expandedDir))
+					Expect(cacheInfoType).To(Equal(cacheInfo))
+				})
+
+				It("leaves the tarball on disk and does not halve the cached size", func() {
+					Expect(filenamesInDir(cacheDir)).To(HaveLen(2))
+
+					entry, ok := cache.Entries[cacheKey]
+					Expect(ok).To(BeTrue())
+					Expect(entry.Size).To(Equal(fileSize * 2))
 				})
 			})
 
