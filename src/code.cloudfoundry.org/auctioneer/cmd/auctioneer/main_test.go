@@ -13,6 +13,7 @@ import (
 	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/auctioneer/cmd/auctioneer/config"
 	"code.cloudfoundry.org/bbs"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/clock"
 	diego_logging_client "code.cloudfoundry.org/diego-logging-client"
 	"code.cloudfoundry.org/diego-logging-client/testhelpers"
@@ -23,7 +24,7 @@ import (
 	locketrunner "code.cloudfoundry.org/locket/cmd/locket/testrunner"
 	"code.cloudfoundry.org/locket/lock"
 	locketmodels "code.cloudfoundry.org/locket/models"
-	"code.cloudfoundry.org/rep"
+
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gbytes"
@@ -43,7 +44,7 @@ var _ = Describe("Auctioneer", func() {
 		runner            *ginkgomon.Runner
 		auctioneerProcess ifrit.Process
 
-		auctioneerClient auctioneer.Client
+		auctioneerClient models.AuctioneerClient
 
 		testIngressServer *testhelpers.TestIngressServer
 		testMetricsChan   chan *loggregator_v2.Envelope
@@ -180,18 +181,18 @@ var _ = Describe("Auctioneer", func() {
 
 	Context("when the auctioneer is configured to grab the lock from the sql locking server", func() {
 		var (
-			task *rep.Task
+			task *models.SchedulingTask
 		)
 
 		BeforeEach(func() {
-			task = &rep.Task{
+			task = &models.SchedulingTask{
 				TaskGuid: "task-guid",
 				Domain:   "test",
-				Resource: rep.Resource{
+				Resource: models.Resource{
 					MemoryMB: 124,
 					DiskMB:   456,
 				},
-				PlacementConstraint: rep.PlacementConstraint{
+				PlacementConstraint: models.PlacementConstraint{
 					RootFs: "some-rootfs",
 				},
 			}
@@ -207,8 +208,8 @@ var _ = Describe("Auctioneer", func() {
 
 		It("acquires the lock and becomes active", func() {
 			Eventually(func() error {
-				return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*auctioneer.TaskStartRequest{
-					&auctioneer.TaskStartRequest{Task: *task},
+				return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*models.TaskStartRequest{
+					&models.TaskStartRequest{Task: *task},
 				})
 			}).ShouldNot(HaveOccurred())
 		})
@@ -230,8 +231,8 @@ var _ = Describe("Auctioneer", func() {
 
 		It("emits metric about holding lock", func() {
 			Eventually(func() error {
-				return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*auctioneer.TaskStartRequest{
-					&auctioneer.TaskStartRequest{Task: *task},
+				return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*models.TaskStartRequest{
+					&models.TaskStartRequest{Task: *task},
 				})
 			}).ShouldNot(HaveOccurred())
 
@@ -280,8 +281,8 @@ var _ = Describe("Auctioneer", func() {
 
 			It("starts but does not accept auctions", func() {
 				Consistently(func() error {
-					return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*auctioneer.TaskStartRequest{
-						&auctioneer.TaskStartRequest{Task: *task},
+					return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*models.TaskStartRequest{
+						&models.TaskStartRequest{Task: *task},
 					})
 				}).Should(HaveOccurred())
 			})
@@ -310,8 +311,8 @@ var _ = Describe("Auctioneer", func() {
 
 				It("acquires the lock and becomes active", func() {
 					Eventually(func() error {
-						return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*auctioneer.TaskStartRequest{
-							&auctioneer.TaskStartRequest{Task: *task},
+						return auctioneerClient.RequestTaskAuctions(logger, "some-request-id", []*models.TaskStartRequest{
+							&models.TaskStartRequest{Task: *task},
 						})
 					}, 2*time.Second).ShouldNot(HaveOccurred())
 				})
@@ -462,7 +463,7 @@ var _ = Describe("Auctioneer", func() {
 	})
 
 	Context("Auctioneer Client", func() {
-		var client auctioneer.Client
+		var client models.AuctioneerClient
 
 		JustBeforeEach(func() {
 			auctioneerProcess = ginkgomon.Invoke(runner)
@@ -481,10 +482,10 @@ var _ = Describe("Auctioneer", func() {
 				})
 
 				It("does not work", func() {
-					err := client.RequestLRPAuctions(logger, "", []*auctioneer.LRPStartRequest{})
+					err := client.RequestLRPAuctions(logger, "", []*models.LRPStartRequest{})
 					Expect(err).To(HaveOccurred())
 
-					err = client.RequestTaskAuctions(logger, "", []*auctioneer.TaskStartRequest{})
+					err = client.RequestTaskAuctions(logger, "", []*models.TaskStartRequest{})
 					Expect(err).To(HaveOccurred())
 				})
 			})
@@ -504,10 +505,10 @@ var _ = Describe("Auctioneer", func() {
 				})
 
 				It("works", func() {
-					err := client.RequestLRPAuctions(logger, "", []*auctioneer.LRPStartRequest{})
+					err := client.RequestLRPAuctions(logger, "", []*models.LRPStartRequest{})
 					Expect(err).NotTo(HaveOccurred())
 
-					err = client.RequestTaskAuctions(logger, "", []*auctioneer.TaskStartRequest{})
+					err = client.RequestTaskAuctions(logger, "", []*models.TaskStartRequest{})
 					Expect(err).NotTo(HaveOccurred())
 				})
 			})
@@ -520,10 +521,10 @@ var _ = Describe("Auctioneer", func() {
 				})
 
 				It("works", func() {
-					err := client.RequestLRPAuctions(logger, "", []*auctioneer.LRPStartRequest{})
+					err := client.RequestLRPAuctions(logger, "", []*models.LRPStartRequest{})
 					Expect(err).NotTo(HaveOccurred())
 
-					err = client.RequestTaskAuctions(logger, "", []*auctioneer.TaskStartRequest{})
+					err = client.RequestTaskAuctions(logger, "", []*models.TaskStartRequest{})
 					Expect(err).NotTo(HaveOccurred())
 				})
 			})
@@ -544,10 +545,10 @@ var _ = Describe("Auctioneer", func() {
 					})
 
 					It("does not work", func() {
-						err := client.RequestLRPAuctions(logger, "", []*auctioneer.LRPStartRequest{})
+						err := client.RequestLRPAuctions(logger, "", []*models.LRPStartRequest{})
 						Expect(err).To(HaveOccurred())
 
-						err = client.RequestTaskAuctions(logger, "", []*auctioneer.TaskStartRequest{})
+						err = client.RequestTaskAuctions(logger, "", []*models.TaskStartRequest{})
 						Expect(err).To(HaveOccurred())
 					})
 				})
@@ -567,10 +568,10 @@ var _ = Describe("Auctioneer", func() {
 					})
 
 					It("falls back to http and does work", func() {
-						err := client.RequestLRPAuctions(logger, "", []*auctioneer.LRPStartRequest{})
+						err := client.RequestLRPAuctions(logger, "", []*models.LRPStartRequest{})
 						Expect(err).NotTo(HaveOccurred())
 
-						err = client.RequestTaskAuctions(logger, "", []*auctioneer.TaskStartRequest{})
+						err = client.RequestTaskAuctions(logger, "", []*models.TaskStartRequest{})
 						Expect(err).NotTo(HaveOccurred())
 					})
 				})

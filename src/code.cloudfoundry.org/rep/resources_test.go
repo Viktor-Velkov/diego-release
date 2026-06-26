@@ -14,17 +14,17 @@ import (
 
 var _ = Describe("Resources", func() {
 	var (
-		cellState      rep.CellState
+		cellState      models.CellState
 		linuxRootFSURL string
 	)
 
 	BeforeEach(func() {
-		linuxOnlyRootFSProviders := rep.RootFSProviders{models.PreloadedRootFSScheme: rep.NewFixedSetRootFSProvider("linux")}
-		total := rep.NewResources(1000, 2000, 10)
-		avail := rep.NewResources(950, 1900, 3)
+		linuxOnlyRootFSProviders := models.RootFSProviders{models.PreloadedRootFSScheme: models.NewFixedSetRootFSProvider("linux")}
+		total := models.NewResources(1000, 2000, 10)
+		avail := models.NewResources(950, 1900, 3)
 		linuxRootFSURL = models.PreloadedRootFS("linux")
 
-		lrps := []rep.LRP{
+		lrps := []models.SchedulingLRP{
 			*buildLRP("ig-1", "pg-1", "domain", 0, linuxRootFSURL, 10, 20, 30, []string{}, []string{}, models.ActualLRPStateClaimed),
 			*buildLRP("ig-2", "pg-1", "domain", 1, linuxRootFSURL, 10, 20, 30, []string{}, []string{}, models.ActualLRPStateClaimed),
 			*buildLRP("ig-3", "pg-2", "domain", 0, linuxRootFSURL, 10, 20, 30, []string{}, []string{}, models.ActualLRPStateClaimed),
@@ -32,12 +32,12 @@ var _ = Describe("Resources", func() {
 			*buildLRP("ig-5", "pg-4", "domain", 0, linuxRootFSURL, 10, 20, 30, []string{}, []string{}, models.ActualLRPStateClaimed),
 		}
 
-		tasks := []rep.Task{
+		tasks := []models.SchedulingTask{
 			*buildTask("tg-big", "domain", linuxRootFSURL, 20, 10, 10, []string{}, []string{}, models.Task_Running, false),
 			*buildTask("tg-small", "domain", linuxRootFSURL, 10, 10, 10, []string{}, []string{}, models.Task_Running, false),
 		}
 
-		cellState = rep.NewCellState(
+		cellState = models.NewCellState(
 			"cell-id",
 			0,
 			"https://foo.cell.service.cf.internal",
@@ -59,7 +59,7 @@ var _ = Describe("Resources", func() {
 	Describe("MatchPlacementTags", func() {
 		Context("when cell state does not have placement tags", func() {
 			It("does not allow lrps with placement tags", func() {
-				state := rep.CellState{
+				state := models.CellState{
 					PlacementTags:         []string{},
 					OptionalPlacementTags: []string{},
 				}
@@ -70,7 +70,7 @@ var _ = Describe("Resources", func() {
 
 		Context("when it has require placement tags", func() {
 			It("requires the placement tags to be present in the lrp", func() {
-				state := rep.CellState{
+				state := models.CellState{
 					PlacementTags:         []string{"foo", "bar"},
 					OptionalPlacementTags: []string{},
 				}
@@ -82,7 +82,7 @@ var _ = Describe("Resources", func() {
 
 		Context("when it has optional placement tags", func() {
 			It("does not require placement tags to be present on the desired lrp", func() {
-				state := rep.CellState{
+				state := models.CellState{
 					PlacementTags:         []string{},
 					OptionalPlacementTags: []string{"foo"},
 				}
@@ -91,7 +91,7 @@ var _ = Describe("Resources", func() {
 			})
 
 			It("does not allow extra placement tags to be defined in the lrp", func() {
-				state := rep.CellState{
+				state := models.CellState{
 					PlacementTags:         []string{},
 					OptionalPlacementTags: []string{"foo"},
 				}
@@ -101,7 +101,7 @@ var _ = Describe("Resources", func() {
 
 		Context("when both placement tags and optional placement tags are present", func() {
 			It("requires all required placement tags to be on the lrp", func() {
-				state := rep.CellState{
+				state := models.CellState{
 					PlacementTags:         []string{"foo"},
 					OptionalPlacementTags: []string{"bar"},
 				}
@@ -115,10 +115,10 @@ var _ = Describe("Resources", func() {
 	})
 
 	Describe("Resource Matching", func() {
-		var requiredResource rep.Resource
+		var requiredResource models.Resource
 		var err error
 		BeforeEach(func() {
-			requiredResource = rep.NewResource(10, 10, 10)
+			requiredResource = models.NewResource(10, 10, 10)
 		})
 
 		JustBeforeEach(func() {
@@ -284,9 +284,9 @@ func buildLRP(instanceGuid,
 	placementTags,
 	volumeDrivers []string,
 	state string,
-) *rep.LRP {
+) *models.SchedulingLRP {
 	lrpKey := models.NewActualLRPKey(guid, int32(index), domain)
-	lrp := rep.NewLRP(instanceGuid, lrpKey, rep.NewResource(memoryMB, diskMB, maxPids), rep.PlacementConstraint{RootFs: rootFS,
+	lrp := models.NewSchedulingLRP(instanceGuid, lrpKey, models.NewResource(memoryMB, diskMB, maxPids), models.PlacementConstraint{RootFs: rootFS,
 		PlacementTags: placementTags,
 		VolumeDrivers: volumeDrivers,
 	})
@@ -294,8 +294,8 @@ func buildLRP(instanceGuid,
 	return &lrp
 }
 
-func buildTask(taskGuid, domain, rootFS string, memoryMB, diskMB, maxPids int32, placementTags, volumeDrivers []string, state models.Task_State, failed bool) *rep.Task {
-	task := rep.NewTask(taskGuid, domain, rep.NewResource(memoryMB, diskMB, maxPids), rep.PlacementConstraint{RootFs: rootFS, VolumeDrivers: volumeDrivers})
+func buildTask(taskGuid, domain, rootFS string, memoryMB, diskMB, maxPids int32, placementTags, volumeDrivers []string, state models.Task_State, failed bool) *models.SchedulingTask {
+	task := models.NewSchedulingTask(taskGuid, domain, models.NewResource(memoryMB, diskMB, maxPids), models.PlacementConstraint{RootFs: rootFS, VolumeDrivers: volumeDrivers})
 	return &task
 }
 

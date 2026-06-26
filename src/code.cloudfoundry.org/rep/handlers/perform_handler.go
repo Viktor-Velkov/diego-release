@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/bbs/trace"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/locket/metrics/helpers"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/rep/auctioncellrep"
 )
 
@@ -30,7 +30,7 @@ func (h *perform) ServeHTTP(w http.ResponseWriter, r *http.Request, logger lager
 	defer stopMetrics(h.metrics, requestType, start, &deferErr)
 
 	logger = logger.Session("auction-perform-work").WithTraceInfo(r)
-	var work rep.Work
+	var work models.Work
 	deferErr = json.NewDecoder(r.Body).Decode(&work)
 	if deferErr != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -38,7 +38,7 @@ func (h *perform) ServeHTTP(w http.ResponseWriter, r *http.Request, logger lager
 		return
 	}
 
-	var failedWork rep.Work
+	var failedWork models.Work
 	failedWork, deferErr = h.rep.Perform(logger, trace.RequestIdFromRequest(r), work)
 	if deferErr != nil {
 		w.WriteHeader(http.StatusInternalServerError)

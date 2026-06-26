@@ -242,7 +242,7 @@ var _ = AfterEach(func() {
 
 	testIngressServer.Stop()
 	close(signalMetricsChan)
-	sqlRunner.Reset()
+	sqlRunner.ResetTables([]string{"domains", "configurations", "tasks", "desired_lrps", "actual_lrps", "locks"})
 })
 
 var _ = SynchronizedAfterSuite(func() {

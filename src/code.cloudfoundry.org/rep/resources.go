@@ -14,42 +14,27 @@ import (
 	"code.cloudfoundry.org/routing-info/internalroutes"
 )
 
-// Scheduling and placement types have moved to code.cloudfoundry.org/bbs/models.
-// These aliases maintain backward compatibility for existing callers.
+var NewResource = bbsmodels.NewResource
+var NewResources = bbsmodels.NewResources
+var NewPlacementConstraint = bbsmodels.NewPlacementConstraint
+var NewLRP = bbsmodels.NewSchedulingLRP
+var NewLRPUpdate = bbsmodels.NewLRPUpdate
+var NewTask = bbsmodels.NewSchedulingTask
+var NewCellState = bbsmodels.NewCellState
 
 var ErrorIncompatibleRootfs = bbsmodels.ErrorIncompatibleRootfs
 
 const StackVersionFile = bbsmodels.StackVersionFile
 
-type Resource             = bbsmodels.Resource
-type Resources            = bbsmodels.Resources
-type PlacementConstraint  = bbsmodels.PlacementConstraint
-type LRP                  = bbsmodels.SchedulingLRP
-type LRPUpdate            = bbsmodels.LRPUpdate
-type Task                 = bbsmodels.SchedulingTask
-type Work                 = bbsmodels.Work
-type CellState            = bbsmodels.CellState
-type InsufficientResourcesError = bbsmodels.InsufficientResourcesError
-type InternalRoute        = bbsmodels.InternalRoute
-type InternalRoutes       = bbsmodels.InternalRoutes
-
-var NewResource            = bbsmodels.NewResource
-var NewResources           = bbsmodels.NewResources
-var NewPlacementConstraint = bbsmodels.NewPlacementConstraint
-var NewLRP                 = bbsmodels.NewSchedulingLRP
-var NewLRPUpdate           = bbsmodels.NewLRPUpdate
-var NewTask                = bbsmodels.NewSchedulingTask
-var NewCellState           = bbsmodels.NewCellState
-
 // InternalRoutesToInternalRoutes converts bbs/models.InternalRoutes to routing-info.InternalRoutes.
 // This conversion is necessary because both types have the same structure but are distinct types in Go.
-func InternalRoutesToInternalRoutes(routes InternalRoutes) internalroutes.InternalRoutes {
+func InternalRoutesToInternalRoutes(routes bbsmodels.InternalRoutes) internalroutes.InternalRoutes {
 	if routes == nil {
 		return nil
 	}
 	converted := make(internalroutes.InternalRoutes, len(routes))
 	for i, route := range routes {
-		converted[i] = internalroutes.InternalRoute{Hostname: route.Hostname}
+		converted[i] = internalroutes.InternalRoute(route)
 	}
 	return converted
 }

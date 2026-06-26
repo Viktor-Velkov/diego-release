@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"strconv"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/executor"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/rep"
@@ -11,8 +12,8 @@ import (
 
 //go:generate counterfeiter . BatchContainerAllocator
 type BatchContainerAllocator interface {
-	BatchLRPAllocationRequest(lager.Logger, string, bool, int, []rep.LRP) []rep.LRP
-	BatchTaskAllocationRequest(lager.Logger, string, []rep.Task) []rep.Task
+	BatchLRPAllocationRequest(lager.Logger, string, bool, int, []models.SchedulingLRP) []models.SchedulingLRP
+	BatchTaskAllocationRequest(lager.Logger, string, []models.SchedulingTask) []models.SchedulingTask
 }
 
 type containerAllocator struct {
@@ -29,7 +30,7 @@ func NewContainerAllocator(instanceGuidGenerator func() (string, error), stackPa
 	}
 }
 
-func buildLRPTags(lrp rep.LRP, instanceGuid string) executor.Tags {
+func buildLRPTags(lrp models.SchedulingLRP, instanceGuid string) executor.Tags {
 	tags := executor.Tags{}
 	tags[rep.DomainTag] = lrp.Domain
 	tags[rep.ProcessGuidTag] = lrp.ProcessGuid
@@ -45,7 +46,7 @@ func buildLRPTags(lrp rep.LRP, instanceGuid string) executor.Tags {
 	return tags
 }
 
-func buildTaskTags(task rep.Task) executor.Tags {
+func buildTaskTags(task models.SchedulingTask) executor.Tags {
 	tags := executor.Tags{}
 	tags[rep.LifecycleTag] = rep.TaskLifecycle
 	tags[rep.DomainTag] = task.Domain
@@ -57,10 +58,10 @@ func buildTaskTags(task rep.Task) executor.Tags {
 	return tags
 }
 
-func (ca containerAllocator) BatchLRPAllocationRequest(logger lager.Logger, traceID string, enableContainerProxy bool, proxyMemoryAllocation int, lrps []rep.LRP) (unallocatedLRPs []rep.LRP) {
+func (ca containerAllocator) BatchLRPAllocationRequest(logger lager.Logger, traceID string, enableContainerProxy bool, proxyMemoryAllocation int, lrps []models.SchedulingLRP) (unallocatedLRPs []models.SchedulingLRP) {
 	logger = logger.Session("lrp-allocate-instances")
 	requests := make([]executor.AllocationRequest, 0, len(lrps))
-	lrpGuidMap := make(map[string]rep.LRP, len(lrps))
+	lrpGuidMap := make(map[string]models.SchedulingLRP, len(lrps))
 
 	for _, lrp := range lrps {
 		instanceGuid, err := ca.generateInstanceGuid()
@@ -109,11 +110,11 @@ func (ca containerAllocator) BatchLRPAllocationRequest(logger lager.Logger, trac
 	return unallocatedLRPs
 }
 
-func (ca containerAllocator) BatchTaskAllocationRequest(logger lager.Logger, traceID string, tasks []rep.Task) (unallocatedTasks []rep.Task) {
+func (ca containerAllocator) BatchTaskAllocationRequest(logger lager.Logger, traceID string, tasks []models.SchedulingTask) (unallocatedTasks []models.SchedulingTask) {
 	logger = logger.Session("task-allocate-instances")
 
-	failedTasks := make([]rep.Task, 0)
-	taskMap := make(map[string]rep.Task, len(tasks))
+	failedTasks := make([]models.SchedulingTask, 0)
+	taskMap := make(map[string]models.SchedulingTask, len(tasks))
 	requests := make([]executor.AllocationRequest, 0, len(tasks))
 
 	for _, task := range tasks {

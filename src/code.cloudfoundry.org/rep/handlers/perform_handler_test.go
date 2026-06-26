@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/rep"
 
@@ -19,30 +20,30 @@ import (
 var _ = Describe("Perform", func() {
 	Context("with valid JSON", func() {
 		var (
-			requestedWork, failedWork rep.Work
+			requestedWork, failedWork models.Work
 			requestLatency            time.Duration
 			requestIdHeader           string
 			b3RequestIdHeader         string
 		)
 
 		BeforeEach(func() {
-			resourceA := rep.NewResource(128, 256, 256)
-			placementContraintA := rep.NewPlacementConstraint("some-rootfs", nil, nil)
-			resourceB := rep.NewResource(256, 512, 256)
-			placementContraintB := rep.NewPlacementConstraint("some-rootfs", nil, nil)
-			resourceC := rep.NewResource(512, 1024, 256)
-			placementContraintC := rep.NewPlacementConstraint("some-rootfs", nil, nil)
+			resourceA := models.NewResource(128, 256, 256)
+			placementContraintA := models.NewPlacementConstraint("some-rootfs", nil, nil)
+			resourceB := models.NewResource(256, 512, 256)
+			placementContraintB := models.NewPlacementConstraint("some-rootfs", nil, nil)
+			resourceC := models.NewResource(512, 1024, 256)
+			placementContraintC := models.NewPlacementConstraint("some-rootfs", nil, nil)
 
-			requestedWork = rep.Work{
-				Tasks: []rep.Task{
-					rep.NewTask("a", "domain", resourceA, placementContraintA),
-					rep.NewTask("b", "domain", resourceB, placementContraintB),
+			requestedWork = models.Work{
+				Tasks: []models.SchedulingTask{
+					models.NewSchedulingTask("a", "domain", resourceA, placementContraintA),
+					models.NewSchedulingTask("b", "domain", resourceB, placementContraintB),
 				},
 			}
 
-			failedWork = rep.Work{
-				Tasks: []rep.Task{
-					rep.NewTask("c", "domain", resourceC, placementContraintC),
+			failedWork = models.Work{
+				Tasks: []models.SchedulingTask{
+					models.NewSchedulingTask("c", "domain", resourceC, placementContraintC),
 				},
 			}
 
@@ -54,7 +55,7 @@ var _ = Describe("Perform", func() {
 
 		Context("and no perform error", func() {
 			BeforeEach(func() {
-				fakeLocalRep.PerformStub = func(logger lager.Logger, traceID string, work rep.Work) (rep.Work, error) {
+				fakeLocalRep.PerformStub = func(logger lager.Logger, traceID string, work models.Work) (models.Work, error) {
 					time.Sleep(requestLatency)
 					return failedWork, nil
 				}

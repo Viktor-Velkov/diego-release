@@ -4,11 +4,11 @@ package repfakes
 import (
 	"sync"
 
-	"code.cloudfoundry.org/rep"
+	"code.cloudfoundry.org/bbs/models"
 )
 
 type FakeClientFactory struct {
-	CreateClientStub        func(string, string, string) (rep.Client, error)
+	CreateClientStub        func(string, string, string) (models.RepClient, error)
 	createClientMutex       sync.RWMutex
 	createClientArgsForCall []struct {
 		arg1 string
@@ -16,18 +16,18 @@ type FakeClientFactory struct {
 		arg3 string
 	}
 	createClientReturns struct {
-		result1 rep.Client
+		result1 models.RepClient
 		result2 error
 	}
 	createClientReturnsOnCall map[int]struct {
-		result1 rep.Client
+		result1 models.RepClient
 		result2 error
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeClientFactory) CreateClient(arg1 string, arg2 string, arg3 string) (rep.Client, error) {
+func (fake *FakeClientFactory) CreateClient(arg1 string, arg2 string, arg3 string) (models.RepClient, error) {
 	fake.createClientMutex.Lock()
 	ret, specificReturn := fake.createClientReturnsOnCall[len(fake.createClientArgsForCall)]
 	fake.createClientArgsForCall = append(fake.createClientArgsForCall, struct {
@@ -54,7 +54,7 @@ func (fake *FakeClientFactory) CreateClientCallCount() int {
 	return len(fake.createClientArgsForCall)
 }
 
-func (fake *FakeClientFactory) CreateClientCalls(stub func(string, string, string) (rep.Client, error)) {
+func (fake *FakeClientFactory) CreateClientCalls(stub func(string, string, string) (models.RepClient, error)) {
 	fake.createClientMutex.Lock()
 	defer fake.createClientMutex.Unlock()
 	fake.CreateClientStub = stub
@@ -67,28 +67,28 @@ func (fake *FakeClientFactory) CreateClientArgsForCall(i int) (string, string, s
 	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
-func (fake *FakeClientFactory) CreateClientReturns(result1 rep.Client, result2 error) {
+func (fake *FakeClientFactory) CreateClientReturns(result1 models.RepClient, result2 error) {
 	fake.createClientMutex.Lock()
 	defer fake.createClientMutex.Unlock()
 	fake.CreateClientStub = nil
 	fake.createClientReturns = struct {
-		result1 rep.Client
+		result1 models.RepClient
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeClientFactory) CreateClientReturnsOnCall(i int, result1 rep.Client, result2 error) {
+func (fake *FakeClientFactory) CreateClientReturnsOnCall(i int, result1 models.RepClient, result2 error) {
 	fake.createClientMutex.Lock()
 	defer fake.createClientMutex.Unlock()
 	fake.CreateClientStub = nil
 	if fake.createClientReturnsOnCall == nil {
 		fake.createClientReturnsOnCall = make(map[int]struct {
-			result1 rep.Client
+			result1 models.RepClient
 			result2 error
 		})
 	}
 	fake.createClientReturnsOnCall[i] = struct {
-		result1 rep.Client
+		result1 models.RepClient
 		result2 error
 	}{result1, result2}
 }
@@ -117,4 +117,4 @@ func (fake *FakeClientFactory) recordInvocation(key string, args []interface{}) 
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ rep.ClientFactory = new(FakeClientFactory)
+var _ models.RepClientFactory = new(FakeClientFactory)

@@ -7,7 +7,6 @@ import (
 
 	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 )
 
 type SimulationRep struct {
@@ -15,23 +14,23 @@ type SimulationRep struct {
 	cellIndex              int
 	stack                  string
 	zone                   string
-	totalResources         rep.Resources
-	lrps                   map[string]rep.LRP
-	tasks                  map[string]rep.Task
+	totalResources         models.Resources
+	lrps                   map[string]models.SchedulingLRP
+	tasks                  map[string]models.SchedulingTask
 	startingContainerCount int
 	volumeDrivers          []string
 
 	lock *sync.Mutex
 }
 
-func New(cellID string, cellIndex int, stack string, zone string, totalResources rep.Resources, volumeDrivers []string) rep.SimClient {
+func New(cellID string, cellIndex int, stack string, zone string, totalResources models.Resources, volumeDrivers []string) models.RepSimClient {
 	return &SimulationRep{
 		cellID:                 cellID,
 		cellIndex:              cellIndex,
 		stack:                  stack,
 		totalResources:         totalResources,
-		lrps:                   map[string]rep.LRP{},
-		tasks:                  map[string]rep.Task{},
+		lrps:                   map[string]models.SchedulingLRP{},
+		tasks:                  map[string]models.SchedulingTask{},
 		startingContainerCount: 0,
 		zone:                   zone,
 		volumeDrivers:          volumeDrivers,
@@ -40,16 +39,16 @@ func New(cellID string, cellIndex int, stack string, zone string, totalResources
 	}
 }
 
-func (r *SimulationRep) State(_ lager.Logger) (rep.CellState, error) {
+func (r *SimulationRep) State(_ lager.Logger) (models.CellState, error) {
 	r.lock.Lock()
 	defer r.lock.Unlock()
 
-	lrps := []rep.LRP{}
+	lrps := []models.SchedulingLRP{}
 	for _, lrp := range r.lrps {
 		lrps = append(lrps, lrp)
 	}
 
-	tasks := []rep.Task{}
+	tasks := []models.SchedulingTask{}
 	for _, task := range r.tasks {
 		tasks = append(tasks, task)
 	}
@@ -58,11 +57,11 @@ func (r *SimulationRep) State(_ lager.Logger) (rep.CellState, error) {
 
 	// util.RandomSleep(800, 900)
 
-	return rep.CellState{
+	return models.CellState{
 		CellID:    r.cellID,
 		CellIndex: r.cellIndex,
-		RootFSProviders: rep.RootFSProviders{
-			models.PreloadedRootFSScheme: rep.NewFixedSetRootFSProvider(r.stack),
+		RootFSProviders: models.RootFSProviders{
+			models.PreloadedRootFSScheme: models.NewFixedSetRootFSProvider(r.stack),
 		},
 		AvailableResources:     availableResources,
 		TotalResources:         r.totalResources,
@@ -74,11 +73,11 @@ func (r *SimulationRep) State(_ lager.Logger) (rep.CellState, error) {
 	}, nil
 }
 
-func (r *SimulationRep) Perform(_ lager.Logger, work rep.Work) (rep.Work, error) {
+func (r *SimulationRep) Perform(_ lager.Logger, work models.Work) (models.Work, error) {
 	r.lock.Lock()
 	defer r.lock.Unlock()
 
-	failedWork := rep.Work{}
+	failedWork := models.Work{}
 
 	availableResources := r.availableResources()
 
@@ -129,8 +128,8 @@ func (r *SimulationRep) Reset() error {
 	r.lock.Lock()
 	defer r.lock.Unlock()
 
-	r.lrps = map[string]rep.LRP{}
-	r.tasks = map[string]rep.Task{}
+	r.lrps = map[string]models.SchedulingLRP{}
+	r.tasks = map[string]models.SchedulingTask{}
 	r.startingContainerCount = 0
 	return nil
 }
@@ -141,7 +140,7 @@ func (rep *SimulationRep) StopLRPInstance(lager.Logger, models.ActualLRPKey, mod
 	panic("UNIMPLEMENTED METHOD")
 }
 
-func (rep *SimulationRep) UpdateLRPInstance(lager.Logger, rep.LRPUpdate) error {
+func (rep *SimulationRep) UpdateLRPInstance(lager.Logger, models.LRPUpdate) error {
 	panic("UNIMPLEMENTED METHOD")
 }
 
@@ -159,7 +158,7 @@ func (rep *SimulationRep) StateClientTimeout() time.Duration {
 
 //internal -- no locks here
 
-func (rep *SimulationRep) availableResources() rep.Resources {
+func (rep *SimulationRep) availableResources() models.Resources {
 	resources := rep.totalResources
 	for _, lrp := range rep.lrps {
 		resources.MemoryMB -= lrp.MemoryMB

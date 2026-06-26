@@ -9,10 +9,11 @@ import (
 	fake_auction_runner "code.cloudfoundry.org/auction/auctiontypes/fakes"
 	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/auctioneer/handlers"
+	"code.cloudfoundry.org/bbs/models"
 	mfakes "code.cloudfoundry.org/diego-logging-client/testhelpers"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/lager/v3/lagertest"
-	"code.cloudfoundry.org/rep"
+
 	"github.com/tedsuo/rata"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -42,11 +43,11 @@ var _ = Describe("Auction Handlers", func() {
 	Describe("Task Handler", func() {
 		Context("with a valid task", func() {
 			BeforeEach(func() {
-				resource := rep.NewResource(1, 2, 3)
-				pc := rep.NewPlacementConstraint("rootfs", []string{}, []string{})
-				task := rep.NewTask("the-task-guid", "test", resource, pc)
+				resource := models.NewResource(1, 2, 3)
+				pc := models.NewPlacementConstraint("rootfs", []string{}, []string{})
+				task := models.NewSchedulingTask("the-task-guid", "test", resource, pc)
 
-				tasks := []auctioneer.TaskStartRequest{auctioneer.TaskStartRequest{Task: task}}
+				tasks := []models.TaskStartRequest{models.TaskStartRequest{Task: task}}
 				reqGen := rata.NewRequestGenerator("http://localhost", auctioneer.Routes)
 
 				payload, err := json.Marshal(tasks)
@@ -86,15 +87,15 @@ var _ = Describe("Auction Handlers", func() {
 	Describe("LRP Handler", func() {
 		Context("with a valid LRPStart", func() {
 			BeforeEach(func() {
-				starts := []auctioneer.LRPStartRequest{{
+				starts := []models.LRPStartRequest{{
 					Indices:     []int{2},
 					Domain:      "tests",
 					ProcessGuid: "some-guid",
-					Resource: rep.Resource{
+					Resource: models.Resource{
 						MemoryMB: 1024,
 						DiskMB:   512,
 					},
-					PlacementConstraint: rep.PlacementConstraint{
+					PlacementConstraint: models.PlacementConstraint{
 						RootFs: "docker:///docker.com/docker",
 					},
 				}}

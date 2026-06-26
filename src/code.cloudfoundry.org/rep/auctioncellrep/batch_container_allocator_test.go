@@ -55,7 +55,7 @@ var _ = Describe("ContainerAllocator", func() {
 
 	Describe("BatchLRPAllocationRequest", func() {
 		var (
-			lrp1, lrp2           rep.LRP
+			lrp1, lrp2           models.SchedulingLRP
 			lrpIndex1, lrpIndex2 int32
 		)
 
@@ -63,23 +63,23 @@ var _ = Describe("ContainerAllocator", func() {
 			lrpIndex1 = 0
 			lrpIndex2 = 1
 
-			lrp1 = rep.NewLRP(
+			lrp1 = models.NewSchedulingLRP(
 				"ig-1",
 				models.NewActualLRPKey("process-guid", lrpIndex1, "tests"),
-				rep.NewResource(2048, 1024, 100),
-				rep.NewPlacementConstraint(linuxRootFSURL, []string{"pt-1"}, []string{"vd-1"}),
+				models.NewResource(2048, 1024, 100),
+				models.NewPlacementConstraint(linuxRootFSURL, []string{"pt-1"}, []string{"vd-1"}),
 			)
 
-			lrp2 = rep.NewLRP(
+			lrp2 = models.NewSchedulingLRP(
 				"ig-2",
 				models.NewActualLRPKey("process-guid", lrpIndex2, "tests"),
-				rep.NewResource(2048, 1024, 100),
-				rep.NewPlacementConstraint("rootfs", []string{"pt-2"}, []string{}),
+				models.NewResource(2048, 1024, 100),
+				models.NewPlacementConstraint("rootfs", []string{"pt-2"}, []string{}),
 			)
 		})
 
 		It("makes the correct allocation requests for all LRPs", func() {
-			allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{lrp1, lrp2})
+			allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{lrp1, lrp2})
 
 			Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 			_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -91,7 +91,7 @@ var _ = Describe("ContainerAllocator", func() {
 		})
 
 		It("does not mark any LRP Auctions as failed", func() {
-			failedWork := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{lrp1, lrp2})
+			failedWork := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{lrp1, lrp2})
 			Expect(failedWork).To(BeEmpty())
 		})
 
@@ -103,7 +103,7 @@ var _ = Describe("ContainerAllocator", func() {
 			})
 
 			It("marks the corresponding LRP Auctions as failed", func() {
-				failedWork := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{lrp1, lrp2})
+				failedWork := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{lrp1, lrp2})
 				Expect(failedWork).To(ConsistOf(lrp2))
 			})
 		})
@@ -115,7 +115,7 @@ var _ = Describe("ContainerAllocator", func() {
 			})
 
 			It("makes the correct allocation requests for all LRP Auctions with the additional memory allocation", func() {
-				allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{lrp1, lrp2})
+				allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{lrp1, lrp2})
 
 				Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 				_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -138,7 +138,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("requests an LRP with unlimited memory", func() {
-					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{lrp1, lrp2})
+					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{lrp1, lrp2})
 
 					expectedResource := executor.NewResource(0, int(lrp1.DiskMB), int(lrp1.MaxPids))
 
@@ -153,31 +153,31 @@ var _ = Describe("ContainerAllocator", func() {
 
 		Context("when no requests need to be made", func() {
 			It("doesn't make any requests to the executorClient", func() {
-				allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{})
+				allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{})
 				Expect(executorClient.AllocateContainersCallCount()).To(Equal(0))
 			})
 		})
 
 		Describe("handling RootFS paths", func() {
-			var validLRP, invalidLRP rep.LRP
+			var validLRP, invalidLRP models.SchedulingLRP
 
 			BeforeEach(func() {
-				validLRP = rep.NewLRP(
+				validLRP = models.NewSchedulingLRP(
 					"ig-1",
 					models.NewActualLRPKey("process-guid", lrpIndex1, "tests"),
-					rep.NewResource(2048, 1024, 100),
-					rep.NewPlacementConstraint(
+					models.NewResource(2048, 1024, 100),
+					models.NewPlacementConstraint(
 						linuxRootFSURL,
 						[]string{"pt-1"},
 						[]string{"vd-1"},
 					),
 				)
 
-				invalidLRP = rep.NewLRP(
+				invalidLRP = models.NewSchedulingLRP(
 					"ig-2",
 					models.NewActualLRPKey("process-guid", lrpIndex2, "tests"),
-					rep.NewResource(2048, 1024, 100),
-					rep.NewPlacementConstraint("rootfs", []string{"pt-2"}, []string{}),
+					models.NewResource(2048, 1024, 100),
+					models.NewPlacementConstraint("rootfs", []string{"pt-2"}, []string{}),
 				)
 			})
 
@@ -187,7 +187,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("only makes container allocation requests for the remaining LRPs", func() {
-					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{validLRP, invalidLRP})
+					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{validLRP, invalidLRP})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -198,7 +198,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("marks the other LRP as failed", func() {
-					failedLRPs := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{validLRP, invalidLRP})
+					failedLRPs := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{validLRP, invalidLRP})
 					Expect(failedLRPs).To(ConsistOf(invalidLRP))
 				})
 			})
@@ -209,7 +209,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("only makes container allocation requests for the LRPs with valid RootFS paths", func() {
-					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{validLRP, invalidLRP})
+					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{validLRP, invalidLRP})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -220,7 +220,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("marks the LRPs with invalid RootFS paths as failed", func() {
-					failedLRPs := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{validLRP, invalidLRP})
+					failedLRPs := allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{validLRP, invalidLRP})
 					Expect(failedLRPs).To(HaveLen(1))
 					Expect(failedLRPs).To(ContainElement(invalidLRP))
 				})
@@ -232,7 +232,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("makes the correct allocation request for it, passing along the blank path to the executor client", func() {
-					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{validLRP})
+					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{validLRP})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -249,7 +249,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("makes the container allocation request with an unchanged rootfs url", func() {
-					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []rep.LRP{validLRP})
+					allocator.BatchLRPAllocationRequest(logger, "some-trace-id", enableContainerProxy, proxyMemoryAllocation, []models.SchedulingLRP{validLRP})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -264,23 +264,23 @@ var _ = Describe("ContainerAllocator", func() {
 
 	Describe("BatchTaskAllocationRequest", func() {
 		var (
-			task1, task2 rep.Task
+			task1, task2 models.SchedulingTask
 		)
 
 		BeforeEach(func() {
-			resource1 := rep.NewResource(256, 512, 256)
-			placement1 := rep.NewPlacementConstraint("tests", []string{"pt-1"}, []string{"vd-1"})
-			task1 = rep.NewTask("the-task-guid-1", "tests", resource1, placement1)
+			resource1 := models.NewResource(256, 512, 256)
+			placement1 := models.NewPlacementConstraint("tests", []string{"pt-1"}, []string{"vd-1"})
+			task1 = models.NewSchedulingTask("the-task-guid-1", "tests", resource1, placement1)
 			task1.RootFs = linuxRootFSURL
 
-			resource2 := rep.NewResource(512, 1024, 256)
-			placement2 := rep.NewPlacementConstraint("linux", []string{"pt-2"}, []string{})
-			task2 = rep.NewTask("the-task-guid-2", "tests", resource2, placement2)
+			resource2 := models.NewResource(512, 1024, 256)
+			placement2 := models.NewPlacementConstraint("linux", []string{"pt-2"}, []string{})
+			task2 = models.NewSchedulingTask("the-task-guid-2", "tests", resource2, placement2)
 			task2.RootFs = "unsupported-arbitrary://still-goes-through"
 		})
 
 		It("makes the correct allocation requests for all Tasks", func() {
-			allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{task1, task2})
+			allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{task1, task2})
 
 			Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 			_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -297,7 +297,7 @@ var _ = Describe("ContainerAllocator", func() {
 			})
 
 			It("does not mark any Tasks as failed", func() {
-				failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{task1, task2})
+				failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{task1, task2})
 				Expect(failedTasks).To(BeEmpty())
 			})
 		})
@@ -317,35 +317,35 @@ var _ = Describe("ContainerAllocator", func() {
 			})
 
 			It("marks the corresponding Tasks as failed", func() {
-				failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{task1, task2})
+				failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{task1, task2})
 				Expect(failedTasks).To(ConsistOf(task1))
 			})
 
 			It("logs the container allocation failure", func() {
-				allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{task1, task2})
+				allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{task1, task2})
 				Eventually(logger).Should(gbytes.Say("container-allocation-failure.*failed-request.*the-task-guid-1"))
 			})
 		})
 
 		Context("when no requests need to be made", func() {
 			It("doesn't make any requests to the executorClient", func() {
-				allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{})
+				allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{})
 				Expect(executorClient.AllocateContainersCallCount()).To(Equal(0))
 			})
 		})
 
 		Describe("handling RootFS paths", func() {
-			var validTask, invalidTask rep.Task
+			var validTask, invalidTask models.SchedulingTask
 
 			BeforeEach(func() {
-				resource1 := rep.NewResource(256, 512, 256)
-				placement1 := rep.NewPlacementConstraint("tests", []string{"pt-1"}, []string{"vd-1"})
-				validTask = rep.NewTask("the-task-guid-1", "tests", resource1, placement1)
+				resource1 := models.NewResource(256, 512, 256)
+				placement1 := models.NewPlacementConstraint("tests", []string{"pt-1"}, []string{"vd-1"})
+				validTask = models.NewSchedulingTask("the-task-guid-1", "tests", resource1, placement1)
 				validTask.RootFs = linuxRootFSURL
 
-				resource2 := rep.NewResource(512, 1024, 256)
-				placement2 := rep.NewPlacementConstraint("linux", []string{"pt-2"}, []string{})
-				invalidTask = rep.NewTask("the-task-guid-2", "tests", resource2, placement2)
+				resource2 := models.NewResource(512, 1024, 256)
+				placement2 := models.NewPlacementConstraint("linux", []string{"pt-2"}, []string{})
+				invalidTask = models.NewSchedulingTask("the-task-guid-2", "tests", resource2, placement2)
 			})
 
 			Context("when a Task specifies an invalid RootFS URL", func() {
@@ -354,7 +354,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("only makes container allocation requests for the remaining Tasks", func() {
-					allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{validTask, invalidTask})
+					allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{validTask, invalidTask})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -365,7 +365,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("marks the Task as failed", func() {
-					failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{validTask, invalidTask})
+					failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{validTask, invalidTask})
 					Expect(failedTasks).To(ConsistOf(invalidTask))
 				})
 			})
@@ -376,7 +376,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("only makes container allocation requests for the tasks with valid RootFS paths", func() {
-					allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{validTask, invalidTask})
+					allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{validTask, invalidTask})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -387,7 +387,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("marks the tasks with invalid RootFS paths as failed", func() {
-					failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{validTask, invalidTask})
+					failedTasks := allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{validTask, invalidTask})
 					Expect(failedTasks).To(HaveLen(1))
 					Expect(failedTasks).To(ContainElement(invalidTask))
 				})
@@ -399,7 +399,7 @@ var _ = Describe("ContainerAllocator", func() {
 				})
 
 				It("makes the correct allocation request for it, passing along the blank path to the executor client", func() {
-					allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []rep.Task{validTask})
+					allocator.BatchTaskAllocationRequest(logger, "some-trace-id", []models.SchedulingTask{validTask})
 
 					Expect(executorClient.AllocateContainersCallCount()).To(Equal(1))
 					_, traceID, arg := executorClient.AllocateContainersArgsForCall(0)
@@ -413,7 +413,7 @@ var _ = Describe("ContainerAllocator", func() {
 	})
 })
 
-func allocationRequestFromLRP(lrp rep.LRP) executor.AllocationRequest {
+func allocationRequestFromLRP(lrp models.SchedulingLRP) executor.AllocationRequest {
 	resource := executor.NewResource(
 		int(lrp.MemoryMB),
 		int(lrp.DiskMB),
@@ -442,7 +442,7 @@ func allocationRequestFromLRP(lrp rep.LRP) executor.AllocationRequest {
 	)
 }
 
-func allocationRequestFromTask(task rep.Task, placementTags, volumeDrivers string) executor.AllocationRequest {
+func allocationRequestFromTask(task models.SchedulingTask, placementTags, volumeDrivers string) executor.AllocationRequest {
 	resource := executor.NewResource(int(task.MemoryMB), int(task.DiskMB), int(task.MaxPids))
 	return executor.NewAllocationRequest(
 		task.TaskGuid,

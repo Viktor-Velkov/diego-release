@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/bbs/trace"
 	"code.cloudfoundry.org/cfdot/commands/helpers"
 	cfhttp "code.cloudfoundry.org/cfhttp/v2"
@@ -64,7 +65,7 @@ func ValidateCellStatesArguments(args []string) error {
 	}
 }
 
-func FetchCellStates(cmd *cobra.Command, stdout, stderr io.Writer, clientFactory rep.ClientFactory, bbsClient bbs.Client) error {
+func FetchCellStates(cmd *cobra.Command, stdout, stderr io.Writer, clientFactory models.RepClientFactory, bbsClient bbs.Client) error {
 	traceID := trace.GenerateTraceID()
 	logger := trace.LoggerWithTraceInfo(globalLogger.Session("cell-states"), traceID)
 

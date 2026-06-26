@@ -4,19 +4,19 @@ import (
 	"sync"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 )
 
 type auctionRunnerDelegate struct {
-	cells       map[string]rep.Client
+	cells       map[string]models.RepClient
 	cellLimit   int
 	workResults auctiontypes.AuctionResults
 	lock        *sync.Mutex
 }
 
-func NewAuctionRunnerDelegate(cells map[string]rep.SimClient) *auctionRunnerDelegate {
-	typecastCells := map[string]rep.Client{}
+func NewAuctionRunnerDelegate(cells map[string]models.RepSimClient) *auctionRunnerDelegate {
+	typecastCells := map[string]models.RepClient{}
 	for guid, cell := range cells {
 		typecastCells[guid] = cell
 	}
@@ -31,8 +31,8 @@ func (a *auctionRunnerDelegate) SetCellLimit(limit int) {
 	a.cellLimit = limit
 }
 
-func (a *auctionRunnerDelegate) FetchCellReps(lager.Logger, string) (map[string]rep.Client, error) {
-	subset := map[string]rep.Client{}
+func (a *auctionRunnerDelegate) FetchCellReps(lager.Logger, string) (map[string]models.RepClient, error) {
+	subset := map[string]models.RepClient{}
 	for i := 0; i < a.cellLimit; i++ {
 		subset[cellGuid(i)] = a.cells[cellGuid(i)]
 	}

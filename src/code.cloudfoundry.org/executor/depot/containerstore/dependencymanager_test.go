@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/cacheddownloader"
 	"code.cloudfoundry.org/cacheddownloader/cacheddownloaderfakes"
 	mfakes "code.cloudfoundry.org/diego-logging-client/testhelpers"
@@ -22,14 +23,14 @@ var _ = Describe("DependencyManager", func() {
 		cache               *cacheddownloaderfakes.FakeCachedDownloader
 		dependencies        []executor.CachedDependency
 		fakeClient          *mfakes.FakeIngressClient
-		logConfig           executor.LogConfig
+		logConfig           models.LogConfig
 		downloadRateLimiter chan struct{}
 	)
 
 	BeforeEach(func() {
 		cache = &cacheddownloaderfakes.FakeCachedDownloader{}
 		fakeClient = &mfakes.FakeIngressClient{}
-		logConfig = executor.LogConfig{Guid: "test", SourceName: "test", Index: 0, Tags: map[string]string{}}
+		logConfig = models.LogConfig{Guid: "test", SourceName: "test", Index: 0, Tags: map[string]string{}}
 		downloadRateLimiter = make(chan struct{}, 2)
 		dependencyManager = containerstore.NewDependencyManager(cache, downloadRateLimiter)
 		dependencies = []executor.CachedDependency{

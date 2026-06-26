@@ -1,3 +1,5 @@
+> **Archived.** This repository has been archived. The code is now maintained inline in [diego-release](https://github.com/cloudfoundry/diego-release) under `src/code.cloudfoundry.org/cacheddownloader/`.
+
 # CachedDownloader
 
 [![Go Report

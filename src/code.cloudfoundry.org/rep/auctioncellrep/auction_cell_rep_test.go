@@ -163,7 +163,7 @@ var _ = Describe("AuctionCellRep", func() {
 
 		Context("when the rep has a container", func() {
 			var (
-				state rep.CellState
+				state models.CellState
 			)
 
 			JustBeforeEach(func() {
@@ -388,7 +388,7 @@ var _ = Describe("AuctionCellRep", func() {
 
 						It("returns the right index", func() {
 							Expect(state.LRPs).To(HaveLen(1))
-							Expect(state.LRPs[0].Resource).To(Equal(rep.Resource{
+							Expect(state.LRPs[0].Resource).To(Equal(models.Resource{
 								MemoryMB: 2048,
 								DiskMB:   4096,
 								MaxPids:  10,
@@ -430,19 +430,19 @@ var _ = Describe("AuctionCellRep", func() {
 			Expect(state.RepURL).To(Equal(repURL))
 
 			Expect(state.Evacuating).To(BeTrue())
-			Expect(state.RootFSProviders).To(Equal(rep.RootFSProviders{
-				models.PreloadedRootFSScheme:    rep.NewFixedSetRootFSProvider("linux"),
-				models.PreloadedOCIRootFSScheme: rep.NewFixedSetRootFSProvider("linux"),
-				"docker":                        rep.ArbitraryRootFSProvider{},
+			Expect(state.RootFSProviders).To(Equal(models.RootFSProviders{
+				models.PreloadedRootFSScheme:    models.NewFixedSetRootFSProvider("linux"),
+				models.PreloadedOCIRootFSScheme: models.NewFixedSetRootFSProvider("linux"),
+				"docker":                        models.ArbitraryRootFSProvider{},
 			}))
 
-			Expect(state.AvailableResources).To(Equal(rep.Resources{
+			Expect(state.AvailableResources).To(Equal(models.Resources{
 				MemoryMB:   int32(availableResources.MemoryMB),
 				DiskMB:     int32(availableResources.DiskMB),
 				Containers: availableResources.Containers,
 			}))
 
-			Expect(state.TotalResources).To(Equal(rep.Resources{
+			Expect(state.TotalResources).To(Equal(models.Resources{
 				MemoryMB:   int32(totalResources.MemoryMB),
 				DiskMB:     int32(totalResources.DiskMB),
 				Containers: totalResources.Containers,
@@ -541,66 +541,66 @@ var _ = Describe("AuctionCellRep", func() {
 		var (
 			remainingCellMemory int
 
-			lrpAuctionOne, lrpAuctionTwo, lrpAuctionThree rep.LRP
-			lrpAuctions                                   []rep.LRP
-			work                                          rep.Work
+			lrpAuctionOne, lrpAuctionTwo, lrpAuctionThree models.SchedulingLRP
+			lrpAuctions                                   []models.SchedulingLRP
+			work                                          models.Work
 
-			successfulLRP, unsuccessfulLRP   rep.LRP
-			successfulTask, unsuccessfulTask rep.Task
+			successfulLRP, unsuccessfulLRP   models.SchedulingLRP
+			successfulTask, unsuccessfulTask models.SchedulingTask
 		)
 
 		BeforeEach(func() {
 			remainingCellMemory = 8192
 
-			successfulLRP = rep.NewLRP(
+			successfulLRP = models.NewSchedulingLRP(
 				"ig-1",
 				models.ActualLRPKey{
 					ProcessGuid: "process-guid",
 					Index:       0,
 					Domain:      "domain",
 				},
-				rep.Resource{},
-				rep.PlacementConstraint{},
+				models.Resource{},
+				models.PlacementConstraint{},
 			)
 
-			unsuccessfulLRP = rep.NewLRP(
+			unsuccessfulLRP = models.NewSchedulingLRP(
 				"ig-2",
 				models.ActualLRPKey{
 					ProcessGuid: "process-guid",
 					Index:       1,
 					Domain:      "domain",
 				},
-				rep.Resource{},
-				rep.PlacementConstraint{},
+				models.Resource{},
+				models.PlacementConstraint{},
 			)
 
-			successfulTask = rep.NewTask(
+			successfulTask = models.NewSchedulingTask(
 				"ig-1",
 				"domain",
-				rep.Resource{},
-				rep.PlacementConstraint{},
+				models.Resource{},
+				models.PlacementConstraint{},
 			)
 
-			unsuccessfulTask = rep.NewTask(
+			unsuccessfulTask = models.NewSchedulingTask(
 				"ig-2",
 				"domain",
-				rep.Resource{},
-				rep.PlacementConstraint{},
+				models.Resource{},
+				models.PlacementConstraint{},
 			)
 		})
 
 		JustBeforeEach(func() {
 			client.RemainingResourcesReturns(executor.ExecutorResources{MemoryMB: remainingCellMemory}, nil)
-			lrpAuctions = []rep.LRP{lrpAuctionOne, lrpAuctionTwo, lrpAuctionThree}
+			lrpAuctions = []models.SchedulingLRP{lrpAuctionOne, lrpAuctionTwo, lrpAuctionThree}
 		})
 
 		It("requests container allocation for all provided LRPs and Tasks", func() {
-			fakeContainerAllocator.BatchLRPAllocationRequestReturns([]rep.LRP{unsuccessfulLRP})
-			fakeContainerAllocator.BatchTaskAllocationRequestReturns([]rep.Task{unsuccessfulTask})
+			fakeContainerAllocator.BatchLRPAllocationRequestReturns([]models.SchedulingLRP{unsuccessfulLRP})
+			fakeContainerAllocator.BatchTaskAllocationRequestReturns([]models.SchedulingTask{unsuccessfulTask})
 
-			cellRep.Perform(logger, "some-trace-id", rep.Work{
-				LRPs:  []rep.LRP{successfulLRP, unsuccessfulLRP},
-				Tasks: []rep.Task{successfulTask, unsuccessfulTask},
+			cellRep.Perform(logger, "some-trace-id", models.Work{
+				LRPs:  []models.SchedulingLRP{successfulLRP, unsuccessfulLRP},
+				Tasks: []models.SchedulingTask{successfulTask, unsuccessfulTask},
 			})
 
 			Expect(fakeContainerAllocator.BatchLRPAllocationRequestCallCount()).To(Equal(1))
@@ -615,12 +615,12 @@ var _ = Describe("AuctionCellRep", func() {
 		})
 
 		It("returns LRPs and Tasks that could not be allocated", func() {
-			fakeContainerAllocator.BatchLRPAllocationRequestReturns([]rep.LRP{unsuccessfulLRP})
-			fakeContainerAllocator.BatchTaskAllocationRequestReturns([]rep.Task{unsuccessfulTask})
+			fakeContainerAllocator.BatchLRPAllocationRequestReturns([]models.SchedulingLRP{unsuccessfulLRP})
+			fakeContainerAllocator.BatchTaskAllocationRequestReturns([]models.SchedulingTask{unsuccessfulTask})
 
-			failedWork, err := cellRep.Perform(logger, "some-trace-id", rep.Work{
-				LRPs:  []rep.LRP{successfulLRP, unsuccessfulLRP},
-				Tasks: []rep.Task{successfulTask, unsuccessfulTask},
+			failedWork, err := cellRep.Perform(logger, "some-trace-id", models.Work{
+				LRPs:  []models.SchedulingLRP{successfulLRP, unsuccessfulLRP},
+				Tasks: []models.SchedulingTask{successfulTask, unsuccessfulTask},
 			})
 			Expect(err).NotTo(HaveOccurred())
 			Expect(failedWork.LRPs).To(ConsistOf(unsuccessfulLRP))
@@ -631,23 +631,23 @@ var _ = Describe("AuctionCellRep", func() {
 			BeforeEach(func() {
 				evacuationReporter.EvacuatingReturns(true)
 
-				lrp := rep.NewLRP(
+				lrp := models.NewSchedulingLRP(
 					"ig-1",
 					models.NewActualLRPKey("process-guid", 1, "tests"),
-					rep.NewResource(2048, 1024, 100),
-					rep.NewPlacementConstraint(linuxRootFSURL, nil, []string{}),
+					models.NewResource(2048, 1024, 100),
+					models.NewPlacementConstraint(linuxRootFSURL, nil, []string{}),
 				)
 
-				task := rep.NewTask(
+				task := models.NewSchedulingTask(
 					"the-task-guid",
 					"tests",
-					rep.NewResource(2048, 1024, 100),
-					rep.NewPlacementConstraint(linuxRootFSURL, nil, []string{}),
+					models.NewResource(2048, 1024, 100),
+					models.NewPlacementConstraint(linuxRootFSURL, nil, []string{}),
 				)
 
-				work = rep.Work{
-					LRPs:  []rep.LRP{lrp},
-					Tasks: []rep.Task{task},
+				work = models.Work{
+					LRPs:  []models.SchedulingLRP{lrp},
+					Tasks: []models.SchedulingTask{task},
 				}
 			})
 
@@ -657,19 +657,19 @@ var _ = Describe("AuctionCellRep", func() {
 		})
 
 		Context("when the cell only has enough resources to run a subset of the workloads", func() {
-			var smallestLRP, middleLRP, largestLRP rep.LRP
+			var smallestLRP, middleLRP, largestLRP models.SchedulingLRP
 
 			BeforeEach(func() {
 				remainingCellMemory = 8192
-				largestLRP = rep.LRP{Resource: rep.Resource{MemoryMB: 6144}}
-				middleLRP = rep.LRP{Resource: rep.Resource{MemoryMB: int32(remainingCellMemory) - largestLRP.MemoryMB}}
-				smallestLRP = rep.LRP{Resource: rep.Resource{MemoryMB: 1}}
+				largestLRP = models.SchedulingLRP{Resource: models.Resource{MemoryMB: 6144}}
+				middleLRP = models.SchedulingLRP{Resource: models.Resource{MemoryMB: int32(remainingCellMemory) - largestLRP.MemoryMB}}
+				smallestLRP = models.SchedulingLRP{Resource: models.Resource{MemoryMB: 1}}
 			})
 
 			It("allocates containers for the largest workloads it can run", func() {
-				failedWork, err := cellRep.Perform(logger, "some-trace-id", rep.Work{
-					LRPs:  []rep.LRP{smallestLRP, middleLRP, largestLRP},
-					Tasks: []rep.Task{},
+				failedWork, err := cellRep.Perform(logger, "some-trace-id", models.Work{
+					LRPs:  []models.SchedulingLRP{smallestLRP, middleLRP, largestLRP},
+					Tasks: []models.SchedulingTask{},
 				})
 
 				Expect(err).NotTo(HaveOccurred())
@@ -691,9 +691,9 @@ var _ = Describe("AuctionCellRep", func() {
 				})
 
 				It("accounts for the proxy overhead when determining which workloads to run and which to reject", func() {
-					failedWork, err := cellRep.Perform(logger, "some-trace-id", rep.Work{
-						LRPs:  []rep.LRP{smallestLRP, middleLRP, largestLRP},
-						Tasks: []rep.Task{},
+					failedWork, err := cellRep.Perform(logger, "some-trace-id", models.Work{
+						LRPs:  []models.SchedulingLRP{smallestLRP, middleLRP, largestLRP},
+						Tasks: []models.SchedulingTask{},
 					})
 
 					Expect(err).NotTo(HaveOccurred())
@@ -712,7 +712,7 @@ var _ = Describe("AuctionCellRep", func() {
 
 		Context("when the workload's cell ID does not match the cell's ID", func() {
 			It("rejects the workload", func() {
-				_, err := cellRep.Perform(logger, "some-trace-id", rep.Work{
+				_, err := cellRep.Perform(logger, "some-trace-id", models.Work{
 					LRPs:   lrpAuctions,
 					CellID: "do-not-want-your-work",
 				})

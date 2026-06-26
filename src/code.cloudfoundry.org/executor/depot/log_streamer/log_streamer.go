@@ -5,8 +5,8 @@ import (
 	"io"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	loggingclient "code.cloudfoundry.org/diego-logging-client"
-	"code.cloudfoundry.org/executor"
 	"code.cloudfoundry.org/go-loggregator/v9/rpc/loggregator_v2"
 )
 
@@ -37,7 +37,7 @@ type logStreamer struct {
 	stderr     *streamDestination
 }
 
-func New(config executor.LogConfig, metronClient loggingclient.IngressClient, maxLogLinesPerSecond int, maxLogBytesPerSecond int64, metricReportInterval time.Duration) LogStreamer {
+func New(config models.LogConfig, metronClient loggingclient.IngressClient, maxLogLinesPerSecond int, maxLogBytesPerSecond int64, metricReportInterval time.Duration) LogStreamer {
 	if config.Guid == "" {
 		return noopStreamer{}
 	}

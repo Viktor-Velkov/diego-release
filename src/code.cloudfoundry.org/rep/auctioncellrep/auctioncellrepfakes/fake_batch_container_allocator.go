@@ -4,48 +4,48 @@ package auctioncellrepfakes
 import (
 	"sync"
 
+	"code.cloudfoundry.org/bbs/models"
 	lager "code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/rep/auctioncellrep"
 )
 
 type FakeBatchContainerAllocator struct {
-	BatchLRPAllocationRequestStub        func(lager.Logger, string, bool, int, []rep.LRP) []rep.LRP
+	BatchLRPAllocationRequestStub        func(lager.Logger, string, bool, int, []models.SchedulingLRP) []models.SchedulingLRP
 	batchLRPAllocationRequestMutex       sync.RWMutex
 	batchLRPAllocationRequestArgsForCall []struct {
 		arg1 lager.Logger
 		arg2 string
 		arg3 bool
 		arg4 int
-		arg5 []rep.LRP
+		arg5 []models.SchedulingLRP
 	}
 	batchLRPAllocationRequestReturns struct {
-		result1 []rep.LRP
+		result1 []models.SchedulingLRP
 	}
 	batchLRPAllocationRequestReturnsOnCall map[int]struct {
-		result1 []rep.LRP
+		result1 []models.SchedulingLRP
 	}
-	BatchTaskAllocationRequestStub        func(lager.Logger, string, []rep.Task) []rep.Task
+	BatchTaskAllocationRequestStub        func(lager.Logger, string, []models.SchedulingTask) []models.SchedulingTask
 	batchTaskAllocationRequestMutex       sync.RWMutex
 	batchTaskAllocationRequestArgsForCall []struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 []rep.Task
+		arg3 []models.SchedulingTask
 	}
 	batchTaskAllocationRequestReturns struct {
-		result1 []rep.Task
+		result1 []models.SchedulingTask
 	}
 	batchTaskAllocationRequestReturnsOnCall map[int]struct {
-		result1 []rep.Task
+		result1 []models.SchedulingTask
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequest(arg1 lager.Logger, arg2 string, arg3 bool, arg4 int, arg5 []rep.LRP) []rep.LRP {
-	var arg5Copy []rep.LRP
+func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequest(arg1 lager.Logger, arg2 string, arg3 bool, arg4 int, arg5 []models.SchedulingLRP) []models.SchedulingLRP {
+	var arg5Copy []models.SchedulingLRP
 	if arg5 != nil {
-		arg5Copy = make([]rep.LRP, len(arg5))
+		arg5Copy = make([]models.SchedulingLRP, len(arg5))
 		copy(arg5Copy, arg5)
 	}
 	fake.batchLRPAllocationRequestMutex.Lock()
@@ -55,7 +55,7 @@ func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequest(arg1 lager.Lo
 		arg2 string
 		arg3 bool
 		arg4 int
-		arg5 []rep.LRP
+		arg5 []models.SchedulingLRP
 	}{arg1, arg2, arg3, arg4, arg5Copy})
 	stub := fake.BatchLRPAllocationRequestStub
 	fakeReturns := fake.batchLRPAllocationRequestReturns
@@ -76,46 +76,46 @@ func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestCallCount() in
 	return len(fake.batchLRPAllocationRequestArgsForCall)
 }
 
-func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestCalls(stub func(lager.Logger, string, bool, int, []rep.LRP) []rep.LRP) {
+func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestCalls(stub func(lager.Logger, string, bool, int, []models.SchedulingLRP) []models.SchedulingLRP) {
 	fake.batchLRPAllocationRequestMutex.Lock()
 	defer fake.batchLRPAllocationRequestMutex.Unlock()
 	fake.BatchLRPAllocationRequestStub = stub
 }
 
-func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestArgsForCall(i int) (lager.Logger, string, bool, int, []rep.LRP) {
+func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestArgsForCall(i int) (lager.Logger, string, bool, int, []models.SchedulingLRP) {
 	fake.batchLRPAllocationRequestMutex.RLock()
 	defer fake.batchLRPAllocationRequestMutex.RUnlock()
 	argsForCall := fake.batchLRPAllocationRequestArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5
 }
 
-func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestReturns(result1 []rep.LRP) {
+func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestReturns(result1 []models.SchedulingLRP) {
 	fake.batchLRPAllocationRequestMutex.Lock()
 	defer fake.batchLRPAllocationRequestMutex.Unlock()
 	fake.BatchLRPAllocationRequestStub = nil
 	fake.batchLRPAllocationRequestReturns = struct {
-		result1 []rep.LRP
+		result1 []models.SchedulingLRP
 	}{result1}
 }
 
-func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestReturnsOnCall(i int, result1 []rep.LRP) {
+func (fake *FakeBatchContainerAllocator) BatchLRPAllocationRequestReturnsOnCall(i int, result1 []models.SchedulingLRP) {
 	fake.batchLRPAllocationRequestMutex.Lock()
 	defer fake.batchLRPAllocationRequestMutex.Unlock()
 	fake.BatchLRPAllocationRequestStub = nil
 	if fake.batchLRPAllocationRequestReturnsOnCall == nil {
 		fake.batchLRPAllocationRequestReturnsOnCall = make(map[int]struct {
-			result1 []rep.LRP
+			result1 []models.SchedulingLRP
 		})
 	}
 	fake.batchLRPAllocationRequestReturnsOnCall[i] = struct {
-		result1 []rep.LRP
+		result1 []models.SchedulingLRP
 	}{result1}
 }
 
-func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequest(arg1 lager.Logger, arg2 string, arg3 []rep.Task) []rep.Task {
-	var arg3Copy []rep.Task
+func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequest(arg1 lager.Logger, arg2 string, arg3 []models.SchedulingTask) []models.SchedulingTask {
+	var arg3Copy []models.SchedulingTask
 	if arg3 != nil {
-		arg3Copy = make([]rep.Task, len(arg3))
+		arg3Copy = make([]models.SchedulingTask, len(arg3))
 		copy(arg3Copy, arg3)
 	}
 	fake.batchTaskAllocationRequestMutex.Lock()
@@ -123,7 +123,7 @@ func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequest(arg1 lager.L
 	fake.batchTaskAllocationRequestArgsForCall = append(fake.batchTaskAllocationRequestArgsForCall, struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 []rep.Task
+		arg3 []models.SchedulingTask
 	}{arg1, arg2, arg3Copy})
 	stub := fake.BatchTaskAllocationRequestStub
 	fakeReturns := fake.batchTaskAllocationRequestReturns
@@ -144,39 +144,39 @@ func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestCallCount() i
 	return len(fake.batchTaskAllocationRequestArgsForCall)
 }
 
-func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestCalls(stub func(lager.Logger, string, []rep.Task) []rep.Task) {
+func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestCalls(stub func(lager.Logger, string, []models.SchedulingTask) []models.SchedulingTask) {
 	fake.batchTaskAllocationRequestMutex.Lock()
 	defer fake.batchTaskAllocationRequestMutex.Unlock()
 	fake.BatchTaskAllocationRequestStub = stub
 }
 
-func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestArgsForCall(i int) (lager.Logger, string, []rep.Task) {
+func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestArgsForCall(i int) (lager.Logger, string, []models.SchedulingTask) {
 	fake.batchTaskAllocationRequestMutex.RLock()
 	defer fake.batchTaskAllocationRequestMutex.RUnlock()
 	argsForCall := fake.batchTaskAllocationRequestArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
-func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestReturns(result1 []rep.Task) {
+func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestReturns(result1 []models.SchedulingTask) {
 	fake.batchTaskAllocationRequestMutex.Lock()
 	defer fake.batchTaskAllocationRequestMutex.Unlock()
 	fake.BatchTaskAllocationRequestStub = nil
 	fake.batchTaskAllocationRequestReturns = struct {
-		result1 []rep.Task
+		result1 []models.SchedulingTask
 	}{result1}
 }
 
-func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestReturnsOnCall(i int, result1 []rep.Task) {
+func (fake *FakeBatchContainerAllocator) BatchTaskAllocationRequestReturnsOnCall(i int, result1 []models.SchedulingTask) {
 	fake.batchTaskAllocationRequestMutex.Lock()
 	defer fake.batchTaskAllocationRequestMutex.Unlock()
 	fake.BatchTaskAllocationRequestStub = nil
 	if fake.batchTaskAllocationRequestReturnsOnCall == nil {
 		fake.batchTaskAllocationRequestReturnsOnCall = make(map[int]struct {
-			result1 []rep.Task
+			result1 []models.SchedulingTask
 		})
 	}
 	fake.batchTaskAllocationRequestReturnsOnCall[i] = struct {
-		result1 []rep.Task
+		result1 []models.SchedulingTask
 	}{result1}
 }
 

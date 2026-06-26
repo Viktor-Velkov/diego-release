@@ -2,19 +2,19 @@ package auctionrunnerdelegate
 
 import (
 	"code.cloudfoundry.org/bbs"
-	"code.cloudfoundry.org/rep"
+	"code.cloudfoundry.org/bbs/models"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
 	"code.cloudfoundry.org/lager/v3"
 )
 
 type AuctionRunnerDelegate struct {
-	repClientFactory rep.ClientFactory
+	repClientFactory models.RepClientFactory
 	bbsClient        bbs.InternalClient
 }
 
 func New(
-	repClientFactory rep.ClientFactory,
+	repClientFactory models.RepClientFactory,
 	bbsClient bbs.InternalClient,
 ) *AuctionRunnerDelegate {
 	return &AuctionRunnerDelegate{
@@ -23,9 +23,9 @@ func New(
 	}
 }
 
-func (a *AuctionRunnerDelegate) FetchCellReps(logger lager.Logger, traceID string) (map[string]rep.Client, error) {
+func (a *AuctionRunnerDelegate) FetchCellReps(logger lager.Logger, traceID string) (map[string]models.RepClient, error) {
 	cells, err := a.bbsClient.Cells(logger, traceID)
-	cellReps := map[string]rep.Client{}
+	cellReps := map[string]models.RepClient{}
 	if err != nil {
 		return cellReps, err
 	}

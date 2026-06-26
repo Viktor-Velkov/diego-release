@@ -83,7 +83,7 @@ func (p *evacuationLRPProcessor) processCreatedContainer(logger lager.Logger, tr
 	p.evacuateClaimedLRPContainer(logger, traceID, lrpContainer)
 }
 
-func (p *evacuationLRPProcessor) processRunningContainer(logger lager.Logger, traceID string, lrpContainer *lrpContainer, logConfig executor.LogConfig) {
+func (p *evacuationLRPProcessor) processRunningContainer(logger lager.Logger, traceID string, lrpContainer *lrpContainer, logConfig models.LogConfig) {
 	logger = logger.Session("process-running-container")
 
 	logger.Debug("extracting-net-info-from-container")

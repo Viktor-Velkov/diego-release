@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	mfakes "code.cloudfoundry.org/diego-logging-client/testhelpers"
-	"code.cloudfoundry.org/executor"
 	"code.cloudfoundry.org/executor/depot/log_streamer"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -19,7 +19,7 @@ var _ = Describe("LogStreamer", func() {
 	var (
 		streamer             log_streamer.LogStreamer
 		fakeClient           *mfakes.FakeIngressClient
-		logConfig            executor.LogConfig
+		logConfig            models.LogConfig
 		maxLogLinesPerSecond int
 		maxLogBytesPerSecond int64
 		metricReportInterval time.Duration
@@ -37,7 +37,7 @@ var _ = Describe("LogStreamer", func() {
 		maxLogLinesPerSecond, maxLogBytesPerSecond = 9999, -1
 		metricReportInterval = 5 * time.Minute
 		fakeClient = &mfakes.FakeIngressClient{}
-		logConfig = executor.LogConfig{Guid: guid, SourceName: sourceName, Index: index, Tags: tags}
+		logConfig = models.LogConfig{Guid: guid, SourceName: sourceName, Index: index, Tags: tags}
 		streamer = log_streamer.New(logConfig, fakeClient, maxLogLinesPerSecond, maxLogBytesPerSecond, metricReportInterval)
 	})
 
@@ -607,7 +607,7 @@ var _ = Describe("LogStreamer", func() {
 
 	Context("when there is no app guid", func() {
 		It("does nothing when told to emit or flush", func() {
-			logConfig = executor.LogConfig{Guid: "", SourceName: sourceName, Index: index, Tags: tags}
+			logConfig = models.LogConfig{Guid: "", SourceName: sourceName, Index: index, Tags: tags}
 			streamer = log_streamer.New(logConfig, fakeClient, maxLogLinesPerSecond, maxLogBytesPerSecond, metricReportInterval)
 
 			streamer.Stdout().Write([]byte("hi"))
@@ -620,7 +620,7 @@ var _ = Describe("LogStreamer", func() {
 
 	Context("when there is no log source", func() {
 		It("defaults to LOG", func() {
-			logConfig = executor.LogConfig{Guid: guid, SourceName: "", Index: index, Tags: tags}
+			logConfig = models.LogConfig{Guid: guid, SourceName: "", Index: index, Tags: tags}
 			streamer = log_streamer.New(logConfig, fakeClient, maxLogLinesPerSecond, maxLogBytesPerSecond, metricReportInterval)
 
 			streamer.Stdout().Write([]byte("hi"))
@@ -634,7 +634,7 @@ var _ = Describe("LogStreamer", func() {
 
 	Context("when there is no source index", func() {
 		It("defaults to 0", func() {
-			logConfig = executor.LogConfig{Guid: guid, SourceName: sourceName, Index: -1, Tags: tags}
+			logConfig = models.LogConfig{Guid: guid, SourceName: sourceName, Index: -1, Tags: tags}
 			streamer = log_streamer.New(logConfig, fakeClient, maxLogLinesPerSecond, maxLogBytesPerSecond, metricReportInterval)
 
 			streamer.Stdout().Write([]byte("hi"))

@@ -129,7 +129,7 @@ var _ = Describe("ClientFactory", func() {
 
 var _ = Describe("Client", func() {
 	var fakeServer *ghttp.Server
-	var client rep.Client
+	var client models.RepClient
 
 	BeforeEach(func() {
 		fakeServer = ghttp.NewServer()
@@ -173,14 +173,14 @@ var _ = Describe("Client", func() {
 		var (
 			logger    = lagertest.NewTestLogger("test")
 			updateErr error
-			lrpUpdate rep.LRPUpdate
+			lrpUpdate models.LRPUpdate
 		)
 
 		BeforeEach(func() {
-			lrpUpdate = rep.LRPUpdate{
+			lrpUpdate = models.LRPUpdate{
 				InstanceGUID: "some-instance-guid",
 				ActualLRPKey: models.NewActualLRPKey("some-process-guid", 2, "test-domain"),
-				InternalRoutes: rep.InternalRoutes{
+				InternalRoutes: models.InternalRoutes{
 					{Hostname: "a.apps.internal"},
 					{Hostname: "b.apps.internal"},
 				},

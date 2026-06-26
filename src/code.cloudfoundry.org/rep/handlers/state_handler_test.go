@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/rep"
 
@@ -17,16 +18,16 @@ import (
 
 var _ = Describe("State", func() {
 	var (
-		repState       rep.CellState
+		repState       models.CellState
 		requestLatency time.Duration
 	)
 
 	BeforeEach(func() {
-		repState = rep.CellState{
-			RootFSProviders: rep.RootFSProviders{"docker": rep.ArbitraryRootFSProvider{}},
+		repState = models.CellState{
+			RootFSProviders: models.RootFSProviders{"docker": models.ArbitraryRootFSProvider{}},
 		}
 		requestLatency = 50 * time.Millisecond
-		fakeLocalRep.StateStub = func(logger lager.Logger) (rep.CellState, bool, error) {
+		fakeLocalRep.StateStub = func(logger lager.Logger) (models.CellState, bool, error) {
 			time.Sleep(requestLatency)
 			return repState, true, nil
 		}
@@ -101,7 +102,7 @@ var _ = Describe("State", func() {
 		)
 
 		BeforeEach(func() {
-			fakeLocalRep.StateReturns(rep.CellState{}, false, errors.New("boom"))
+			fakeLocalRep.StateReturns(models.CellState{}, false, errors.New("boom"))
 
 			requestIdHeader = "fa89bcf8-3607-419f-a4b3-151312f5154b"
 			b3RequestIdHeader = fmt.Sprintf(`"trace-id":"%s"`, strings.Replace(requestIdHeader, "-", "", -1))

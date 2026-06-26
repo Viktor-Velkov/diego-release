@@ -90,7 +90,7 @@ var _ = Describe("Transformer", func() {
 
 			logger = lagertest.NewTestLogger("test-container-store")
 
-			logConfig := executor.LogConfig{Guid: "test", SourceName: "test", Index: 1, Tags: map[string]string{}}
+			logConfig := models.LogConfig{Guid: "test", SourceName: "test", Index: 1, Tags: map[string]string{}}
 			logStreamer = log_streamer.New(logConfig, fakeMetronClient, 100, 100000, 5*time.Minute)
 
 			healthyMonitoringInterval = 1 * time.Second

@@ -8,7 +8,6 @@ import (
 
 	"code.cloudfoundry.org/bbs/models"
 	lager "code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 )
 
 type FakeSimClient struct {
@@ -24,18 +23,18 @@ type FakeSimClient struct {
 	cancelTaskReturnsOnCall map[int]struct {
 		result1 error
 	}
-	PerformStub        func(lager.Logger, rep.Work) (rep.Work, error)
+	PerformStub        func(lager.Logger, models.Work) (models.Work, error)
 	performMutex       sync.RWMutex
 	performArgsForCall []struct {
 		arg1 lager.Logger
-		arg2 rep.Work
+		arg2 models.Work
 	}
 	performReturns struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}
 	performReturnsOnCall map[int]struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}
 	ResetStub        func() error
@@ -53,17 +52,17 @@ type FakeSimClient struct {
 	setStateClientArgsForCall []struct {
 		arg1 *http.Client
 	}
-	StateStub        func(lager.Logger) (rep.CellState, error)
+	StateStub        func(lager.Logger) (models.CellState, error)
 	stateMutex       sync.RWMutex
 	stateArgsForCall []struct {
 		arg1 lager.Logger
 	}
 	stateReturns struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 error
 	}
 	stateReturnsOnCall map[int]struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 error
 	}
 	StateClientTimeoutStub        func() time.Duration
@@ -89,11 +88,11 @@ type FakeSimClient struct {
 	stopLRPInstanceReturnsOnCall map[int]struct {
 		result1 error
 	}
-	UpdateLRPInstanceStub        func(lager.Logger, rep.LRPUpdate) error
+	UpdateLRPInstanceStub        func(lager.Logger, models.LRPUpdate) error
 	updateLRPInstanceMutex       sync.RWMutex
 	updateLRPInstanceArgsForCall []struct {
 		arg1 lager.Logger
-		arg2 rep.LRPUpdate
+		arg2 models.LRPUpdate
 	}
 	updateLRPInstanceReturns struct {
 		result1 error
@@ -167,12 +166,12 @@ func (fake *FakeSimClient) CancelTaskReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
-func (fake *FakeSimClient) Perform(arg1 lager.Logger, arg2 rep.Work) (rep.Work, error) {
+func (fake *FakeSimClient) Perform(arg1 lager.Logger, arg2 models.Work) (models.Work, error) {
 	fake.performMutex.Lock()
 	ret, specificReturn := fake.performReturnsOnCall[len(fake.performArgsForCall)]
 	fake.performArgsForCall = append(fake.performArgsForCall, struct {
 		arg1 lager.Logger
-		arg2 rep.Work
+		arg2 models.Work
 	}{arg1, arg2})
 	stub := fake.PerformStub
 	fakeReturns := fake.performReturns
@@ -193,41 +192,41 @@ func (fake *FakeSimClient) PerformCallCount() int {
 	return len(fake.performArgsForCall)
 }
 
-func (fake *FakeSimClient) PerformCalls(stub func(lager.Logger, rep.Work) (rep.Work, error)) {
+func (fake *FakeSimClient) PerformCalls(stub func(lager.Logger, models.Work) (models.Work, error)) {
 	fake.performMutex.Lock()
 	defer fake.performMutex.Unlock()
 	fake.PerformStub = stub
 }
 
-func (fake *FakeSimClient) PerformArgsForCall(i int) (lager.Logger, rep.Work) {
+func (fake *FakeSimClient) PerformArgsForCall(i int) (lager.Logger, models.Work) {
 	fake.performMutex.RLock()
 	defer fake.performMutex.RUnlock()
 	argsForCall := fake.performArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeSimClient) PerformReturns(result1 rep.Work, result2 error) {
+func (fake *FakeSimClient) PerformReturns(result1 models.Work, result2 error) {
 	fake.performMutex.Lock()
 	defer fake.performMutex.Unlock()
 	fake.PerformStub = nil
 	fake.performReturns = struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeSimClient) PerformReturnsOnCall(i int, result1 rep.Work, result2 error) {
+func (fake *FakeSimClient) PerformReturnsOnCall(i int, result1 models.Work, result2 error) {
 	fake.performMutex.Lock()
 	defer fake.performMutex.Unlock()
 	fake.PerformStub = nil
 	if fake.performReturnsOnCall == nil {
 		fake.performReturnsOnCall = make(map[int]struct {
-			result1 rep.Work
+			result1 models.Work
 			result2 error
 		})
 	}
 	fake.performReturnsOnCall[i] = struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}{result1, result2}
 }
@@ -317,7 +316,7 @@ func (fake *FakeSimClient) SetStateClientArgsForCall(i int) *http.Client {
 	return argsForCall.arg1
 }
 
-func (fake *FakeSimClient) State(arg1 lager.Logger) (rep.CellState, error) {
+func (fake *FakeSimClient) State(arg1 lager.Logger) (models.CellState, error) {
 	fake.stateMutex.Lock()
 	ret, specificReturn := fake.stateReturnsOnCall[len(fake.stateArgsForCall)]
 	fake.stateArgsForCall = append(fake.stateArgsForCall, struct {
@@ -342,7 +341,7 @@ func (fake *FakeSimClient) StateCallCount() int {
 	return len(fake.stateArgsForCall)
 }
 
-func (fake *FakeSimClient) StateCalls(stub func(lager.Logger) (rep.CellState, error)) {
+func (fake *FakeSimClient) StateCalls(stub func(lager.Logger) (models.CellState, error)) {
 	fake.stateMutex.Lock()
 	defer fake.stateMutex.Unlock()
 	fake.StateStub = stub
@@ -355,28 +354,28 @@ func (fake *FakeSimClient) StateArgsForCall(i int) lager.Logger {
 	return argsForCall.arg1
 }
 
-func (fake *FakeSimClient) StateReturns(result1 rep.CellState, result2 error) {
+func (fake *FakeSimClient) StateReturns(result1 models.CellState, result2 error) {
 	fake.stateMutex.Lock()
 	defer fake.stateMutex.Unlock()
 	fake.StateStub = nil
 	fake.stateReturns = struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeSimClient) StateReturnsOnCall(i int, result1 rep.CellState, result2 error) {
+func (fake *FakeSimClient) StateReturnsOnCall(i int, result1 models.CellState, result2 error) {
 	fake.stateMutex.Lock()
 	defer fake.stateMutex.Unlock()
 	fake.StateStub = nil
 	if fake.stateReturnsOnCall == nil {
 		fake.stateReturnsOnCall = make(map[int]struct {
-			result1 rep.CellState
+			result1 models.CellState
 			result2 error
 		})
 	}
 	fake.stateReturnsOnCall[i] = struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 error
 	}{result1, result2}
 }
@@ -497,12 +496,12 @@ func (fake *FakeSimClient) StopLRPInstanceReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
-func (fake *FakeSimClient) UpdateLRPInstance(arg1 lager.Logger, arg2 rep.LRPUpdate) error {
+func (fake *FakeSimClient) UpdateLRPInstance(arg1 lager.Logger, arg2 models.LRPUpdate) error {
 	fake.updateLRPInstanceMutex.Lock()
 	ret, specificReturn := fake.updateLRPInstanceReturnsOnCall[len(fake.updateLRPInstanceArgsForCall)]
 	fake.updateLRPInstanceArgsForCall = append(fake.updateLRPInstanceArgsForCall, struct {
 		arg1 lager.Logger
-		arg2 rep.LRPUpdate
+		arg2 models.LRPUpdate
 	}{arg1, arg2})
 	stub := fake.UpdateLRPInstanceStub
 	fakeReturns := fake.updateLRPInstanceReturns
@@ -523,13 +522,13 @@ func (fake *FakeSimClient) UpdateLRPInstanceCallCount() int {
 	return len(fake.updateLRPInstanceArgsForCall)
 }
 
-func (fake *FakeSimClient) UpdateLRPInstanceCalls(stub func(lager.Logger, rep.LRPUpdate) error) {
+func (fake *FakeSimClient) UpdateLRPInstanceCalls(stub func(lager.Logger, models.LRPUpdate) error) {
 	fake.updateLRPInstanceMutex.Lock()
 	defer fake.updateLRPInstanceMutex.Unlock()
 	fake.UpdateLRPInstanceStub = stub
 }
 
-func (fake *FakeSimClient) UpdateLRPInstanceArgsForCall(i int) (lager.Logger, rep.LRPUpdate) {
+func (fake *FakeSimClient) UpdateLRPInstanceArgsForCall(i int) (lager.Logger, models.LRPUpdate) {
 	fake.updateLRPInstanceMutex.RLock()
 	defer fake.updateLRPInstanceMutex.RUnlock()
 	argsForCall := fake.updateLRPInstanceArgsForCall[i]
@@ -597,4 +596,4 @@ func (fake *FakeSimClient) recordInvocation(key string, args []interface{}) {
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ rep.SimClient = new(FakeSimClient)
+var _ models.RepSimClient = new(FakeSimClient)

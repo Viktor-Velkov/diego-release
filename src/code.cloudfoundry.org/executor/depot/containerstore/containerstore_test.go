@@ -392,7 +392,7 @@ var _ = Describe("Container Store", func() {
 					CachedDependencies: []executor.CachedDependency{
 						{Name: "artifact", From: "https://example.com", To: "/etc/foo", CacheKey: "abc", LogSource: "source"},
 					},
-					LogConfig: executor.LogConfig{
+					LogConfig: models.LogConfig{
 						Guid:       logGuid,
 						Index:      1,
 						SourceName: "test-source",
@@ -1667,7 +1667,7 @@ var _ = Describe("Container Store", func() {
 					Guid: containerGuid,
 					RunInfo: executor.RunInfo{
 						Action: runAction,
-						LogConfig: executor.LogConfig{
+						LogConfig: models.LogConfig{
 							Guid: containerGuid,
 						},
 						LogRateLimitBytesPerSecond: logRateUnlimitedBytesPerSecond,
@@ -2354,7 +2354,7 @@ var _ = Describe("Container Store", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			runInfo := executor.RunInfo{
-				LogConfig: executor.LogConfig{
+				LogConfig: models.LogConfig{
 					Guid:       containerGuid,
 					Index:      1,
 					SourceName: "test-source",
@@ -2424,7 +2424,7 @@ var _ = Describe("Container Store", func() {
 				return nil
 			}
 			runInfo := executor.RunInfo{
-				LogConfig: executor.LogConfig{
+				LogConfig: models.LogConfig{
 					Guid:       containerGuid,
 					Index:      1,
 					SourceName: "test-source",
@@ -2680,7 +2680,7 @@ var _ = Describe("Container Store", func() {
 				return nil
 			}
 			runInfo := executor.RunInfo{
-				LogConfig: executor.LogConfig{
+				LogConfig: models.LogConfig{
 					Guid:       containerGuid,
 					Index:      1,
 					SourceName: "test-source",
@@ -2760,7 +2760,7 @@ var _ = Describe("Container Store", func() {
 
 		BeforeEach(func() {
 			runInfo := executor.RunInfo{
-				LogConfig: executor.LogConfig{
+				LogConfig: models.LogConfig{
 					Guid:       containerGuid,
 					Index:      1,
 					SourceName: "test-source",
@@ -3278,7 +3278,7 @@ var _ = Describe("Container Store", func() {
 			StartTimeoutMs:     50000,
 			Privileged:         true,
 			CachedDependencies: []executor.CachedDependency{},
-			LogConfig: executor.LogConfig{
+			LogConfig: models.LogConfig{
 				Guid:       "log-guid",
 				Index:      1,
 				SourceName: "test-source",

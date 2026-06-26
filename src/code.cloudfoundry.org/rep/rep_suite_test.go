@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	cfhttp "code.cloudfoundry.org/cfhttp/v2"
 	executorfakes "code.cloudfoundry.org/executor/fakes"
 	"code.cloudfoundry.org/rep"
@@ -16,7 +17,7 @@ import (
 var (
 	cfHttpTimeout time.Duration
 	auctionRep    *repfakes.FakeClient
-	factory       rep.ClientFactory
+	factory       bbsmodels.RepClientFactory
 
 	fakeExecutorClient *executorfakes.FakeClient
 	fakeEvacuatable    *fake_evacuation_context.FakeEvacuatable

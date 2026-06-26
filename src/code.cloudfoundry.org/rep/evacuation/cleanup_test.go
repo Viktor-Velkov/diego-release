@@ -116,12 +116,12 @@ var _ = Describe("EvacuationCleanup", func() {
 					{
 						Guid:    "container1",
 						State:   executor.StateRunning,
-						RunInfo: executor.RunInfo{LogConfig: executor.LogConfig{Guid: "log-guid-1", SourceName: "source-name-1", Index: 0}},
+						RunInfo: executor.RunInfo{LogConfig: models.LogConfig{Guid: "log-guid-1", SourceName: "source-name-1", Index: 0}},
 					},
 					{
 						Guid:    "container2",
 						State:   executor.StateRunning,
-						RunInfo: executor.RunInfo{LogConfig: executor.LogConfig{Guid: "log-guid-2", SourceName: "source-name-2", Index: 1}},
+						RunInfo: executor.RunInfo{LogConfig: models.LogConfig{Guid: "log-guid-2", SourceName: "source-name-2", Index: 1}},
 					},
 				},
 				nil,
@@ -153,12 +153,12 @@ var _ = Describe("EvacuationCleanup", func() {
 							{
 								Guid:    "container1",
 								State:   executor.StateRunning,
-								RunInfo: executor.RunInfo{LogConfig: executor.LogConfig{Guid: "log-guid-1", SourceName: "source-name-1", Index: 0}},
+								RunInfo: executor.RunInfo{LogConfig: models.LogConfig{Guid: "log-guid-1", SourceName: "source-name-1", Index: 0}},
 							},
 							{
 								Guid:    "container2",
 								State:   executor.StateCompleted,
-								RunInfo: executor.RunInfo{LogConfig: executor.LogConfig{Guid: "log-guid-2", SourceName: "source-name-2", Index: 1}},
+								RunInfo: executor.RunInfo{LogConfig: models.LogConfig{Guid: "log-guid-2", SourceName: "source-name-2", Index: 1}},
 							},
 						},
 						nil,

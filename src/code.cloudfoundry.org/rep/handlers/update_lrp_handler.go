@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/executor"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/locket/metrics/helpers"
@@ -56,7 +57,7 @@ func (h *UpdateLRPInstanceHandler) ServeHTTP(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	var lrpUpdate rep.LRPUpdate
+	var lrpUpdate models.LRPUpdate
 	deferErr = json.NewDecoder(r.Body).Decode(&lrpUpdate)
 	if deferErr != nil {
 		w.WriteHeader(http.StatusBadRequest)

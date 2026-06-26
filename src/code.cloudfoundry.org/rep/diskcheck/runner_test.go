@@ -3,6 +3,7 @@ package diskcheck_test
 import (
 	"errors"
 	"os"
+	"sync"
 	"time"
 
 	"code.cloudfoundry.org/clock/fakeclock"
@@ -29,6 +30,7 @@ var _ = Describe("Runner", func() {
 		checkPathFunc    func(string) (bool, error)
 		checkPathErr     error
 		checkPathRO      bool
+		checkPathMu      sync.Mutex
 		paths            []string
 	)
 
@@ -44,6 +46,8 @@ var _ = Describe("Runner", func() {
 		paths = []string{"/some/path"}
 
 		checkPathFunc = func(path string) (bool, error) {
+			checkPathMu.Lock()
+			defer checkPathMu.Unlock()
 			return checkPathRO, checkPathErr
 		}
 	})
@@ -149,7 +153,9 @@ var _ = Describe("Runner", func() {
 		Context("and a path becomes read-only during a periodic check", func() {
 			JustBeforeEach(func() {
 				Eventually(process.Ready()).Should(BeClosed())
+				checkPathMu.Lock()
 				checkPathRO = true
+				checkPathMu.Unlock()
 				fakeClock.WaitForWatcherAndIncrement(checkInterval)
 			})
 
@@ -173,7 +179,9 @@ var _ = Describe("Runner", func() {
 		Context("and a path check returns an error during a periodic check", func() {
 			JustBeforeEach(func() {
 				Eventually(process.Ready()).Should(BeClosed())
+				checkPathMu.Lock()
 				checkPathErr = errors.New("statfs failed")
+				checkPathMu.Unlock()
 				fakeClock.WaitForWatcherAndIncrement(checkInterval)
 			})
 
@@ -211,7 +219,9 @@ var _ = Describe("Runner", func() {
 		Context("when a path becomes read-only during periodic checks", func() {
 			JustBeforeEach(func() {
 				Eventually(process.Ready()).Should(BeClosed())
+				checkPathMu.Lock()
 				checkPathRO = true
+				checkPathMu.Unlock()
 			})
 
 			It("does not evacuate on the first failure", func() {
@@ -232,7 +242,9 @@ var _ = Describe("Runner", func() {
 		Context("when a path check returns an error during periodic checks", func() {
 			JustBeforeEach(func() {
 				Eventually(process.Ready()).Should(BeClosed())
+				checkPathMu.Lock()
 				checkPathErr = errors.New("statfs failed")
+				checkPathMu.Unlock()
 			})
 
 			It("does not evacuate on the first failure", func() {
@@ -250,9 +262,13 @@ var _ = Describe("Runner", func() {
 			Context("when the error clears before the threshold is reached", func() {
 				It("resets the counter and does not evacuate", func() {
 					fakeClock.WaitForWatcherAndIncrement(checkInterval) // failure 1 of 3
-					checkPathErr = nil                                  // clear — next tick resets counter
+					checkPathMu.Lock()
+					checkPathErr = nil // clear — next tick resets counter
+					checkPathMu.Unlock()
 					fakeClock.WaitForWatcherAndIncrement(checkInterval) // healthy tick, counter → 0
+					checkPathMu.Lock()
 					checkPathErr = errors.New("statfs failed again")
+					checkPathMu.Unlock()
 					fakeClock.WaitForWatcherAndIncrement(checkInterval) // failure 1 of 3 again
 					// Only 1 failure since the reset — threshold is 3, no evacuation yet.
 					Consistently(evacuatable.EvacuateCallCount, 100*time.Millisecond).Should(Equal(0))

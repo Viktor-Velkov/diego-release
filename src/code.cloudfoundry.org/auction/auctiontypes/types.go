@@ -5,9 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"code.cloudfoundry.org/auctioneer"
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 	"github.com/tedsuo/ifrit"
 )
 
@@ -48,12 +47,12 @@ var ErrorExceededInflightCreation = errors.New("waiting to start instance: reach
 //go:generate counterfeiter -o fakes/fake_auction_runner.go . AuctionRunner
 type AuctionRunner interface {
 	ifrit.Runner
-	ScheduleLRPsForAuctions([]auctioneer.LRPStartRequest, string)
-	ScheduleTasksForAuctions([]auctioneer.TaskStartRequest, string)
+	ScheduleLRPsForAuctions([]bbsmodels.LRPStartRequest, string)
+	ScheduleTasksForAuctions([]bbsmodels.TaskStartRequest, string)
 }
 
 type AuctionRunnerDelegate interface {
-	FetchCellReps(lager.Logger, string) (map[string]rep.Client, error)
+	FetchCellReps(lager.Logger, string) (map[string]bbsmodels.RepClient, error)
 	AuctionCompleted(lager.Logger, string, AuctionResults)
 }
 
@@ -93,11 +92,11 @@ func NewAuctionRecord(now time.Time) AuctionRecord {
 }
 
 type LRPAuction struct {
-	rep.LRP
+	bbsmodels.SchedulingLRP
 	AuctionRecord
 }
 
-func NewLRPAuction(lrp rep.LRP, now time.Time) LRPAuction {
+func NewLRPAuction(lrp bbsmodels.SchedulingLRP, now time.Time) LRPAuction {
 	return LRPAuction{
 		lrp,
 		NewAuctionRecord(now),
@@ -105,15 +104,15 @@ func NewLRPAuction(lrp rep.LRP, now time.Time) LRPAuction {
 }
 
 func (a *LRPAuction) Copy() LRPAuction {
-	return LRPAuction{a.LRP.Copy(), a.AuctionRecord}
+	return LRPAuction{a.SchedulingLRP.Copy(), a.AuctionRecord}
 }
 
 type TaskAuction struct {
-	rep.Task
+	bbsmodels.SchedulingTask
 	AuctionRecord
 }
 
-func NewTaskAuction(task rep.Task, now time.Time) TaskAuction {
+func NewTaskAuction(task bbsmodels.SchedulingTask, now time.Time) TaskAuction {
 	return TaskAuction{
 		task,
 		NewAuctionRecord(now),
@@ -121,5 +120,5 @@ func NewTaskAuction(task rep.Task, now time.Time) TaskAuction {
 }
 
 func (a *TaskAuction) Copy() TaskAuction {
-	return TaskAuction{a.Task.Copy(), a.AuctionRecord}
+	return TaskAuction{a.SchedulingTask.Copy(), a.AuctionRecord}
 }

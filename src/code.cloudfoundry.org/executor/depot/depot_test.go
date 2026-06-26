@@ -3,6 +3,8 @@ package depot_test
 import (
 	"errors"
 	"io"
+	"math"
+	"os"
 	"time"
 
 	bbsmodels "code.cloudfoundry.org/bbs/models"
@@ -35,6 +37,7 @@ var _ = Describe("Depot", func() {
 		DeleteWorkPoolSize  int
 		ReadWorkPoolSize    int
 		MetricsWorkPoolSize int
+		diskPath            string
 	)
 
 	BeforeEach(func() {
@@ -54,6 +57,7 @@ var _ = Describe("Depot", func() {
 		DeleteWorkPoolSize = 5
 		ReadWorkPoolSize = 5
 		MetricsWorkPoolSize = 5
+		diskPath = ""
 	})
 
 	JustBeforeEach(func() {
@@ -67,7 +71,7 @@ var _ = Describe("Depot", func() {
 		Expect(err).NotTo(HaveOccurred())
 
 		depotClient = depot.NewClient(
-			resources, containerStore, gardenClient, volmanClient, eventHub,
+			resources, diskPath, containerStore, gardenClient, volmanClient, eventHub,
 			creationWorkPool, deletionWorkPool, readWorkPool, metricsWorkPool,
 		)
 	})
@@ -710,8 +714,29 @@ var _ = Describe("Depot", func() {
 
 	Describe("TotalResources", func() {
 		Context("when asked for total resources", func() {
-			It("should return the resources it was configured with", func() {
-				Expect(depotClient.TotalResources(logger)).To(Equal(resources))
+			Context("when disk path is not provided", func() {
+				It("should return the resources it was configured with", func() {
+					Expect(depotClient.TotalResources(logger)).To(Equal(resources))
+				})
+			})
+
+			Context("when disk path is provided", func() {
+				BeforeEach(func() {
+					diskPath = os.TempDir()
+				})
+
+				It("should return the resources it was configured with, with live disk capacity", func() {
+					totalResources, err := depotClient.TotalResources(logger)
+					Expect(err).NotTo(HaveOccurred())
+
+					Expect(totalResources.MemoryMB).To(Equal(resources.MemoryMB))
+					Expect(totalResources.Containers).To(Equal(resources.Containers))
+
+					// disk capacity should be updated
+					Expect(totalResources.DiskMB).NotTo(Equal(resources.DiskMB))
+					Expect(totalResources.DiskMB).To(BeNumerically(">", 0))
+					Expect(totalResources.DiskMB).To(BeNumerically("<=", math.MaxInt32))
+				})
 			})
 		})
 	})

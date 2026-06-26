@@ -878,7 +878,7 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 		})
 
 		Context("acting as an auction representative", func() {
-			var repClient rep.Client
+			var repClient models.RepClient
 
 			JustBeforeEach(func() {
 				Eventually(fetchCells(logger)).Should(HaveLen(1))
@@ -950,13 +950,13 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 						err := bbsClient.DesireTask(logger, requestIdHeader, task.TaskGuid, task.Domain, task.TaskDefinition)
 						Expect(err).NotTo(HaveOccurred())
 
-						work := rep.Work{
-							Tasks: []rep.Task{
-								rep.NewTask(
+						work := models.Work{
+							Tasks: []models.SchedulingTask{
+								models.NewSchedulingTask(
 									task.TaskGuid,
 									"domain",
-									rep.NewResource(100, 100, 10),
-									rep.NewPlacementConstraint("foobar", []string{}, []string{}),
+									models.NewResource(100, 100, 10),
+									models.NewPlacementConstraint("foobar", []string{}, []string{}),
 								),
 							},
 						}
@@ -1016,13 +1016,13 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 					})
 
 					JustBeforeEach(func() {
-						work := rep.Work{
-							LRPs: []rep.LRP{
-								rep.NewLRP(
+						work := models.Work{
+							LRPs: []models.SchedulingLRP{
+								models.NewSchedulingLRP(
 									"",
 									models.NewActualLRPKey("pg-1", 0, "domain"),
-									rep.NewResource(100, 100, 10),
-									rep.NewPlacementConstraint("foobar", placementTags, volumeDrivers),
+									models.NewResource(100, 100, 10),
+									models.NewPlacementConstraint("foobar", placementTags, volumeDrivers),
 								),
 							},
 						}
@@ -1049,7 +1049,7 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 				It("returns total capacity and state information", func() {
 					state, err := repClient.State(logger)
 					Expect(err).NotTo(HaveOccurred())
-					Expect(state.TotalResources).To(Equal(rep.Resources{
+					Expect(state.TotalResources).To(Equal(models.Resources{
 						MemoryMB:   1024,
 						DiskMB:     10 * 1024,
 						Containers: 3,
@@ -1063,11 +1063,11 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 						fakeGarden.RouteToHandler("GET", "/containers", ghttp.RespondWithJSONEncoded(http.StatusOK, struct{}{}))
 						fakeGarden.RouteToHandler("GET", "/containers/bulk_info", ghttp.RespondWithJSONEncoded(http.StatusOK, struct{}{}))
 
-						Eventually(func() rep.Resources {
+						Eventually(func() models.Resources {
 							state, err := repClient.State(logger)
 							Expect(err).NotTo(HaveOccurred())
 							return state.AvailableResources
-						}).Should(Equal(rep.Resources{
+						}).Should(Equal(models.Resources{
 							MemoryMB:   1024,
 							DiskMB:     10 * 1024,
 							Containers: 3,
@@ -1211,7 +1211,7 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 				addr          string
 				tlsConfig     *rep.TLSConfig
 				client        *http.Client
-				clientFactory rep.ClientFactory
+				clientFactory models.RepClientFactory
 			)
 
 			BeforeEach(func() {

@@ -102,7 +102,7 @@ func FetchCellRegistration(bbsClient bbs.Client, traceID string, cellId string) 
 	return nil, errors.New("Cell not found")
 }
 
-func FetchCellState(stdout, stderr io.Writer, clientFactory rep.ClientFactory, registration *models.CellPresence, traceID string) error {
+func FetchCellState(stdout, stderr io.Writer, clientFactory models.RepClientFactory, registration *models.CellPresence, traceID string) error {
 	repClient, err := clientFactory.CreateClient(registration.RepAddress, registration.RepUrl, traceID)
 	if err != nil {
 		return err

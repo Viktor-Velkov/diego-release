@@ -4,24 +4,24 @@ import (
 	"encoding/json"
 	"net/url"
 
-	"code.cloudfoundry.org/rep"
+	models "code.cloudfoundry.org/bbs/models"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("RootFSProviders", func() {
 	var (
-		arbitrary rep.ArbitraryRootFSProvider
-		fixedSet  rep.FixedSetRootFSProvider
-		providers rep.RootFSProviders
+		arbitrary models.ArbitraryRootFSProvider
+		fixedSet  models.FixedSetRootFSProvider
+		providers models.RootFSProviders
 
 		providersJSON string
 	)
 
 	BeforeEach(func() {
-		arbitrary = rep.ArbitraryRootFSProvider{}
-		fixedSet = rep.NewFixedSetRootFSProvider("baz", "quux")
-		providers = rep.RootFSProviders{
+		arbitrary = models.ArbitraryRootFSProvider{}
+		fixedSet = models.NewFixedSetRootFSProvider("baz", "quux")
+		providers = models.RootFSProviders{
 			"foo": arbitrary,
 			"bar": fixedSet,
 		}
@@ -46,7 +46,7 @@ var _ = Describe("RootFSProviders", func() {
 	})
 
 	It("deserializes", func() {
-		var providersResult rep.RootFSProviders
+		var providersResult models.RootFSProviders
 		err := json.Unmarshal([]byte(providersJSON), &providersResult)
 		Expect(err).NotTo(HaveOccurred())
 

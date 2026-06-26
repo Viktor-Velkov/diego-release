@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/locket/metrics/helpers"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/rep/auctioncellrep"
 )
 
@@ -30,7 +30,7 @@ func (h *state) ServeHTTP(w http.ResponseWriter, r *http.Request, logger lager.L
 
 	logger = logger.Session("auction-fetch-state").WithTraceInfo(r)
 
-	var state rep.CellState
+	var state models.CellState
 	var healthy bool
 	state, healthy, deferErr = h.rep.State(logger)
 	if deferErr != nil {

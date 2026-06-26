@@ -25,6 +25,7 @@ var (
 type FileCache struct {
 	CachedPath     string
 	maxSizeInBytes int64
+	minFreeBytes   int64
 	Entries        map[string]*FileCacheEntry
 	OldEntries     map[string]*FileCacheEntry
 	Seq            uint64
@@ -40,10 +41,15 @@ type FileCacheEntry struct {
 	fileInUseCount        int
 }
 
-func NewCache(dir string, maxSizeInBytes int64) *FileCache {
+func NewCache(dir string, maxSizeInBytes int64, minFreeBytes ...int64) *FileCache {
+	var minFree int64
+	if len(minFreeBytes) > 0 {
+		minFree = minFreeBytes[0]
+	}
 	return &FileCache{
 		CachedPath:     dir,
 		maxSizeInBytes: maxSizeInBytes,
+		minFreeBytes:   minFree,
 		Entries:        map[string]*FileCacheEntry{},
 		OldEntries:     map[string]*FileCacheEntry{},
 		Seq:            0,

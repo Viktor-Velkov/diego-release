@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/locket"
 	locketmodels "code.cloudfoundry.org/locket/models"
-	"code.cloudfoundry.org/rep"
 	"github.com/spf13/cobra"
 )
 
@@ -57,7 +57,7 @@ func NewBBSClient(cmd *cobra.Command, bbsClientConfig TLSConfig) (bbs.Client, er
 	return client, err
 }
 
-func NewRepClient(clientFactory rep.ClientFactory, address, url string) (rep.Client, error) {
+func NewRepClient(clientFactory models.RepClientFactory, address, url string) (models.RepClient, error) {
 	traceID := ""
 	return clientFactory.CreateClient(address, traceID, url)
 }

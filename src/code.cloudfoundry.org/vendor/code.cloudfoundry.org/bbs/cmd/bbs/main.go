@@ -11,8 +11,9 @@ import (
 	"os"
 	"time"
 
-	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/bbs/cmd/bbs/config"
+	bbsauctioneer "code.cloudfoundry.org/bbs/cmd/bbs/internal/auctioneer"
+	bbsrep "code.cloudfoundry.org/bbs/cmd/bbs/internal/rep"
 	"code.cloudfoundry.org/bbs/controllers"
 	"code.cloudfoundry.org/bbs/converger"
 	"code.cloudfoundry.org/bbs/db/migrations"
@@ -23,6 +24,7 @@ import (
 	"code.cloudfoundry.org/bbs/handlers"
 	"code.cloudfoundry.org/bbs/metrics"
 	"code.cloudfoundry.org/bbs/migration"
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/bbs/serviceclient"
 	"code.cloudfoundry.org/bbs/taskworkpool"
 	cfhttp "code.cloudfoundry.org/cfhttp/v2"
@@ -40,7 +42,6 @@ import (
 	"code.cloudfoundry.org/locket/lock"
 	"code.cloudfoundry.org/locket/lockheldmetrics"
 	locketmodels "code.cloudfoundry.org/locket/models"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/tlsconfig"
 	"github.com/tedsuo/ifrit"
 	"github.com/tedsuo/ifrit/grouper"
@@ -168,7 +169,7 @@ func main() {
 	actualLRPInstanceHub := events.NewHub(logger)
 	taskHub := events.NewHub(logger)
 
-	repTLSConfig := &rep.TLSConfig{
+	repTLSConfig := &bbsrep.TLSConfig{
 		RequireTLS:      true,
 		CaCertFile:      bbsConfig.RepCACert,
 		CertFile:        bbsConfig.RepClientCert,
@@ -179,7 +180,7 @@ func main() {
 	httpClient := cfhttp.NewClient(
 		cfhttp.WithRequestTimeout(time.Duration(bbsConfig.CommunicationTimeout)),
 	)
-	repClientFactory, err := rep.NewClientFactory(httpClient, httpClient, repTLSConfig)
+	repClientFactory, err := bbsrep.NewClientFactory(httpClient, httpClient, repTLSConfig)
 	if err != nil {
 		logger.Fatal("new-rep-client-factory-failed", err)
 	}
@@ -440,13 +441,13 @@ func hubMaintainer(logger lager.Logger, desiredHub, actualHub, taskHub events.Hu
 	}
 }
 
-func initializeAuctioneerClient(logger lager.Logger, bbsConfig *config.BBSConfig) auctioneer.Client {
+func initializeAuctioneerClient(logger lager.Logger, bbsConfig *config.BBSConfig) bbsmodels.AuctioneerClient {
 	if bbsConfig.AuctioneerAddress == "" {
 		logger.Fatal("auctioneer-address-validation-failed", errors.New("auctioneerAddress is required"))
 	}
 
 	if bbsConfig.AuctioneerCACert != "" || bbsConfig.AuctioneerClientCert != "" || bbsConfig.AuctioneerClientKey != "" {
-		client, err := auctioneer.NewSecureClient(bbsConfig.AuctioneerAddress,
+		client, err := bbsauctioneer.NewSecureClient(bbsConfig.AuctioneerAddress,
 			bbsConfig.AuctioneerCACert,
 			bbsConfig.AuctioneerClientCert,
 			bbsConfig.AuctioneerClientKey,
@@ -459,7 +460,7 @@ func initializeAuctioneerClient(logger lager.Logger, bbsConfig *config.BBSConfig
 		return client
 	}
 
-	return auctioneer.NewClient(bbsConfig.AuctioneerAddress, time.Duration(bbsConfig.CommunicationTimeout))
+	return bbsauctioneer.NewClient(bbsConfig.AuctioneerAddress, time.Duration(bbsConfig.CommunicationTimeout))
 }
 
 func initializeMetron(logger lager.Logger, bbsConfig config.BBSConfig) (loggingclient.IngressClient, error) {

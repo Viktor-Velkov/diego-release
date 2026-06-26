@@ -208,7 +208,7 @@ var _ = Context("when declarative healthchecks is turned on", func() {
 		})
 
 		Context("when startup check times out but readiness check succeeds immediately", func() {
-			var repClient rep.Client
+			var repClient models.RepClient
 			BeforeEach(func() {
 				// Create an LRP with:
 				// - Startup check on port 9999 (never becomes available, will timeout)

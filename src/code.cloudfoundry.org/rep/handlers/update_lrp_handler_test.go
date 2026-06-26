@@ -16,7 +16,7 @@ import (
 	executorfakes "code.cloudfoundry.org/executor/fakes"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/lager/v3/lagertest"
-	"code.cloudfoundry.org/rep"
+
 	"code.cloudfoundry.org/rep/handlers"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -33,7 +33,7 @@ var _ = Describe("UpdateLRPInstanceHandler", func() {
 		logger                *lagertest.TestLogger
 		processGuid           string
 		instanceGuid          string
-		internalRoutes        rep.InternalRoutes
+		internalRoutes        models.InternalRoutes
 		metricTags            map[string]string
 
 		requestIdHeader   string
@@ -54,13 +54,13 @@ var _ = Describe("UpdateLRPInstanceHandler", func() {
 
 		processGuid = "process-guid"
 		instanceGuid = "instance-guid"
-		internalRoutes = rep.InternalRoutes{
+		internalRoutes = models.InternalRoutes{
 			{Hostname: "a.apps.internal"},
 			{Hostname: "b.apps.internal"},
 		}
 		metricTags = map[string]string{"some-key": "some-value"}
 		k := models.NewActualLRPKey(processGuid, 2, "test-domain")
-		lrpUpdate := rep.NewLRPUpdate(instanceGuid, k, internalRoutes, metricTags)
+		lrpUpdate := models.NewLRPUpdate(instanceGuid, k, internalRoutes, metricTags)
 		req, err = http.NewRequest("PUT", "", JSONReaderFor(lrpUpdate))
 		Expect(err).NotTo(HaveOccurred())
 

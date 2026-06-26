@@ -17,8 +17,8 @@ import (
 //go:generate counterfeiter . AuctionCellClient
 
 type AuctionCellClient interface {
-	State(logger lager.Logger) (rep.CellState, bool, error)
-	Perform(logger lager.Logger, traceID string, work rep.Work) (rep.Work, error)
+	State(logger lager.Logger) (models.CellState, bool, error)
+	Perform(logger lager.Logger, traceID string, work models.Work) (models.Work, error)
 	Reset() error
 }
 
@@ -31,7 +31,7 @@ type AuctionCellRep struct {
 	cellIndex                int
 	repURL                   string
 	stackPathMap             rep.StackPathMap
-	rootFSProviders          rep.RootFSProviders
+	rootFSProviders          models.RootFSProviders
 	containerMetricsProvider rep.ContainerMetricsProvider
 	zone                     string
 	client                   executor.Client
@@ -77,18 +77,18 @@ func New(
 	}
 }
 
-func rootFSProviders(preloaded rep.StackPathMap, arbitrary []string) rep.RootFSProviders {
-	rootFSProviders := rep.RootFSProviders{}
+func rootFSProviders(preloaded rep.StackPathMap, arbitrary []string) models.RootFSProviders {
+	rootFSProviders := models.RootFSProviders{}
 	for _, scheme := range arbitrary {
-		rootFSProviders[scheme] = rep.ArbitraryRootFSProvider{}
+		rootFSProviders[scheme] = models.ArbitraryRootFSProvider{}
 	}
 
 	stacks := make([]string, 0, len(preloaded))
 	for stack := range preloaded {
 		stacks = append(stacks, stack)
 	}
-	rootFSProviders[models.PreloadedRootFSScheme] = rep.NewFixedSetRootFSProvider(stacks...)
-	rootFSProviders[models.PreloadedOCIRootFSScheme] = rep.NewFixedSetRootFSProvider(stacks...)
+	rootFSProviders[models.PreloadedRootFSScheme] = models.NewFixedSetRootFSProvider(stacks...)
+	rootFSProviders[models.PreloadedOCIRootFSScheme] = models.NewFixedSetRootFSProvider(stacks...)
 
 	return rootFSProviders
 }
@@ -109,36 +109,36 @@ func rootFSURLFromPath(rootfsPath string, stackPathMap rep.StackPathMap) string 
 	return rootfsPath
 }
 
-func (a *AuctionCellRep) State(logger lager.Logger) (rep.CellState, bool, error) {
+func (a *AuctionCellRep) State(logger lager.Logger) (models.CellState, bool, error) {
 	logger = logger.Session("auction-state")
 	logger.Info("providing")
 
 	containers, err := a.client.ListContainers(logger)
 	if err != nil {
 		logger.Error("failed-to-fetch-containers", err)
-		return rep.CellState{}, false, err
+		return models.CellState{}, false, err
 	}
 
 	totalResources, err := a.client.TotalResources(logger)
 	if err != nil {
 		logger.Error("failed-to-get-total-resources", err)
-		return rep.CellState{}, false, err
+		return models.CellState{}, false, err
 	}
 
 	availableResources, err := a.client.RemainingResources(logger)
 	if err != nil {
 		logger.Error("failed-to-get-remaining-resource", err)
-		return rep.CellState{}, false, err
+		return models.CellState{}, false, err
 	}
 
 	volumeDrivers, err := a.client.VolumeDrivers(logger)
 	if err != nil {
 		logger.Error("failed-to-get-volume-drivers", err)
-		return rep.CellState{}, false, err
+		return models.CellState{}, false, err
 	}
 
-	lrps := []rep.LRP{}
-	tasks := []rep.Task{}
+	lrps := []models.SchedulingLRP{}
+	tasks := []models.SchedulingTask{}
 	startingContainerCount := 0
 
 	for i := range containers {
@@ -167,8 +167,8 @@ func (a *AuctionCellRep) State(logger lager.Logger) (rep.CellState, bool, error)
 			logger.Error("cannot-unmarshal-volume-drivers", err, lager.Data{"volume-drivers": volumeDriversJSON})
 		}
 
-		resource := rep.Resource{MemoryMB: int32(container.MemoryMB), DiskMB: int32(container.DiskMB), MaxPids: int32(container.MaxPids)}
-		placementConstraint := rep.PlacementConstraint{
+		resource := models.Resource{MemoryMB: int32(container.MemoryMB), DiskMB: int32(container.DiskMB), MaxPids: int32(container.MaxPids)}
+		placementConstraint := models.PlacementConstraint{
 			RootFs:        rootFSURLFromPath(container.RootFSPath, a.stackPathMap),
 			VolumeDrivers: volumeDrivers,
 			PlacementTags: placementTags,
@@ -198,7 +198,7 @@ func (a *AuctionCellRep) State(logger lager.Logger) (rep.CellState, bool, error)
 			default:
 				state = models.ActualLRPStateClaimed
 			}
-			lrp := rep.NewLRP(instanceKey.InstanceGuid, *key, resource, placementConstraint)
+			lrp := models.NewSchedulingLRP(instanceKey.InstanceGuid, *key, resource, placementConstraint)
 			lrp.State = state
 			lrps = append(lrps, lrp)
 		case rep.TaskLifecycle:
@@ -207,7 +207,7 @@ func (a *AuctionCellRep) State(logger lager.Logger) (rep.CellState, bool, error)
 			if container.State == executor.StateCompleted {
 				state = models.Task_Completed
 			}
-			task := rep.NewTask(container.Guid, domain, resource, placementConstraint)
+			task := models.NewSchedulingTask(container.Guid, domain, resource, placementConstraint)
 			task.State = state
 			task.Failed = container.RunResult.Failed
 			tasks = append(tasks, task)
@@ -219,7 +219,7 @@ func (a *AuctionCellRep) State(logger lager.Logger) (rep.CellState, bool, error)
 		allocatedProxyMemory = a.proxyMemoryAllocation
 	}
 
-	state := rep.NewCellState(
+	state := models.NewCellState(
 		a.cellID,
 		a.cellIndex,
 		a.repURL,
@@ -324,8 +324,8 @@ func containerIsStarting(container *executor.Container) bool {
 		container.State == executor.StateCreated
 }
 
-func (a *AuctionCellRep) Perform(logger lager.Logger, traceID string, work rep.Work) (rep.Work, error) {
-	var failedWork = rep.Work{}
+func (a *AuctionCellRep) Perform(logger lager.Logger, traceID string, work models.Work) (models.Work, error) {
+	var failedWork = models.Work{}
 
 	logger = logger.Session("auction-work", lager.Data{
 		"lrp-starts": len(work.LRPs),
@@ -344,7 +344,7 @@ func (a *AuctionCellRep) Perform(logger lager.Logger, traceID string, work rep.W
 		return work, err
 	}
 
-	var lrpRequests []rep.LRP
+	var lrpRequests []models.SchedulingLRP
 	remainingMemory := int32(remainingResources.MemoryMB)
 
 	sort.SliceStable(work.LRPs, func(i, j int) bool {
@@ -375,8 +375,8 @@ func (a *AuctionCellRep) Perform(logger lager.Logger, traceID string, work rep.W
 	return failedWork, nil
 }
 
-func (a *AuctionCellRep) convertResources(resources executor.ExecutorResources) rep.Resources {
-	return rep.Resources{
+func (a *AuctionCellRep) convertResources(resources executor.ExecutorResources) models.Resources {
+	return models.Resources{
 		MemoryMB:   int32(resources.MemoryMB),
 		DiskMB:     int32(resources.DiskMB),
 		Containers: resources.Containers,

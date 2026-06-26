@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/bytefmt"
 	"code.cloudfoundry.org/cacheddownloader"
 	loggingclient "code.cloudfoundry.org/diego-logging-client"
@@ -17,7 +18,7 @@ import (
 //go:generate counterfeiter -o containerstorefakes/fake_bindmounter.go . DependencyManager
 
 type DependencyManager interface {
-	DownloadCachedDependencies(logger lager.Logger, mounts []executor.CachedDependency, logconfig executor.LogConfig, metronClient loggingclient.IngressClient) (BindMounts, error)
+	DownloadCachedDependencies(logger lager.Logger, mounts []executor.CachedDependency, logconfig models.LogConfig, metronClient loggingclient.IngressClient) (BindMounts, error)
 	ReleaseCachedDependencies(logger lager.Logger, keys []BindMountCacheKey) error
 	Stop(logger lager.Logger)
 }
@@ -40,7 +41,7 @@ func (bm *dependencyManager) Stop(logger lager.Logger) {
 	}
 }
 
-func (bm *dependencyManager) DownloadCachedDependencies(logger lager.Logger, mounts []executor.CachedDependency, logConfig executor.LogConfig, metronClient loggingclient.IngressClient) (BindMounts, error) {
+func (bm *dependencyManager) DownloadCachedDependencies(logger lager.Logger, mounts []executor.CachedDependency, logConfig models.LogConfig, metronClient loggingclient.IngressClient) (BindMounts, error) {
 	logger.Debug("downloading-cached-dependencies")
 	defer logger.Debug("downloading-cached-dependencies-complete")
 
@@ -96,7 +97,7 @@ func (bm *dependencyManager) DownloadCachedDependencies(logger lager.Logger, mou
 	}
 }
 
-func (bm *dependencyManager) downloadCachedDependency(logger lager.Logger, mount *executor.CachedDependency, logConfig executor.LogConfig, metronClient loggingclient.IngressClient, cancelChan <-chan struct{}) (*cachedBindMount, error) {
+func (bm *dependencyManager) downloadCachedDependency(logger lager.Logger, mount *executor.CachedDependency, logConfig models.LogConfig, metronClient loggingclient.IngressClient, cancelChan <-chan struct{}) (*cachedBindMount, error) {
 	sourceName, tags := logConfig.GetSourceNameAndTagsForLogging()
 	if mount.LogSource != "" {
 		sourceName = mount.LogSource

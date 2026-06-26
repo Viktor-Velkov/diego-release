@@ -6,19 +6,19 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/workpool"
 	"github.com/GaryBoone/GoStats/stats"
 )
 
 type Report struct {
-	Cells                        map[string]rep.Client
+	Cells                        map[string]models.RepClient
 	NumAuctions                  int
 	AuctionResults               auctiontypes.AuctionResults
 	AuctionDuration              time.Duration
-	CellStates                   map[string]rep.CellState
-	InstancesByRep               map[string][]rep.LRP
+	CellStates                   map[string]models.CellState
+	InstancesByRep               map[string][]models.SchedulingLRP
 	auctionedInstancesByInstGuid map[string]bool
 }
 
@@ -40,7 +40,7 @@ func NewStat(data []float64) Stat {
 	}
 }
 
-func NewReport(numAuctions int, cells map[string]rep.Client, results auctiontypes.AuctionResults, duration time.Duration) *Report {
+func NewReport(numAuctions int, cells map[string]models.RepClient, results auctiontypes.AuctionResults, duration time.Duration) *Report {
 	states := fetchStates(cells)
 	return &Report{
 		Cells:           cells,
@@ -52,7 +52,7 @@ func NewReport(numAuctions int, cells map[string]rep.Client, results auctiontype
 	}
 }
 
-func (r *Report) IsAuctionedInstance(inst rep.LRP) bool {
+func (r *Report) IsAuctionedInstance(inst models.SchedulingLRP) bool {
 	if r.auctionedInstancesByInstGuid == nil {
 		r.auctionedInstancesByInstGuid = map[string]bool{}
 		for _, result := range r.AuctionResults.SuccessfulLRPs {
@@ -120,10 +120,10 @@ func (r *Report) WaitTimeStats() Stat {
 	return NewStat(waitTimes)
 }
 
-func fetchStates(cells map[string]rep.Client) map[string]rep.CellState {
+func fetchStates(cells map[string]models.RepClient) map[string]models.CellState {
 	logger := lager.NewLogger("fetch-states")
 	lock := &sync.Mutex{}
-	states := map[string]rep.CellState{}
+	states := map[string]models.CellState{}
 	works := []func(){}
 
 	for repGuid, cell := range cells {
@@ -147,8 +147,8 @@ func fetchStates(cells map[string]rep.Client) map[string]rep.CellState {
 	return states
 }
 
-func instancesByRepFromStates(states map[string]rep.CellState) map[string][]rep.LRP {
-	instancesByRepGuid := map[string][]rep.LRP{}
+func instancesByRepFromStates(states map[string]models.CellState) map[string][]models.SchedulingLRP {
+	instancesByRepGuid := map[string][]models.SchedulingLRP{}
 	for repGuid, state := range states {
 		instances := state.LRPs
 		sort.Sort(ByProcessGuid(instances))
@@ -158,7 +158,7 @@ func instancesByRepFromStates(states map[string]rep.CellState) map[string][]rep.
 	return instancesByRepGuid
 }
 
-type ByProcessGuid []rep.LRP
+type ByProcessGuid []models.SchedulingLRP
 
 func (a ByProcessGuid) Len() int           { return len(a) }
 func (a ByProcessGuid) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }

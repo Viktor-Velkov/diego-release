@@ -4,25 +4,25 @@ package auctioncellrepfakes
 import (
 	"sync"
 
+	"code.cloudfoundry.org/bbs/models"
 	lager "code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/rep/auctioncellrep"
 )
 
 type FakeAuctionCellClient struct {
-	PerformStub        func(lager.Logger, string, rep.Work) (rep.Work, error)
+	PerformStub        func(lager.Logger, string, models.Work) (models.Work, error)
 	performMutex       sync.RWMutex
 	performArgsForCall []struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 rep.Work
+		arg3 models.Work
 	}
 	performReturns struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}
 	performReturnsOnCall map[int]struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}
 	ResetStub        func() error
@@ -35,18 +35,18 @@ type FakeAuctionCellClient struct {
 	resetReturnsOnCall map[int]struct {
 		result1 error
 	}
-	StateStub        func(lager.Logger) (rep.CellState, bool, error)
+	StateStub        func(lager.Logger) (models.CellState, bool, error)
 	stateMutex       sync.RWMutex
 	stateArgsForCall []struct {
 		arg1 lager.Logger
 	}
 	stateReturns struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 bool
 		result3 error
 	}
 	stateReturnsOnCall map[int]struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 bool
 		result3 error
 	}
@@ -54,13 +54,13 @@ type FakeAuctionCellClient struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeAuctionCellClient) Perform(arg1 lager.Logger, arg2 string, arg3 rep.Work) (rep.Work, error) {
+func (fake *FakeAuctionCellClient) Perform(arg1 lager.Logger, arg2 string, arg3 models.Work) (models.Work, error) {
 	fake.performMutex.Lock()
 	ret, specificReturn := fake.performReturnsOnCall[len(fake.performArgsForCall)]
 	fake.performArgsForCall = append(fake.performArgsForCall, struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 rep.Work
+		arg3 models.Work
 	}{arg1, arg2, arg3})
 	stub := fake.PerformStub
 	fakeReturns := fake.performReturns
@@ -81,41 +81,41 @@ func (fake *FakeAuctionCellClient) PerformCallCount() int {
 	return len(fake.performArgsForCall)
 }
 
-func (fake *FakeAuctionCellClient) PerformCalls(stub func(lager.Logger, string, rep.Work) (rep.Work, error)) {
+func (fake *FakeAuctionCellClient) PerformCalls(stub func(lager.Logger, string, models.Work) (models.Work, error)) {
 	fake.performMutex.Lock()
 	defer fake.performMutex.Unlock()
 	fake.PerformStub = stub
 }
 
-func (fake *FakeAuctionCellClient) PerformArgsForCall(i int) (lager.Logger, string, rep.Work) {
+func (fake *FakeAuctionCellClient) PerformArgsForCall(i int) (lager.Logger, string, models.Work) {
 	fake.performMutex.RLock()
 	defer fake.performMutex.RUnlock()
 	argsForCall := fake.performArgsForCall[i]
 	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
-func (fake *FakeAuctionCellClient) PerformReturns(result1 rep.Work, result2 error) {
+func (fake *FakeAuctionCellClient) PerformReturns(result1 models.Work, result2 error) {
 	fake.performMutex.Lock()
 	defer fake.performMutex.Unlock()
 	fake.PerformStub = nil
 	fake.performReturns = struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeAuctionCellClient) PerformReturnsOnCall(i int, result1 rep.Work, result2 error) {
+func (fake *FakeAuctionCellClient) PerformReturnsOnCall(i int, result1 models.Work, result2 error) {
 	fake.performMutex.Lock()
 	defer fake.performMutex.Unlock()
 	fake.PerformStub = nil
 	if fake.performReturnsOnCall == nil {
 		fake.performReturnsOnCall = make(map[int]struct {
-			result1 rep.Work
+			result1 models.Work
 			result2 error
 		})
 	}
 	fake.performReturnsOnCall[i] = struct {
-		result1 rep.Work
+		result1 models.Work
 		result2 error
 	}{result1, result2}
 }
@@ -173,7 +173,7 @@ func (fake *FakeAuctionCellClient) ResetReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
-func (fake *FakeAuctionCellClient) State(arg1 lager.Logger) (rep.CellState, bool, error) {
+func (fake *FakeAuctionCellClient) State(arg1 lager.Logger) (models.CellState, bool, error) {
 	fake.stateMutex.Lock()
 	ret, specificReturn := fake.stateReturnsOnCall[len(fake.stateArgsForCall)]
 	fake.stateArgsForCall = append(fake.stateArgsForCall, struct {
@@ -198,7 +198,7 @@ func (fake *FakeAuctionCellClient) StateCallCount() int {
 	return len(fake.stateArgsForCall)
 }
 
-func (fake *FakeAuctionCellClient) StateCalls(stub func(lager.Logger) (rep.CellState, bool, error)) {
+func (fake *FakeAuctionCellClient) StateCalls(stub func(lager.Logger) (models.CellState, bool, error)) {
 	fake.stateMutex.Lock()
 	defer fake.stateMutex.Unlock()
 	fake.StateStub = stub
@@ -211,30 +211,30 @@ func (fake *FakeAuctionCellClient) StateArgsForCall(i int) lager.Logger {
 	return argsForCall.arg1
 }
 
-func (fake *FakeAuctionCellClient) StateReturns(result1 rep.CellState, result2 bool, result3 error) {
+func (fake *FakeAuctionCellClient) StateReturns(result1 models.CellState, result2 bool, result3 error) {
 	fake.stateMutex.Lock()
 	defer fake.stateMutex.Unlock()
 	fake.StateStub = nil
 	fake.stateReturns = struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 bool
 		result3 error
 	}{result1, result2, result3}
 }
 
-func (fake *FakeAuctionCellClient) StateReturnsOnCall(i int, result1 rep.CellState, result2 bool, result3 error) {
+func (fake *FakeAuctionCellClient) StateReturnsOnCall(i int, result1 models.CellState, result2 bool, result3 error) {
 	fake.stateMutex.Lock()
 	defer fake.stateMutex.Unlock()
 	fake.StateStub = nil
 	if fake.stateReturnsOnCall == nil {
 		fake.stateReturnsOnCall = make(map[int]struct {
-			result1 rep.CellState
+			result1 models.CellState
 			result2 bool
 			result3 error
 		})
 	}
 	fake.stateReturnsOnCall[i] = struct {
-		result1 rep.CellState
+		result1 models.CellState
 		result2 bool
 		result3 error
 	}{result1, result2, result3}

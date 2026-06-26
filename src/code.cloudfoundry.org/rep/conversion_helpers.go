@@ -214,7 +214,7 @@ func (rrch RunRequestConversionHelper) NewRunRequestFromDesiredLRP(
 		CPUWeight:      uint(math.Max(float64(desiredLRP.CpuWeight), 1.0)),
 		Ports:          ConvertPortMappings(desiredLRP.Ports),
 		InternalRoutes: internalRoutes,
-		LogConfig: executor.LogConfig{
+		LogConfig: models.LogConfig{
 			Guid:       desiredLRP.LogGuid,
 			Index:      int(lrpKey.Index),
 			SourceName: desiredLRP.LogSource,
@@ -299,7 +299,7 @@ func (rrch RunRequestConversionHelper) NewRunRequestFromTask(task *models.Task, 
 		RootFSPath: rootFSPath,
 		CPUWeight:  uint(task.CpuWeight),
 		Privileged: task.Privileged,
-		LogConfig: executor.LogConfig{
+		LogConfig: models.LogConfig{
 			Guid:       task.LogGuid,
 			SourceName: task.LogSource,
 			Tags:       metricTags,

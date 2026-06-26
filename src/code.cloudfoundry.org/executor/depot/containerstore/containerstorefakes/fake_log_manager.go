@@ -5,17 +5,17 @@ import (
 	"sync"
 	"time"
 
+	"code.cloudfoundry.org/bbs/models"
 	diego_logging_client "code.cloudfoundry.org/diego-logging-client"
-	"code.cloudfoundry.org/executor"
 	"code.cloudfoundry.org/executor/depot/containerstore"
 	"code.cloudfoundry.org/executor/depot/log_streamer"
 )
 
 type FakeLogManager struct {
-	NewLogStreamerStub        func(executor.LogConfig, diego_logging_client.IngressClient, int, int64, time.Duration) log_streamer.LogStreamer
+	NewLogStreamerStub        func(models.LogConfig, diego_logging_client.IngressClient, int, int64, time.Duration) log_streamer.LogStreamer
 	newLogStreamerMutex       sync.RWMutex
 	newLogStreamerArgsForCall []struct {
-		arg1 executor.LogConfig
+		arg1 models.LogConfig
 		arg2 diego_logging_client.IngressClient
 		arg3 int
 		arg4 int64
@@ -31,11 +31,11 @@ type FakeLogManager struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeLogManager) NewLogStreamer(arg1 executor.LogConfig, arg2 diego_logging_client.IngressClient, arg3 int, arg4 int64, arg5 time.Duration) log_streamer.LogStreamer {
+func (fake *FakeLogManager) NewLogStreamer(arg1 models.LogConfig, arg2 diego_logging_client.IngressClient, arg3 int, arg4 int64, arg5 time.Duration) log_streamer.LogStreamer {
 	fake.newLogStreamerMutex.Lock()
 	ret, specificReturn := fake.newLogStreamerReturnsOnCall[len(fake.newLogStreamerArgsForCall)]
 	fake.newLogStreamerArgsForCall = append(fake.newLogStreamerArgsForCall, struct {
-		arg1 executor.LogConfig
+		arg1 models.LogConfig
 		arg2 diego_logging_client.IngressClient
 		arg3 int
 		arg4 int64
@@ -60,13 +60,13 @@ func (fake *FakeLogManager) NewLogStreamerCallCount() int {
 	return len(fake.newLogStreamerArgsForCall)
 }
 
-func (fake *FakeLogManager) NewLogStreamerCalls(stub func(executor.LogConfig, diego_logging_client.IngressClient, int, int64, time.Duration) log_streamer.LogStreamer) {
+func (fake *FakeLogManager) NewLogStreamerCalls(stub func(models.LogConfig, diego_logging_client.IngressClient, int, int64, time.Duration) log_streamer.LogStreamer) {
 	fake.newLogStreamerMutex.Lock()
 	defer fake.newLogStreamerMutex.Unlock()
 	fake.NewLogStreamerStub = stub
 }
 
-func (fake *FakeLogManager) NewLogStreamerArgsForCall(i int) (executor.LogConfig, diego_logging_client.IngressClient, int, int64, time.Duration) {
+func (fake *FakeLogManager) NewLogStreamerArgsForCall(i int) (models.LogConfig, diego_logging_client.IngressClient, int, int64, time.Duration) {
 	fake.newLogStreamerMutex.RLock()
 	defer fake.newLogStreamerMutex.RUnlock()
 	argsForCall := fake.newLogStreamerArgsForCall[i]

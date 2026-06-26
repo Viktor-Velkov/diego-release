@@ -341,7 +341,7 @@ var _ = Describe("Resources", func() {
 					RootFSPath: stackPathMap["cflinuxfs3"],
 					CPUWeight:  uint(desiredLRP.CpuWeight),
 					Ports:      rep.ConvertPortMappings(desiredLRP.Ports),
-					LogConfig: executor.LogConfig{
+					LogConfig: models.LogConfig{
 						Guid:       desiredLRP.LogGuid,
 						Index:      int(actualLRP.Index),
 						SourceName: desiredLRP.LogSource,
@@ -755,7 +755,7 @@ var _ = Describe("Resources", func() {
 				It("adds internal routes to run info", func() {
 					runReq, err := runRequestConversionHelper.NewRunRequestFromDesiredLRP(containerGuid, desiredLRP, &actualLRP.ActualLRPKey, &actualLRP.ActualLRPInstanceKey, stackPathMap, rep.LayeringModeSingleLayer)
 					Expect(err).NotTo(HaveOccurred())
-					Expect(runReq.RunInfo.InternalRoutes).To(Equal(rep.InternalRoutes{
+					Expect(runReq.RunInfo.InternalRoutes).To(Equal(models.InternalRoutes{
 						{Hostname: "foo.apps.internal"},
 						{Hostname: "bar.apps.internal"},
 					}))
@@ -797,7 +797,7 @@ var _ = Describe("Resources", func() {
 						{Name: "app bits", From: "blobstore.com/bits/app-bits", To: "/usr/local/app", CacheKey: "cache-key", LogSource: "log-source"},
 						{Name: "app bits with checksum", From: "blobstore.com/bits/app-bits-checksum", To: "/usr/local/app-checksum", CacheKey: "cache-key", LogSource: "log-source", ChecksumAlgorithm: "md5", ChecksumValue: "checksum-value"},
 					},
-					LogConfig: executor.LogConfig{
+					LogConfig: models.LogConfig{
 						Guid:       task.LogGuid,
 						SourceName: task.LogSource,
 						Tags: map[string]string{

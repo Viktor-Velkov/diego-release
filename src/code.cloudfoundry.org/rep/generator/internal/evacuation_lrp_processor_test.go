@@ -77,7 +77,7 @@ var _ = Describe("EvacuationLrpProcessor", func() {
 
 			container = executor.Container{
 				Guid:    rep.LRPContainerGuid(desiredLRP.ProcessGuid, instanceGuid),
-				RunInfo: executor.RunInfo{LogConfig: executor.LogConfig{Guid: logGuid, SourceName: sourceName, Index: index}},
+				RunInfo: executor.RunInfo{LogConfig: models.LogConfig{Guid: logGuid, SourceName: sourceName, Index: index}},
 				Tags: executor.Tags{
 					rep.LifecycleTag:    rep.LRPLifecycle,
 					rep.DomainTag:       desiredLRP.Domain,
@@ -265,7 +265,7 @@ var _ = Describe("EvacuationLrpProcessor", func() {
 				container.InternalIP = internalIP
 				container.AdvertisePreferenceForInstanceAddress = false
 				container.Ports = []executor.PortMapping{{ContainerPort: 1357, HostPort: 8642}}
-				container.InternalRoutes = rep.InternalRoutes{{Hostname: "some-internal-route.apps.internal"}, {Hostname: "some-other-internal-route"}}
+				container.InternalRoutes = models.InternalRoutes{{Hostname: "some-internal-route.apps.internal"}, {Hostname: "some-other-internal-route"}}
 				lrpNetInfo = models.NewActualLRPNetInfo(externalIP, internalIP, models.ActualLRPNetInfo_PreferredAddressHost, models.NewPortMapping(8642, 1357))
 				container.MetricsConfig.Tags = map[string]string{"app_name": "some-application"}
 				container.Routable = true

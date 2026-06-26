@@ -9,7 +9,7 @@ import (
 	"code.cloudfoundry.org/lager/v3"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/auctioneer"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/workpool"
 )
 
@@ -130,10 +130,10 @@ func (a *auctionRunner) Run(signals <-chan os.Signal, ready chan<- struct{}) err
 	}
 }
 
-func (a *auctionRunner) ScheduleLRPsForAuctions(lrpStarts []auctioneer.LRPStartRequest, traceID string) {
+func (a *auctionRunner) ScheduleLRPsForAuctions(lrpStarts []models.LRPStartRequest, traceID string) {
 	a.batch.AddLRPStarts(lrpStarts, traceID)
 }
 
-func (a *auctionRunner) ScheduleTasksForAuctions(tasks []auctioneer.TaskStartRequest, traceID string) {
+func (a *auctionRunner) ScheduleTasksForAuctions(tasks []models.TaskStartRequest, traceID string) {
 	a.batch.AddTasks(tasks, traceID)
 }

@@ -67,10 +67,10 @@ var _ = Describe("Sortable Auctions", func() {
 		})
 
 		It("sorts boulders before pebbles", func() {
-			Expect(tasks[0].Task.TaskGuid).To((Equal("tg-9")))
-			Expect(tasks[1].Task.TaskGuid).To((Equal("tg-8")))
-			Expect(tasks[2].Task.TaskGuid).To((Equal("tg-7")))
-			Expect(tasks[3].Task.TaskGuid).To((Equal("tg-6")))
+			Expect(tasks[0].SchedulingTask.TaskGuid).To((Equal("tg-9")))
+			Expect(tasks[1].SchedulingTask.TaskGuid).To((Equal("tg-8")))
+			Expect(tasks[2].SchedulingTask.TaskGuid).To((Equal("tg-7")))
+			Expect(tasks[3].SchedulingTask.TaskGuid).To((Equal("tg-6")))
 		})
 	})
 })

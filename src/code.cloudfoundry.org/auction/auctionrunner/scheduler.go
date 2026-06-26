@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/rep"
+	"code.cloudfoundry.org/bbs/models"
 
 	"code.cloudfoundry.org/clock"
 	"code.cloudfoundry.org/lager/v3"
@@ -14,7 +14,7 @@ import (
 
 type Zone []*Cell
 
-func (z *Zone) filterCells(pc rep.PlacementConstraint) ([]*Cell, error) {
+func (z *Zone) filterCells(pc models.PlacementConstraint) ([]*Cell, error) {
 	var cells = make([]*Cell, 0, len(*z))
 	err := auctiontypes.ErrorCellMismatch
 
@@ -239,14 +239,14 @@ func splitLRPS(lrps []auctiontypes.LRPAuction) ([]auctiontypes.LRPAuction, []auc
 	return lrps[:0], lrps[0:]
 }
 
-func (s *Scheduler) commitCells() []rep.Work {
+func (s *Scheduler) commitCells() []models.Work {
 	wg := &sync.WaitGroup{}
 	for _, cells := range s.zones {
 		wg.Add(len(cells))
 	}
 
 	lock := &sync.Mutex{}
-	failedWorks := []rep.Work{}
+	failedWorks := []models.Work{}
 
 	for _, cells := range s.zones {
 		for _, cell := range cells {
@@ -268,14 +268,14 @@ func (s *Scheduler) commitCells() []rep.Work {
 
 type CellResourceState struct {
 	CellID                string `json:"cell_id"`
-	RootFSProviders       rep.RootFSProviders
-	AvailableResources    rep.Resources
-	TotalResources        rep.Resources
+	RootFSProviders       models.RootFSProviders
+	AvailableResources    models.Resources
+	TotalResources        models.Resources
 	PlacementTags         []string
 	OptionalPlacementTags []string
 }
 
-func NewCellResourceState(state rep.CellState) CellResourceState {
+func NewCellResourceState(state models.CellState) CellResourceState {
 	return CellResourceState{
 		CellID:                state.CellID,
 		RootFSProviders:       state.RootFSProviders,
@@ -304,7 +304,7 @@ func (s *Scheduler) scheduleLRPAuction(lrpAuction *auctiontypes.LRPAuction) (*au
 
 	for zoneIndex, lrpByZone := range sortedZones {
 		for _, cell := range lrpByZone.zone {
-			score, err := cell.ScoreForLRP(&lrpAuction.LRP, s.startingContainerWeight, s.binPackFirstFitWeight)
+			score, err := cell.ScoreForLRP(&lrpAuction.SchedulingLRP, s.startingContainerWeight, s.binPackFirstFitWeight)
 			if err != nil {
 				cellStates[cell.Guid] = NewCellResourceState(cell.State())
 				removeNonApplicableProblems(problems, err)
@@ -330,15 +330,15 @@ func (s *Scheduler) scheduleLRPAuction(lrpAuction *auctiontypes.LRPAuction) (*au
 	}
 
 	if winnerCell == nil {
-		err := &rep.InsufficientResourcesError{Problems: problems}
-		s.logger.Error("lrp-auction-failed", err, lager.Data{"lrp-guid": lrpAuction.Identifier(), "lrp-instance-guid": lrpAuction.LRP.InstanceGUID, "lrp-placement-constraints": lrpAuction.LRP.PlacementConstraint, "lrp-resource": lrpAuction.LRP.Resource})
+		err := &models.InsufficientResourcesError{Problems: problems}
+		s.logger.Error("lrp-auction-failed", err, lager.Data{"lrp-guid": lrpAuction.Identifier(), "lrp-instance-guid": lrpAuction.SchedulingLRP.InstanceGUID, "lrp-placement-constraints": lrpAuction.SchedulingLRP.PlacementConstraint, "lrp-resource": lrpAuction.SchedulingLRP.Resource})
 		s.logger.Debug("cells-failing-score-for-lrp", lager.Data{"states": cellStates})
 		return nil, err
 	}
 
-	err = winnerCell.ReserveLRP(&lrpAuction.LRP)
+	err = winnerCell.ReserveLRP(&lrpAuction.SchedulingLRP)
 	if err != nil {
-		s.logger.Error("lrp-failed-to-reserve-cell", err, lager.Data{"cell-guid": winnerCell.Guid, "lrp-guid": lrpAuction.Identifier(), "lrp-instance-guid": lrpAuction.LRP.InstanceGUID, "lrp-placement-constraints": lrpAuction.LRP.PlacementConstraint, "lrp-resource": lrpAuction.LRP.Resource})
+		s.logger.Error("lrp-failed-to-reserve-cell", err, lager.Data{"cell-guid": winnerCell.Guid, "lrp-guid": lrpAuction.Identifier(), "lrp-instance-guid": lrpAuction.SchedulingLRP.InstanceGUID, "lrp-placement-constraints": lrpAuction.SchedulingLRP.PlacementConstraint, "lrp-resource": lrpAuction.SchedulingLRP.Resource})
 		s.logger.Debug("cells-failing-score-for-lrp", lager.Data{"states": cellStates})
 		return nil, err
 	}
@@ -380,7 +380,7 @@ func (s *Scheduler) scheduleTaskAuction(taskAuction *auctiontypes.TaskAuction, s
 
 	for _, zone := range filteredZones {
 		for _, cell := range zone {
-			score, err := cell.ScoreForTask(&taskAuction.Task, startingContainerWeight)
+			score, err := cell.ScoreForTask(&taskAuction.SchedulingTask, startingContainerWeight)
 			if err != nil {
 				removeNonApplicableProblems(problems, err)
 				continue
@@ -394,12 +394,12 @@ func (s *Scheduler) scheduleTaskAuction(taskAuction *auctiontypes.TaskAuction, s
 	}
 
 	if winnerCell == nil {
-		err := &rep.InsufficientResourcesError{Problems: problems}
+		err := &models.InsufficientResourcesError{Problems: problems}
 		s.logger.Error("task-auction-failed", err, lager.Data{"task-guid": taskAuction.Identifier()})
 		return nil, err
 	}
 
-	err := winnerCell.ReserveTask(&taskAuction.Task)
+	err := winnerCell.ReserveTask(&taskAuction.SchedulingTask)
 	if err != nil {
 		s.logger.Error("task-failed-to-reserve-cell", err, lager.Data{"cell-guid": winnerCell.Guid, "task-guid": taskAuction.Identifier()})
 		return nil, err
@@ -416,7 +416,7 @@ func (s *Scheduler) scheduleTaskAuction(taskAuction *auctiontypes.TaskAuction, s
 // For example, if there is not enough memory on one cell and not enough disk on another, we should
 // not call out memory or disk as being a specific problem.
 func removeNonApplicableProblems(problems map[string]struct{}, err error) {
-	if ierr, ok := err.(rep.InsufficientResourcesError); ok {
+	if ierr, ok := err.(models.InsufficientResourcesError); ok {
 		for problem := range problems {
 			if _, ok := ierr.Problems[problem]; !ok {
 				delete(problems, problem)
