@@ -1,7 +1,7 @@
-jq/jq-1.8.1-linux-amd64.tgz:
-  size: 993240
-  object_id: e8793d0d-eec7-4b5e-78ba-656714b86ca2
-  sha: sha256:8f502a0c127e2de360f05071a6806bdc033df10c958c1a2b0bcfe089b1c74e39
+jq/jq-1.8.2-linux-amd64.tgz:
+  size: 997950
+  object_id: 5e0b3188-c63d-4a12-580b-d5656f1f1eca
+  sha: sha256:4eb5a980357883a9dc5c7b84723ae986bc95e985c61ed868c0b3f549f16ac4e4
 libpcap/libpcap-1.10.6.tar.xz:
   size: 682312
   object_id: 3751fb92-0424-4bc4-69b0-4b85c515765f

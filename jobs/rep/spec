@@ -44,6 +44,15 @@ properties:
   diego.rep.evacuation_timeout_in_seconds:
     description: "The time to wait for evacuation to complete in seconds"
     default: 600
+  diego.rep.disk_health_check_paths:
+    description: "Filesystem paths rep will check for read-only status. If empty, the disk health check is disabled."
+    default: []
+  diego.rep.disk_health_check_interval:
+    description: "How often rep checks disk paths for read-only status."
+    default: "15s"
+  diego.rep.disk_health_check_failure_threshold:
+    description: "Number of consecutive periodic check failures required before rep triggers evacuation. The startup check is always immediate regardless of this value."
+    default: 3
   diego.rep.zone:
     description: "The zone associated with the rep. This will override the BOSH-provided spec.az property if present."
   diego.rep.use_azure_fault_domains:
@@ -73,6 +82,9 @@ properties:
   diego.rep.optional_placement_tags:
     description: "Array of optional tags used for scheduling Tasks and LRPs"
     default: []
+  diego.rep.cell_annotations:
+    description: "Map of string key-value annotations to attach to the cell presence"
+    default: {}
 
   loggregator.v2_api_port:
     description: "Local metron agent gRPC port"

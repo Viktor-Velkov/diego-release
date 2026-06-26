@@ -89,3 +89,5 @@ src/code.cloudfoundry.org/inigo/cell/assets/fake_proxy/fake-proxy-test
 docs/superpowers
 .bundle/
 .bash-guard
+
+_rocket-agent/

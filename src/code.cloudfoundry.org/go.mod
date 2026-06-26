@@ -17,7 +17,7 @@ require (
 	code.cloudfoundry.org/bbs/format v1.9.0
 	code.cloudfoundry.org/bbs/models v1.8.0
 	code.cloudfoundry.org/bytefmt v0.78.0
-	code.cloudfoundry.org/certsplitter v0.75.0
+	code.cloudfoundry.org/certsplitter v0.77.0
 	code.cloudfoundry.org/cfhttp/v2 v2.83.0
 	code.cloudfoundry.org/clock v1.76.0
 	code.cloudfoundry.org/cnbapplifecycle v0.0.7
@@ -30,7 +30,7 @@ require (
 	code.cloudfoundry.org/garden v0.0.0-20260617020226-a9e754564bb5
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.104.0
-	code.cloudfoundry.org/guardian v0.0.0-20260605171223-aa33de635baa
+	code.cloudfoundry.org/guardian v0.0.0-20260617020628-23df023654fd
 	code.cloudfoundry.org/lager/v3 v3.75.0
 	code.cloudfoundry.org/localip v0.77.0
 	code.cloudfoundry.org/locket v1.3.0
