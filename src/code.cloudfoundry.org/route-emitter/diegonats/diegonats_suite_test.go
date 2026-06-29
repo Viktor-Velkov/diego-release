@@ -1,6 +1,8 @@
 package diegonats_test
 
 import (
+	"encoding/json"
+	"os"
 	"testing"
 
 	"code.cloudfoundry.org/inigo/helpers/portauthority"
@@ -8,6 +10,7 @@ import (
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega/gexec"
 	"github.com/tedsuo/ifrit"
 	ginkgomon "github.com/tedsuo/ifrit/ginkgomon_v2"
 )
@@ -23,7 +26,23 @@ var (
 	portAllocator     portauthority.PortAllocator
 )
 
-var _ = BeforeSuite(func() {
+var _ = SynchronizedBeforeSuite(func() []byte {
+	natsServer := os.Getenv("NATS_SERVER_BINARY")
+	if natsServer == "" {
+		var err error
+		natsServer, err = gexec.Build("github.com/nats-io/nats-server/v2", "-race")
+		Expect(err).NotTo(HaveOccurred())
+	}
+	payload, err := json.Marshal(map[string]string{
+		"nats-server": natsServer,
+	})
+	Expect(err).NotTo(HaveOccurred())
+	return payload
+}, func(payload []byte) {
+	binaries := map[string]string{}
+	Expect(json.Unmarshal(payload, &binaries)).To(Succeed())
+	Expect(os.Setenv("NATS_SERVER_BINARY", binaries["nats-server"])).To(Succeed())
+
 	node := GinkgoParallelProcess()
 	startPort := 1050 * node
 	portRange := 1000
@@ -36,7 +55,9 @@ var _ = BeforeSuite(func() {
 	Expect(err).NotTo(HaveOccurred())
 })
 
-var _ = AfterSuite(func() {
+var _ = SynchronizedAfterSuite(func() {
+}, func() {
+	gexec.CleanupBuildArtifacts()
 })
 
 func startNATS() {

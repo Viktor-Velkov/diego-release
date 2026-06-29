@@ -19,8 +19,8 @@ import (
 	"code.cloudfoundry.org/auction/simulation/simulationrep"
 	"code.cloudfoundry.org/auction/simulation/util"
 	"code.cloudfoundry.org/auction/simulation/visualization"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
@@ -35,9 +35,9 @@ const numCells = 100
 
 var numZones = 2
 
-var cells map[string]rep.SimClient
+var cells map[string]models.RepSimClient
 
-var repResources = rep.Resources{
+var repResources = models.Resources{
 	MemoryMB:   100.0,
 	DiskMB:     100.0,
 	Containers: 100,
@@ -135,8 +135,8 @@ func zone(index int) string {
 	return fmt.Sprintf("Z%d", index%numZones)
 }
 
-func buildInProcessReps() map[string]rep.SimClient {
-	cells := map[string]rep.SimClient{}
+func buildInProcessReps() map[string]models.RepSimClient {
+	cells := map[string]models.RepSimClient{}
 
 	for i := 0; i < numCells; i++ {
 		guid := cellGuid(i)

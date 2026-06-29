@@ -6,7 +6,7 @@ import (
 	"code.cloudfoundry.org/auction/auctiontypes"
 	"code.cloudfoundry.org/bbs/fake_bbs"
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/rep"
+
 	"code.cloudfoundry.org/rep/repfakes"
 
 	"code.cloudfoundry.org/lager/v3"
@@ -41,8 +41,8 @@ var _ = Describe("Auction Runner Delegate", func() {
 	Describe("fetching cell reps", func() {
 		Context("when the BSS succeeds", func() {
 			BeforeEach(func() {
-				cellPresence1 := models.NewCellPresence("cell-A", "cell-a.url", "", "zone-1", models.NewCellCapacity(123, 456, 789), []string{}, []string{}, []string{}, []string{}, []string{}, nil)
-				cellPresence2 := models.NewCellPresence("cell-B", "cell-b.url", "", "zone-1", models.NewCellCapacity(123, 456, 789), []string{}, []string{}, []string{}, []string{}, []string{}, nil)
+				cellPresence1 := models.NewCellPresence("cell-A", "cell-a.url", "", "zone-1", models.NewCellCapacity(123, 456, 789), []string{}, []string{}, []string{}, []string{}, []string{}, map[string]string{})
+				cellPresence2 := models.NewCellPresence("cell-B", "cell-b.url", "", "zone-1", models.NewCellCapacity(123, 456, 789), []string{}, []string{}, []string{}, []string{}, []string{}, map[string]string{})
 				cells := []*models.CellPresence{&cellPresence1, &cellPresence2}
 
 				bbsClient.CellsReturns(cells, nil)
@@ -76,7 +76,7 @@ var _ = Describe("Auction Runner Delegate", func() {
 						[]string{},
 						[]string{},
 						[]string{},
-						nil,
+						map[string]string{},
 					)
 					cells := []*models.CellPresence{&cellPresence}
 					bbsClient.CellsReturns(cells, nil)
@@ -109,7 +109,7 @@ var _ = Describe("Auction Runner Delegate", func() {
 
 			Context("when creating a rep client fails", func() {
 				var (
-					reps map[string]rep.Client
+					reps map[string]models.RepClient
 					err  error
 				)
 
@@ -127,7 +127,7 @@ var _ = Describe("Auction Runner Delegate", func() {
 						[]string{},
 						[]string{},
 						[]string{},
-						nil,
+						map[string]string{},
 					)
 					cells := []*models.CellPresence{&cellPresence}
 					bbsClient.CellsReturns(cells, nil)
@@ -163,34 +163,34 @@ var _ = Describe("Auction Runner Delegate", func() {
 		var results auctiontypes.AuctionResults
 
 		BeforeEach(func() {
-			resource := rep.NewResource(10, 10, 10)
-			pc := rep.NewPlacementConstraint("linux", []string{}, []string{})
+			resource := models.NewResource(10, 10, 10)
+			pc := models.NewPlacementConstraint("linux", []string{}, []string{})
 
 			results = auctiontypes.AuctionResults{
 				SuccessfulLRPs: []auctiontypes.LRPAuction{
 					{
-						LRP: rep.NewLRP("", models.NewActualLRPKey("successful-start", 0, "domain"), resource, pc),
+						SchedulingLRP: models.NewSchedulingLRP("", models.NewActualLRPKey("successful-start", 0, "domain"), resource, pc),
 					},
 				},
 				SuccessfulTasks: []auctiontypes.TaskAuction{
 					{
-						Task: rep.NewTask("successful-task", "domain", resource, pc),
+						SchedulingTask: models.NewSchedulingTask("successful-task", "domain", resource, pc),
 					},
 				},
 				FailedLRPs: []auctiontypes.LRPAuction{
 					{
-						LRP:           rep.NewLRP("", models.NewActualLRPKey("insufficient-capacity", 0, "domain"), resource, pc),
+						SchedulingLRP: models.NewSchedulingLRP("", models.NewActualLRPKey("insufficient-capacity", 0, "domain"), resource, pc),
 						AuctionRecord: auctiontypes.AuctionRecord{PlacementError: "insufficient resources"},
 					},
 					{
-						LRP:           rep.NewLRP("", models.NewActualLRPKey("incompatible-stacks", 0, "domain"), resource, pc),
+						SchedulingLRP: models.NewSchedulingLRP("", models.NewActualLRPKey("incompatible-stacks", 0, "domain"), resource, pc),
 						AuctionRecord: auctiontypes.AuctionRecord{PlacementError: auctiontypes.ErrorCellMismatch.Error()},
 					},
 				},
 				FailedTasks: []auctiontypes.TaskAuction{
 					{
-						Task:          rep.NewTask("failed-task", "domain", resource, pc),
-						AuctionRecord: auctiontypes.AuctionRecord{PlacementError: "insufficient resources"},
+						SchedulingTask: models.NewSchedulingTask("failed-task", "domain", resource, pc),
+						AuctionRecord:  auctiontypes.AuctionRecord{PlacementError: "insufficient resources"},
 					},
 				},
 			}

@@ -7,17 +7,14 @@ import (
 	"net/http"
 	"time"
 
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	cfhttp "code.cloudfoundry.org/cfhttp/v2"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/tlsconfig"
 	"github.com/tedsuo/rata"
 )
 
-//go:generate counterfeiter -o auctioneerfakes/fake_client.go . Client
-type Client interface {
-	RequestLRPAuctions(logger lager.Logger, traceID string, lrpStart []*LRPStartRequest) error
-	RequestTaskAuctions(logger lager.Logger, traceID string, tasks []*TaskStartRequest) error
-}
+//go:generate counterfeiter -o auctioneerfakes/fake_client.go code.cloudfoundry.org/bbs/models AuctioneerClient
 
 const ClientRetryCount = 3
 
@@ -29,7 +26,7 @@ type auctioneerClient struct {
 	reqGen             *rata.RequestGenerator
 }
 
-func NewClient(auctioneerURL string, requestTimeout time.Duration) Client {
+func NewClient(auctioneerURL string, requestTimeout time.Duration) bbsmodels.AuctioneerClient {
 	return &auctioneerClient{
 		httpClient: cfhttp.NewClient(
 			cfhttp.WithRequestTimeout(requestTimeout),
@@ -39,7 +36,7 @@ func NewClient(auctioneerURL string, requestTimeout time.Duration) Client {
 	}
 }
 
-func NewSecureClient(auctioneerURL, caFile, certFile, keyFile string, requireTLS bool, requestTimeout time.Duration) (Client, error) {
+func NewSecureClient(auctioneerURL, caFile, certFile, keyFile string, requireTLS bool, requestTimeout time.Duration) (bbsmodels.AuctioneerClient, error) {
 	insecureHTTPClient := cfhttp.NewClient(
 		cfhttp.WithRequestTimeout(requestTimeout),
 	)
@@ -66,7 +63,7 @@ func NewSecureClient(auctioneerURL, caFile, certFile, keyFile string, requireTLS
 	}, nil
 }
 
-func (c *auctioneerClient) RequestLRPAuctions(logger lager.Logger, traceID string, lrpStarts []*LRPStartRequest) error {
+func (c *auctioneerClient) RequestLRPAuctions(logger lager.Logger, traceID string, lrpStarts []*bbsmodels.LRPStartRequest) error {
 	logger = logger.Session("request-lrp-auctions")
 
 	payload, err := json.Marshal(lrpStarts)
@@ -87,7 +84,7 @@ func (c *auctioneerClient) RequestLRPAuctions(logger lager.Logger, traceID strin
 	return nil
 }
 
-func (c *auctioneerClient) RequestTaskAuctions(logger lager.Logger, traceID string, tasks []*TaskStartRequest) error {
+func (c *auctioneerClient) RequestTaskAuctions(logger lager.Logger, traceID string, tasks []*bbsmodels.TaskStartRequest) error {
 	logger = logger.Session("request-task-auctions")
 
 	payload, err := json.Marshal(tasks)
@@ -124,7 +121,7 @@ func (c *auctioneerClient) doRequest(logger lager.Logger, client *http.Client, t
 	logger = logger.Session("do-request")
 	var resp *http.Response
 	var err error
-	for attempts := range ClientRetryCount {
+	for attempts := 0; attempts < ClientRetryCount; attempts++ {
 		logger.Debug("creating-request", lager.Data{"attempt": attempts + 1, "request_name": route})
 		var req *http.Request
 		req, err = c.reqGen.CreateRequest(route, params, bytes.NewBuffer(payload))

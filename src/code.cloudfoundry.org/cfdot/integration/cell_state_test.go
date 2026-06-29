@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/rep"
+
 	"code.cloudfoundry.org/tlsconfig"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -25,7 +25,7 @@ var _ = Describe("cell-state", func() {
 		var (
 			presence1, presence2   *models.CellPresence
 			rep1Server, rep2Server *ghttp.Server
-			cellState1, cellState2 *rep.CellState
+			cellState1, cellState2 *models.CellState
 		)
 
 		BeforeEach(func() {
@@ -50,23 +50,23 @@ var _ = Describe("cell-state", func() {
 				RepUrl: rep2Server.URL(),
 			}
 
-			cellState1 = &rep.CellState{
+			cellState1 = &models.CellState{
 				RepURL:             rep1Server.URL(),
 				CellID:             "cell-1",
-				RootFSProviders:    rep.RootFSProviders{},
-				AvailableResources: rep.Resources{},
-				TotalResources:     rep.Resources{},
-				LRPs:               []rep.LRP{},
-				Tasks:              []rep.Task{},
+				RootFSProviders:    models.RootFSProviders{},
+				AvailableResources: models.Resources{},
+				TotalResources:     models.Resources{},
+				LRPs:               []models.SchedulingLRP{},
+				Tasks:              []models.SchedulingTask{},
 			}
-			cellState2 = &rep.CellState{
+			cellState2 = &models.CellState{
 				RepURL:             rep2Server.URL(),
 				CellID:             "cell-2",
-				RootFSProviders:    rep.RootFSProviders{},
-				AvailableResources: rep.Resources{},
-				TotalResources:     rep.Resources{},
-				LRPs:               []rep.LRP{},
-				Tasks:              []rep.Task{},
+				RootFSProviders:    models.RootFSProviders{},
+				AvailableResources: models.Resources{},
+				TotalResources:     models.Resources{},
+				LRPs:               []models.SchedulingLRP{},
+				Tasks:              []models.SchedulingTask{},
 			}
 
 			bbsServer.AppendHandlers(
@@ -170,7 +170,7 @@ var _ = Describe("cell-state", func() {
 					Eventually(sess).Should(gexec.Exit(0))
 
 					decoder := json.NewDecoder(io.NopCloser(bytes.NewBuffer(sess.Out.Contents())))
-					var receivedState rep.CellState
+					var receivedState models.CellState
 
 					err := decoder.Decode(&receivedState)
 					Expect(err).NotTo(HaveOccurred())
@@ -223,7 +223,7 @@ var _ = Describe("cell-state", func() {
 					It("should succeed", func() {
 						Eventually(sess).Should(gexec.Exit(0))
 						decoder := json.NewDecoder(io.NopCloser(bytes.NewBuffer(sess.Out.Contents())))
-						var receivedState rep.CellState
+						var receivedState models.CellState
 
 						err := decoder.Decode(&receivedState)
 						Expect(err).NotTo(HaveOccurred())

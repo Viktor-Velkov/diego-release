@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/auctioneer"
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/bbs/trace"
 	"code.cloudfoundry.org/lager/v3"
 )
@@ -35,7 +35,7 @@ func (h *LRPAuctionHandler) Create(w http.ResponseWriter, r *http.Request, logge
 		return
 	}
 
-	starts := []auctioneer.LRPStartRequest{}
+	starts := []bbsmodels.LRPStartRequest{}
 	err = json.Unmarshal(payload, &starts)
 	if err != nil {
 		logger.Error("malformed-json", err)
@@ -43,7 +43,7 @@ func (h *LRPAuctionHandler) Create(w http.ResponseWriter, r *http.Request, logge
 		return
 	}
 
-	validStarts := make([]auctioneer.LRPStartRequest, 0, len(starts))
+	validStarts := make([]bbsmodels.LRPStartRequest, 0, len(starts))
 	lrpGuids := make(map[string][]int)
 	for i := range starts {
 		start := &starts[i]

@@ -21,7 +21,7 @@ files:
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/internal/truncate/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/lagerctx/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/lager/v3/lagertest/*.go # gosub
-  - code.cloudfoundry.org/routing-info/cfroutes/*.go # gosub
+  - code.cloudfoundry.org/vendor/code.cloudfoundry.org/routing-info/cfroutes/*.go # gosub
   - code.cloudfoundry.org/vendor/code.cloudfoundry.org/tlsconfig/*.go # gosub
   - code.cloudfoundry.org/vizzini/*.go # gosub
   - code.cloudfoundry.org/vizzini/config/*.go # gosub

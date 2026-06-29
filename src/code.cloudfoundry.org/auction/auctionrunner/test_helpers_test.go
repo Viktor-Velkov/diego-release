@@ -4,9 +4,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/rep"
 	. "github.com/onsi/gomega"
 )
 
@@ -16,18 +14,18 @@ func BuildLRPStartRequest(
 	rootFS string,
 	memoryMB, diskMB, maxPids int32,
 	volumeDriver, placementTags []string,
-) auctioneer.LRPStartRequest {
-	return auctioneer.NewLRPStartRequest(
+) models.LRPStartRequest {
+	return models.NewLRPStartRequest(
 		processGuid,
 		domain,
 		indices,
-		rep.NewResource(memoryMB, diskMB, maxPids),
-		rep.NewPlacementConstraint(rootFS, placementTags, volumeDriver),
+		models.NewResource(memoryMB, diskMB, maxPids),
+		models.NewPlacementConstraint(rootFS, placementTags, volumeDriver),
 	)
 }
 
-func BuildTaskStartRequest(taskGuid, domain, rootFS string, memoryMB, diskMB, maxPids int32) auctioneer.TaskStartRequest {
-	return auctioneer.NewTaskStartRequest(*BuildTask(taskGuid, domain, rootFS, memoryMB, diskMB, maxPids, []string{}, []string{}))
+func BuildTaskStartRequest(taskGuid, domain, rootFS string, memoryMB, diskMB, maxPids int32) models.TaskStartRequest {
+	return models.NewTaskStartRequest(*BuildTask(taskGuid, domain, rootFS, memoryMB, diskMB, maxPids, []string{}, []string{}))
 }
 
 func BuildLRP(
@@ -36,23 +34,23 @@ func BuildLRP(
 	rootFS string,
 	memoryMB, diskMB, maxPids int32,
 	placementTags []string,
-) *rep.LRP {
+) *models.SchedulingLRP {
 	lrpKey := models.NewActualLRPKey(guid, int32(index), domain)
-	lrp := rep.NewLRP(
+	lrp := models.NewSchedulingLRP(
 		"",
 		lrpKey,
-		rep.NewResource(memoryMB, diskMB, maxPids),
-		rep.NewPlacementConstraint(rootFS, placementTags, []string{}),
+		models.NewResource(memoryMB, diskMB, maxPids),
+		models.NewPlacementConstraint(rootFS, placementTags, []string{}),
 	)
 	return &lrp
 }
 
-func BuildTask(taskGuid, domain, rootFS string, memoryMB, diskMB, maxPids int32, volumeDrivers, placementTags []string) *rep.Task {
-	task := rep.NewTask(
+func BuildTask(taskGuid, domain, rootFS string, memoryMB, diskMB, maxPids int32, volumeDrivers, placementTags []string) *models.SchedulingTask {
+	task := models.NewSchedulingTask(
 		taskGuid,
 		domain,
-		rep.NewResource(memoryMB, diskMB, maxPids),
-		rep.NewPlacementConstraint(rootFS, placementTags, volumeDrivers),
+		models.NewResource(memoryMB, diskMB, maxPids),
+		models.NewPlacementConstraint(rootFS, placementTags, volumeDrivers),
 	)
 	return &task
 }
@@ -68,11 +66,11 @@ func BuildLRPAuction(
 	lrpKey := models.NewActualLRPKey(processGuid, int32(index), domain)
 
 	return auctiontypes.NewLRPAuction(
-		rep.NewLRP(
+		models.NewSchedulingLRP(
 			"",
 			lrpKey,
-			rep.NewResource(memoryMB, diskMB, maxPids),
-			rep.NewPlacementConstraint(rootFS, placementTags, volumeDrivers),
+			models.NewResource(memoryMB, diskMB, maxPids),
+			models.NewPlacementConstraint(rootFS, placementTags, volumeDrivers),
 		),
 		queueTime,
 	)
@@ -90,11 +88,11 @@ func BuildLRPAuctionWithPlacementError(
 	lrpKey := models.NewActualLRPKey(processGuid, int32(index), domain)
 
 	a := auctiontypes.NewLRPAuction(
-		rep.NewLRP(
+		models.NewSchedulingLRP(
 			"",
 			lrpKey,
-			rep.NewResource(memoryMB, diskMB, maxPids),
-			rep.NewPlacementConstraint(rootFS, placementTags, volumeDrivers),
+			models.NewResource(memoryMB, diskMB, maxPids),
+			models.NewPlacementConstraint(rootFS, placementTags, volumeDrivers),
 		),
 		queueTime,
 	)
@@ -103,12 +101,12 @@ func BuildLRPAuctionWithPlacementError(
 	return a
 }
 
-func BuildLRPAuctions(start auctioneer.LRPStartRequest, queueTime time.Time) []auctiontypes.LRPAuction {
+func BuildLRPAuctions(start models.LRPStartRequest, queueTime time.Time) []auctiontypes.LRPAuction {
 	auctions := make([]auctiontypes.LRPAuction, 0, len(start.Indices))
 	for _, index := range start.Indices {
 		lrpKey := models.NewActualLRPKey(start.ProcessGuid, int32(index), start.Domain)
 		auctions = append(auctions, auctiontypes.NewLRPAuction(
-			rep.NewLRP("", lrpKey, start.Resource, start.PlacementConstraint),
+			models.NewSchedulingLRP("", lrpKey, start.Resource, start.PlacementConstraint),
 			queueTime,
 		))
 	}
@@ -116,7 +114,7 @@ func BuildLRPAuctions(start auctioneer.LRPStartRequest, queueTime time.Time) []a
 	return auctions
 }
 
-func BuildTaskAuction(task *rep.Task, queueTime time.Time) auctiontypes.TaskAuction {
+func BuildTaskAuction(task *models.SchedulingTask, queueTime time.Time) auctiontypes.TaskAuction {
 	return auctiontypes.NewTaskAuction(*task, queueTime)
 }
 
@@ -124,13 +122,13 @@ const linuxStack = "linux"
 
 var linuxRootFSURL = models.PreloadedRootFS(linuxStack)
 
-var linuxOnlyRootFSProviders = rep.RootFSProviders{models.PreloadedRootFSScheme: rep.NewFixedSetRootFSProvider(linuxStack)}
+var linuxOnlyRootFSProviders = models.RootFSProviders{models.PreloadedRootFSScheme: models.NewFixedSetRootFSProvider(linuxStack)}
 
 const windowsStack = "windows"
 
 var windowsRootFSURL = models.PreloadedRootFS(windowsStack)
 
-var windowsOnlyRootFSProviders = rep.RootFSProviders{models.PreloadedRootFSScheme: rep.NewFixedSetRootFSProvider(windowsStack)}
+var windowsOnlyRootFSProviders = models.RootFSProviders{models.PreloadedRootFSScheme: models.NewFixedSetRootFSProvider(windowsStack)}
 
 func BuildCellState(
 	cellID string,
@@ -141,14 +139,14 @@ func BuildCellState(
 	containers int,
 	evacuating bool,
 	startingContainerCount int,
-	rootFSProviders rep.RootFSProviders,
-	lrps []rep.LRP,
+	rootFSProviders models.RootFSProviders,
+	lrps []models.SchedulingLRP,
 	volumeDrivers []string,
 	placementTags []string,
 	optionalPlacementTags []string,
 	proxyMemoryAllocationMB int,
-) rep.CellState {
-	totalResources := rep.NewResources(memoryMB, diskMB, containers)
+) models.CellState {
+	totalResources := models.NewResources(memoryMB, diskMB, containers)
 
 	availableResources := totalResources.Copy()
 	for i := range lrps {
@@ -159,7 +157,7 @@ func BuildCellState(
 	Expect(availableResources.DiskMB).To(BeNumerically(">=", 0), "Check your math!")
 	Expect(availableResources.Containers).To(BeNumerically(">=", 0), "Check your math!")
 
-	return rep.NewCellState(
+	return models.NewCellState(
 		cellID,
 		cellIndex,
 		"https://foo.cell.service.cf.internal",

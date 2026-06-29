@@ -4,9 +4,7 @@ import (
 	"sync"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/rep"
 
 	"code.cloudfoundry.org/clock"
 )
@@ -32,14 +30,14 @@ func NewBatch(clock clock.Clock) *Batch {
 	}
 }
 
-func (b *Batch) AddLRPStarts(starts []auctioneer.LRPStartRequest, traceID string) {
+func (b *Batch) AddLRPStarts(starts []models.LRPStartRequest, traceID string) {
 	auctions := make([]auctiontypes.LRPAuction, 0, len(starts))
 	now := b.clock.Now()
 	for i := range starts {
 		start := &starts[i]
 		for _, index := range start.Indices {
 			lrpKey := models.NewActualLRPKey(start.ProcessGuid, int32(index), start.Domain)
-			auction := auctiontypes.NewLRPAuction(rep.NewLRP("", lrpKey, start.Resource, start.PlacementConstraint), now)
+			auction := auctiontypes.NewLRPAuction(models.NewSchedulingLRP("", lrpKey, start.Resource, start.PlacementConstraint), now)
 			auctions = append(auctions, auction)
 		}
 	}
@@ -50,7 +48,7 @@ func (b *Batch) AddLRPStarts(starts []auctioneer.LRPStartRequest, traceID string
 	b.lock.Unlock()
 }
 
-func (b *Batch) AddTasks(tasks []auctioneer.TaskStartRequest, traceID string) {
+func (b *Batch) AddTasks(tasks []models.TaskStartRequest, traceID string) {
 	auctions := make([]auctiontypes.TaskAuction, 0, len(tasks))
 	now := b.clock.Now()
 	for i := range tasks {

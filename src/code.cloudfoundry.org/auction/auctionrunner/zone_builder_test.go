@@ -8,8 +8,8 @@ import (
 
 	"code.cloudfoundry.org/auction/auctionrunner"
 	"code.cloudfoundry.org/auction/auctiontypes/fakes"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3/lagertest"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/rep/repfakes"
 	"code.cloudfoundry.org/workpool"
 
@@ -79,7 +79,7 @@ func (matcher *logDataMatcher) NegatedFailureMessage(actual interface{}) string 
 
 var _ = Describe("ZoneBuilder", func() {
 	var repA, repB, repC *repfakes.FakeSimClient
-	var clients map[string]rep.Client
+	var clients map[string]models.RepClient
 	var workPool *workpool.WorkPool
 	var logger *lagertest.TestLogger
 	var metricEmitter *fakes.FakeAuctionMetricEmitterDelegate
@@ -126,7 +126,7 @@ var _ = Describe("ZoneBuilder", func() {
 		repB = new(repfakes.FakeSimClient)
 		repC = new(repfakes.FakeSimClient)
 
-		clients = map[string]rep.Client{
+		clients = map[string]models.RepClient{
 			"A": repA,
 			"B": repB,
 			"C": repC,

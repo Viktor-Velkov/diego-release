@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/auctioneer"
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/bbs/trace"
 	"code.cloudfoundry.org/lager/v3"
 )
@@ -35,7 +35,7 @@ func (h *TaskAuctionHandler) Create(w http.ResponseWriter, r *http.Request, logg
 		return
 	}
 
-	tasks := []auctioneer.TaskStartRequest{}
+	tasks := []bbsmodels.TaskStartRequest{}
 	err = json.Unmarshal(payload, &tasks)
 	if err != nil {
 		logger.Error("malformed-json", err)
@@ -43,13 +43,13 @@ func (h *TaskAuctionHandler) Create(w http.ResponseWriter, r *http.Request, logg
 		return
 	}
 
-	validTasks := make([]auctioneer.TaskStartRequest, 0, len(tasks))
+	validTasks := make([]bbsmodels.TaskStartRequest, 0, len(tasks))
 	taskGuids := make([]string, 0, len(tasks))
 	for i := range tasks {
 		t := &tasks[i]
 		if err := t.Validate(); err == nil {
 			validTasks = append(validTasks, *t)
-			taskGuids = append(taskGuids, t.TaskGuid)
+			taskGuids = append(taskGuids, t.Task.TaskGuid)
 		} else {
 			logger.Error("task-validate-failed", err, lager.Data{"task": t})
 		}

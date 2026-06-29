@@ -7,7 +7,7 @@ import (
 	"code.cloudfoundry.org/bbs/fake_bbs"
 	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/cfdot/commands"
-	"code.cloudfoundry.org/rep"
+
 	"code.cloudfoundry.org/rep/repfakes"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -98,17 +98,17 @@ var _ = Describe("CellState", func() {
 			fakeRepClientFactory *repfakes.FakeClientFactory
 			stdout, stderr       *gbytes.Buffer
 			registration         *models.CellPresence
-			state                rep.CellState
+			state                models.CellState
 		)
 
 		BeforeEach(func() {
-			state = rep.CellState{
+			state = models.CellState{
 				RepURL:             "https://7a66adb6-1ce5-4c12-9127-6ff13efd1a79.cell.service.cf.internal:1801",
 				CellID:             "cell-id",
-				RootFSProviders:    rep.RootFSProviders{},
-				AvailableResources: rep.Resources{},
-				TotalResources:     rep.Resources{},
-				LRPs:               []rep.LRP{},
+				RootFSProviders:    models.RootFSProviders{},
+				AvailableResources: models.Resources{},
+				TotalResources:     models.Resources{},
+				LRPs:               []models.SchedulingLRP{},
 			}
 
 			stdout = gbytes.NewBuffer()
@@ -133,7 +133,7 @@ var _ = Describe("CellState", func() {
 			_, _, actualTraceID := fakeRepClientFactory.CreateClientArgsForCall(0)
 			Expect(actualTraceID).To(Equal("some-trace-id"))
 
-			var receivedState rep.CellState
+			var receivedState models.CellState
 			err = json.Unmarshal(stdout.Contents(), &receivedState)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(receivedState).To(Equal(state))
@@ -141,7 +141,7 @@ var _ = Describe("CellState", func() {
 
 		Context("when the rep fails to respond", func() {
 			BeforeEach(func() {
-				fakeRepClient.StateReturns(rep.CellState{}, errors.New("boom"))
+				fakeRepClient.StateReturns(models.CellState{}, errors.New("boom"))
 			})
 
 			It("returns an error", func() {

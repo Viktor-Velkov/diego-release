@@ -7,7 +7,7 @@ import (
 	"code.cloudfoundry.org/bbs/fake_bbs"
 	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/cfdot/commands"
-	"code.cloudfoundry.org/rep"
+
 	"code.cloudfoundry.org/rep/repfakes"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -36,28 +36,28 @@ var _ = Describe("CellState", func() {
 			fakeRepClient1, fakeRepClient2 *repfakes.FakeClient
 			fakeRepClientFactory           *repfakes.FakeClientFactory
 			stdout, stderr                 *gbytes.Buffer
-			state1, state2                 rep.CellState
+			state1, state2                 models.CellState
 			fakeBBSClient                  *fake_bbs.FakeClient
 		)
 
 		BeforeEach(func() {
 			cmd = &cobra.Command{}
 
-			state1 = rep.CellState{
+			state1 = models.CellState{
 				RepURL:             "https://cell-1.cell.service.cf.internal:1801",
 				CellID:             "cell-id1",
-				RootFSProviders:    rep.RootFSProviders{},
-				AvailableResources: rep.Resources{},
-				TotalResources:     rep.Resources{},
-				LRPs:               []rep.LRP{},
+				RootFSProviders:    models.RootFSProviders{},
+				AvailableResources: models.Resources{},
+				TotalResources:     models.Resources{},
+				LRPs:               []models.SchedulingLRP{},
 			}
-			state2 = rep.CellState{
+			state2 = models.CellState{
 				RepURL:             "https://cell-2.cell.service.cf.internal:1801",
 				CellID:             "cell-id2",
-				RootFSProviders:    rep.RootFSProviders{},
-				AvailableResources: rep.Resources{},
-				TotalResources:     rep.Resources{},
-				LRPs:               []rep.LRP{},
+				RootFSProviders:    models.RootFSProviders{},
+				AvailableResources: models.Resources{},
+				TotalResources:     models.Resources{},
+				LRPs:               []models.SchedulingLRP{},
 			}
 
 			stdout = gbytes.NewBuffer()
@@ -98,7 +98,7 @@ var _ = Describe("CellState", func() {
 			Expect(fakeRepClient2.StateCallCount()).To(Equal(1))
 
 			decoder := json.NewDecoder(stdout)
-			var receivedState rep.CellState
+			var receivedState models.CellState
 
 			err := decoder.Decode(&receivedState)
 			Expect(err).NotTo(HaveOccurred())
@@ -122,7 +122,7 @@ var _ = Describe("CellState", func() {
 
 		Context("when one of the rep fails to respond", func() {
 			BeforeEach(func() {
-				fakeRepClient1.StateReturns(rep.CellState{}, errors.New("boom"))
+				fakeRepClient1.StateReturns(models.CellState{}, errors.New("boom"))
 			})
 
 			It("prints an error", func() {
@@ -133,7 +133,7 @@ var _ = Describe("CellState", func() {
 
 			It("prints the cell stats of the other cells", func() {
 				commands.FetchCellStates(cmd, stdout, stderr, fakeRepClientFactory, fakeBBSClient)
-				var receivedState rep.CellState
+				var receivedState models.CellState
 				err := json.NewDecoder(stdout).Decode(&receivedState)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(receivedState).To(Equal(state2))

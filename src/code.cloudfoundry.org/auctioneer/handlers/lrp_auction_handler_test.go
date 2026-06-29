@@ -8,11 +8,10 @@ import (
 	"strings"
 
 	fake_auction_runner "code.cloudfoundry.org/auction/auctiontypes/fakes"
-	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/auctioneer/handlers"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/lager/v3/lagertest"
-	"code.cloudfoundry.org/rep"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -41,18 +40,18 @@ var _ = Describe("LRPAuctionHandler", func() {
 
 	Describe("Create", func() {
 		Context("when the request body is an LRP start auction request", func() {
-			var starts []auctioneer.LRPStartRequest
+			var starts []models.LRPStartRequest
 
 			BeforeEach(func() {
-				starts = []auctioneer.LRPStartRequest{{
+				starts = []models.LRPStartRequest{{
 					Indices:     []int{2, 3},
 					Domain:      "tests",
 					ProcessGuid: "some-guid",
-					Resource: rep.Resource{
+					Resource: models.Resource{
 						MemoryMB: 1024,
 						DiskMB:   512,
 					},
-					PlacementConstraint: rep.PlacementConstraint{
+					PlacementConstraint: models.PlacementConstraint{
 						RootFs: "docker:///docker.com/docker",
 					},
 				}}
@@ -88,10 +87,10 @@ var _ = Describe("LRPAuctionHandler", func() {
 		})
 
 		Context("when the start auction has invalid index", func() {
-			var start auctioneer.LRPStartRequest
+			var start models.LRPStartRequest
 
 			BeforeEach(func() {
-				start = auctioneer.LRPStartRequest{}
+				start = models.LRPStartRequest{}
 
 				handler.Create(responseRecorder, newTestRequest(start), logger)
 			})

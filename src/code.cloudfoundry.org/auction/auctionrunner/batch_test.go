@@ -5,7 +5,7 @@ import (
 
 	"code.cloudfoundry.org/auction/auctionrunner"
 	"code.cloudfoundry.org/auction/auctiontypes"
-	"code.cloudfoundry.org/auctioneer"
+	bbsmodels "code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/clock/fakeclock"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -13,8 +13,8 @@ import (
 )
 
 var _ = Describe("Batch", func() {
-	var lrpStart auctioneer.LRPStartRequest
-	var task auctioneer.TaskStartRequest
+	var lrpStart bbsmodels.LRPStartRequest
+	var task bbsmodels.TaskStartRequest
 	var batch *auctionrunner.Batch
 	var clock *fakeclock.FakeClock
 
@@ -34,7 +34,7 @@ var _ = Describe("Batch", func() {
 		Context("when adding start auctions", func() {
 			BeforeEach(func() {
 				lrpStart = BuildLRPStartRequest("pg-1", "domain", []int{1}, "linux", 10, 10, 10, []string{}, []string{})
-				batch.AddLRPStarts([]auctioneer.LRPStartRequest{lrpStart}, "some-trace-id")
+				batch.AddLRPStarts([]bbsmodels.LRPStartRequest{lrpStart}, "some-trace-id")
 			})
 
 			It("makes the start auction available when drained", func() {
@@ -50,7 +50,7 @@ var _ = Describe("Batch", func() {
 		Context("when adding tasks", func() {
 			BeforeEach(func() {
 				task = BuildTaskStartRequest("tg-1", "domain", "linux", 10, 10, 10)
-				batch.AddTasks([]auctioneer.TaskStartRequest{task}, "some-trace-id")
+				batch.AddTasks([]bbsmodels.TaskStartRequest{task}, "some-trace-id")
 			})
 
 			It("makes the stop auction available when drained", func() {
@@ -66,13 +66,13 @@ var _ = Describe("Batch", func() {
 
 	Describe("DedupeAndDrain", func() {
 		BeforeEach(func() {
-			batch.AddLRPStarts([]auctioneer.LRPStartRequest{
+			batch.AddLRPStarts([]bbsmodels.LRPStartRequest{
 				BuildLRPStartRequest("pg-1", "domain", []int{1}, "linux", 10, 10, 10, []string{"driver-1"}, []string{"tag-1"}),
 				BuildLRPStartRequest("pg-1", "domain", []int{1}, "linux", 10, 10, 10, []string{"driver-1"}, []string{"tag-1"}),
 				BuildLRPStartRequest("pg-2", "domain", []int{2}, "linux", 10, 10, 10, []string{"driver-2"}, []string{"tag-2"}),
 			}, "some-trace-id")
 
-			batch.AddTasks([]auctioneer.TaskStartRequest{
+			batch.AddTasks([]bbsmodels.TaskStartRequest{
 				BuildTaskStartRequest("tg-1", "domain", "linux", 10, 10, 10),
 				BuildTaskStartRequest("tg-1", "domain", "linux", 10, 10, 10),
 				BuildTaskStartRequest("tg-2", "domain", "linux", 10, 10, 10)}, "some-trace-id")

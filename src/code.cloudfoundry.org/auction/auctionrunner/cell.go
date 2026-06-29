@@ -1,8 +1,8 @@
 package auctionrunner
 
 import (
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 )
 
 const LocalityOffset = 1000
@@ -10,21 +10,21 @@ const LocalityOffset = 1000
 type Cell struct {
 	logger lager.Logger
 	Guid   string
-	client rep.Client
-	state  rep.CellState
+	client models.RepClient
+	state  models.CellState
 	Index  int
 
-	workToCommit rep.Work
+	workToCommit models.Work
 }
 
-func NewCell(logger lager.Logger, guid string, client rep.Client, state rep.CellState) *Cell {
+func NewCell(logger lager.Logger, guid string, client models.RepClient, state models.CellState) *Cell {
 	return &Cell{
 		logger:       logger,
 		Guid:         guid,
 		client:       client,
 		state:        state,
 		Index:        state.CellIndex,
-		workToCommit: rep.Work{CellID: guid},
+		workToCommit: models.Work{CellID: guid},
 	}
 }
 
@@ -44,12 +44,12 @@ func (c *Cell) MatchPlacementTags(placementTags []string) bool {
 	return c.state.MatchPlacementTags(placementTags)
 }
 
-func (c *Cell) State() rep.CellState {
+func (c *Cell) State() models.CellState {
 	return c.state
 }
 
-func (c *Cell) ScoreForLRP(lrp *rep.LRP, startingContainerWeight, binPackFirstFitWeight float64) (float64, error) {
-	proxiedLRP := rep.Resource{
+func (c *Cell) ScoreForLRP(lrp *models.SchedulingLRP, startingContainerWeight, binPackFirstFitWeight float64) (float64, error) {
+	proxiedLRP := models.Resource{
 		MemoryMB: lrp.Resource.MemoryMB + int32(c.state.ProxyMemoryAllocationMB),
 		DiskMB:   lrp.Resource.DiskMB,
 		MaxPids:  lrp.Resource.MaxPids,
@@ -84,7 +84,7 @@ func (c *Cell) ScoreForLRP(lrp *rep.LRP, startingContainerWeight, binPackFirstFi
 	return resourceScore + float64(localityScore) + indexScore, nil
 }
 
-func (c *Cell) ScoreForTask(task *rep.Task, startingContainerWeight float64) (float64, error) {
+func (c *Cell) ScoreForTask(task *models.SchedulingTask, startingContainerWeight float64) (float64, error) {
 	err := c.state.ResourceMatch(&task.Resource)
 	if err != nil {
 		return 0, err
@@ -95,7 +95,7 @@ func (c *Cell) ScoreForTask(task *rep.Task, startingContainerWeight float64) (fl
 	return resourceScore + float64(localityScore), nil
 }
 
-func (c *Cell) ReserveLRP(lrp *rep.LRP) error {
+func (c *Cell) ReserveLRP(lrp *models.SchedulingLRP) error {
 	err := c.state.ResourceMatch(&lrp.Resource)
 	if err != nil {
 		return err
@@ -106,7 +106,7 @@ func (c *Cell) ReserveLRP(lrp *rep.LRP) error {
 	return nil
 }
 
-func (c *Cell) ReserveTask(task *rep.Task) error {
+func (c *Cell) ReserveTask(task *models.SchedulingTask) error {
 	err := c.state.ResourceMatch(&task.Resource)
 	if err != nil {
 		return err
@@ -117,9 +117,9 @@ func (c *Cell) ReserveTask(task *rep.Task) error {
 	return nil
 }
 
-func (c *Cell) Commit() rep.Work {
+func (c *Cell) Commit() models.Work {
 	if len(c.workToCommit.LRPs) == 0 && len(c.workToCommit.Tasks) == 0 {
-		return rep.Work{}
+		return models.Work{}
 	}
 
 	failedWork, err := c.client.Perform(c.logger, c.workToCommit)
@@ -128,7 +128,7 @@ func (c *Cell) Commit() rep.Work {
 		//an error may indicate partial failure
 		//in this case we don't reschedule work in order to make sure we don't
 		//create duplicates of things -- we'll let the converger figure things out for us later
-		return rep.Work{}
+		return models.Work{}
 	}
 	return failedWork
 }

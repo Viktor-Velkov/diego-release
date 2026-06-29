@@ -99,11 +99,18 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 	routingAPI, err := gexec.Build("code.cloudfoundry.org/routing-api/cmd/routing-api", "-race")
 	Expect(err).NotTo(HaveOccurred())
 
+	natsServer := os.Getenv("NATS_SERVER_BINARY")
+	if natsServer == "" {
+		natsServer, err = gexec.Build("github.com/nats-io/nats-server/v2", "-race")
+		Expect(err).NotTo(HaveOccurred())
+	}
+
 	payload, err := json.Marshal(map[string]string{
 		"emitter":     emitter,
 		"bbs":         bbs,
 		"locket":      locket,
 		"routing-api": routingAPI,
+		"nats-server": natsServer,
 	})
 
 	Expect(err).NotTo(HaveOccurred())
@@ -116,6 +123,7 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 	Expect(err).NotTo(HaveOccurred())
 
 	emitterPath = string(binaries["emitter"])
+	Expect(os.Setenv("NATS_SERVER_BINARY", binaries["nats-server"])).To(Succeed())
 
 	dbName := fmt.Sprintf("diego_route_emitter_%d", GinkgoParallelProcess())
 	sqlRunner = test_helpers.NewSQLRunner(dbName)

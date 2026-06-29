@@ -8,11 +8,10 @@ import (
 	"strings"
 
 	fake_auction_runner "code.cloudfoundry.org/auction/auctiontypes/fakes"
-	"code.cloudfoundry.org/auctioneer"
 	"code.cloudfoundry.org/auctioneer/handlers"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/lager/v3/lagertest"
-	"code.cloudfoundry.org/rep"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -41,13 +40,13 @@ var _ = Describe("TaskAuctionHandler", func() {
 
 	Describe("Create", func() {
 		Context("when the request body is a task", func() {
-			var tasks []auctioneer.TaskStartRequest
+			var tasks []models.TaskStartRequest
 
 			BeforeEach(func() {
-				resource := rep.NewResource(1, 2, 3)
-				pc := rep.NewPlacementConstraint("rootfs", []string{}, []string{})
-				task := rep.NewTask("the-task-guid", "test", resource, pc)
-				tasks = []auctioneer.TaskStartRequest{auctioneer.TaskStartRequest{Task: task}}
+				resource := models.NewResource(1, 2, 3)
+				pc := models.NewPlacementConstraint("rootfs", []string{}, []string{})
+				task := models.NewSchedulingTask("the-task-guid", "test", resource, pc)
+				tasks = []models.TaskStartRequest{models.TaskStartRequest{Task: task}}
 				req := newTestRequest(tasks)
 				req.Header.Add(lager.RequestIdHeader, requestIdHeader)
 				handler.Create(responseRecorder, req, logger)
@@ -75,11 +74,11 @@ var _ = Describe("TaskAuctionHandler", func() {
 		})
 
 		Context("when the request body is a not a valid task", func() {
-			var tasks []auctioneer.TaskStartRequest
+			var tasks []models.TaskStartRequest
 
 			BeforeEach(func() {
-				task := rep.Task{}
-				tasks = []auctioneer.TaskStartRequest{auctioneer.TaskStartRequest{Task: task}}
+				task := models.SchedulingTask{}
+				tasks = []models.TaskStartRequest{models.TaskStartRequest{Task: task}}
 
 				req := newTestRequest(tasks)
 				req.Header.Add(lager.RequestIdHeader, requestIdHeader)

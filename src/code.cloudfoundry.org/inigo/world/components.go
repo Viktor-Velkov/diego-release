@@ -360,7 +360,7 @@ type ComponentMaker interface {
 	Auctioneer(modifyConfigFuncs ...func(cfg *auctioneerconfig.AuctioneerConfig)) *ginkgomon.Runner
 	BBS(modifyConfigFuncs ...func(*bbsconfig.BBSConfig)) *ginkgomon.Runner
 	BBSClient() bbs.InternalClient
-	RepClientFactory() rep.ClientFactory
+	RepClientFactory() models.RepClientFactory
 	BBSServiceClient(logger lager.Logger) serviceclient.ServiceClient
 	BBSURL() string
 	BBSSSLConfig() SSLConfig
@@ -1091,7 +1091,7 @@ func (maker commonComponentMaker) BBSClient() bbs.InternalClient {
 	return client
 }
 
-func (maker commonComponentMaker) RepClientFactory() rep.ClientFactory {
+func (maker commonComponentMaker) RepClientFactory() models.RepClientFactory {
 	Expect(maker.repSSL.CACert).To(BeAnExistingFile())
 
 	tlsConfig := rep.TLSConfig{

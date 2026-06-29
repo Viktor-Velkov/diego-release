@@ -4,17 +4,17 @@ package auctioneerfakes
 import (
 	"sync"
 
-	"code.cloudfoundry.org/auctioneer"
+	"code.cloudfoundry.org/bbs/models"
 	lager "code.cloudfoundry.org/lager/v3"
 )
 
 type FakeClient struct {
-	RequestLRPAuctionsStub        func(lager.Logger, string, []*auctioneer.LRPStartRequest) error
+	RequestLRPAuctionsStub        func(lager.Logger, string, []*models.LRPStartRequest) error
 	requestLRPAuctionsMutex       sync.RWMutex
 	requestLRPAuctionsArgsForCall []struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 []*auctioneer.LRPStartRequest
+		arg3 []*models.LRPStartRequest
 	}
 	requestLRPAuctionsReturns struct {
 		result1 error
@@ -22,12 +22,12 @@ type FakeClient struct {
 	requestLRPAuctionsReturnsOnCall map[int]struct {
 		result1 error
 	}
-	RequestTaskAuctionsStub        func(lager.Logger, string, []*auctioneer.TaskStartRequest) error
+	RequestTaskAuctionsStub        func(lager.Logger, string, []*models.TaskStartRequest) error
 	requestTaskAuctionsMutex       sync.RWMutex
 	requestTaskAuctionsArgsForCall []struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 []*auctioneer.TaskStartRequest
+		arg3 []*models.TaskStartRequest
 	}
 	requestTaskAuctionsReturns struct {
 		result1 error
@@ -39,10 +39,10 @@ type FakeClient struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeClient) RequestLRPAuctions(arg1 lager.Logger, arg2 string, arg3 []*auctioneer.LRPStartRequest) error {
-	var arg3Copy []*auctioneer.LRPStartRequest
+func (fake *FakeClient) RequestLRPAuctions(arg1 lager.Logger, arg2 string, arg3 []*models.LRPStartRequest) error {
+	var arg3Copy []*models.LRPStartRequest
 	if arg3 != nil {
-		arg3Copy = make([]*auctioneer.LRPStartRequest, len(arg3))
+		arg3Copy = make([]*models.LRPStartRequest, len(arg3))
 		copy(arg3Copy, arg3)
 	}
 	fake.requestLRPAuctionsMutex.Lock()
@@ -50,7 +50,7 @@ func (fake *FakeClient) RequestLRPAuctions(arg1 lager.Logger, arg2 string, arg3 
 	fake.requestLRPAuctionsArgsForCall = append(fake.requestLRPAuctionsArgsForCall, struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 []*auctioneer.LRPStartRequest
+		arg3 []*models.LRPStartRequest
 	}{arg1, arg2, arg3Copy})
 	stub := fake.RequestLRPAuctionsStub
 	fakeReturns := fake.requestLRPAuctionsReturns
@@ -71,13 +71,13 @@ func (fake *FakeClient) RequestLRPAuctionsCallCount() int {
 	return len(fake.requestLRPAuctionsArgsForCall)
 }
 
-func (fake *FakeClient) RequestLRPAuctionsCalls(stub func(lager.Logger, string, []*auctioneer.LRPStartRequest) error) {
+func (fake *FakeClient) RequestLRPAuctionsCalls(stub func(lager.Logger, string, []*models.LRPStartRequest) error) {
 	fake.requestLRPAuctionsMutex.Lock()
 	defer fake.requestLRPAuctionsMutex.Unlock()
 	fake.RequestLRPAuctionsStub = stub
 }
 
-func (fake *FakeClient) RequestLRPAuctionsArgsForCall(i int) (lager.Logger, string, []*auctioneer.LRPStartRequest) {
+func (fake *FakeClient) RequestLRPAuctionsArgsForCall(i int) (lager.Logger, string, []*models.LRPStartRequest) {
 	fake.requestLRPAuctionsMutex.RLock()
 	defer fake.requestLRPAuctionsMutex.RUnlock()
 	argsForCall := fake.requestLRPAuctionsArgsForCall[i]
@@ -107,10 +107,10 @@ func (fake *FakeClient) RequestLRPAuctionsReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
-func (fake *FakeClient) RequestTaskAuctions(arg1 lager.Logger, arg2 string, arg3 []*auctioneer.TaskStartRequest) error {
-	var arg3Copy []*auctioneer.TaskStartRequest
+func (fake *FakeClient) RequestTaskAuctions(arg1 lager.Logger, arg2 string, arg3 []*models.TaskStartRequest) error {
+	var arg3Copy []*models.TaskStartRequest
 	if arg3 != nil {
-		arg3Copy = make([]*auctioneer.TaskStartRequest, len(arg3))
+		arg3Copy = make([]*models.TaskStartRequest, len(arg3))
 		copy(arg3Copy, arg3)
 	}
 	fake.requestTaskAuctionsMutex.Lock()
@@ -118,7 +118,7 @@ func (fake *FakeClient) RequestTaskAuctions(arg1 lager.Logger, arg2 string, arg3
 	fake.requestTaskAuctionsArgsForCall = append(fake.requestTaskAuctionsArgsForCall, struct {
 		arg1 lager.Logger
 		arg2 string
-		arg3 []*auctioneer.TaskStartRequest
+		arg3 []*models.TaskStartRequest
 	}{arg1, arg2, arg3Copy})
 	stub := fake.RequestTaskAuctionsStub
 	fakeReturns := fake.requestTaskAuctionsReturns
@@ -139,13 +139,13 @@ func (fake *FakeClient) RequestTaskAuctionsCallCount() int {
 	return len(fake.requestTaskAuctionsArgsForCall)
 }
 
-func (fake *FakeClient) RequestTaskAuctionsCalls(stub func(lager.Logger, string, []*auctioneer.TaskStartRequest) error) {
+func (fake *FakeClient) RequestTaskAuctionsCalls(stub func(lager.Logger, string, []*models.TaskStartRequest) error) {
 	fake.requestTaskAuctionsMutex.Lock()
 	defer fake.requestTaskAuctionsMutex.Unlock()
 	fake.RequestTaskAuctionsStub = stub
 }
 
-func (fake *FakeClient) RequestTaskAuctionsArgsForCall(i int) (lager.Logger, string, []*auctioneer.TaskStartRequest) {
+func (fake *FakeClient) RequestTaskAuctionsArgsForCall(i int) (lager.Logger, string, []*models.TaskStartRequest) {
 	fake.requestTaskAuctionsMutex.RLock()
 	defer fake.requestTaskAuctionsMutex.RUnlock()
 	argsForCall := fake.requestTaskAuctionsArgsForCall[i]
@@ -201,4 +201,4 @@ func (fake *FakeClient) recordInvocation(key string, args []interface{}) {
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ auctioneer.Client = new(FakeClient)
+var _ models.AuctioneerClient = new(FakeClient)

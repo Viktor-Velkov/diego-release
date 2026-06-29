@@ -5,7 +5,7 @@ import (
 
 	"code.cloudfoundry.org/auction/auctionrunner"
 	"code.cloudfoundry.org/bbs/models"
-	"code.cloudfoundry.org/rep"
+
 	"code.cloudfoundry.org/rep/repfakes"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -23,7 +23,7 @@ var _ = Describe("Cell", func() {
 		emptyState := BuildCellState("cellID", 0, "the-zone", 100, 200, 50, false, 0, linuxOnlyRootFSProviders, nil, []string{}, []string{}, []string{}, 0)
 		emptyCell = auctionrunner.NewCell(logger, "empty-cell", client, emptyState)
 
-		state := BuildCellState("cellID", 0, "the-zone", 100, 200, 50, false, 10, linuxOnlyRootFSProviders, []rep.LRP{
+		state := BuildCellState("cellID", 0, "the-zone", 100, 200, 50, false, 10, linuxOnlyRootFSProviders, []models.SchedulingLRP{
 			*BuildLRP("pg-1", "domain", 0, linuxRootFSURL, 10, 20, 10, []string{}),
 			*BuildLRP("pg-1", "domain", 1, linuxRootFSURL, 10, 20, 10, []string{}),
 			*BuildLRP("pg-2", "domain", 0, linuxRootFSURL, 10, 20, 10, []string{}),
@@ -65,7 +65,7 @@ var _ = Describe("Cell", func() {
 				lrpDesiredMemory    int32
 				proxyMemoryOverhead int
 				proxiedCell         *auctionrunner.Cell
-				lrp                 *rep.LRP
+				lrp                 *models.SchedulingLRP
 			)
 
 			JustBeforeEach(func() {
@@ -141,18 +141,18 @@ var _ = Describe("Cell", func() {
 		})
 
 		Context("Weighted Bin Pack First Fit algorithm", func() {
-			var instance *rep.LRP
-			var cellStateZero, cellStateOne rep.CellState
+			var instance *models.SchedulingLRP
+			var cellStateZero, cellStateOne models.CellState
 			var cellZero, cellOne *auctionrunner.Cell
 
 			BeforeEach(func() {
 				instance = BuildLRP("pg-0", "domain", 0, linuxRootFSURL, 20, 20, 10, []string{})
 
-				cellZeroLRPs := []rep.LRP{*BuildLRP("pg-1", "domain", 0, linuxRootFSURL, 20, 20, 10, []string{})}
+				cellZeroLRPs := []models.SchedulingLRP{*BuildLRP("pg-1", "domain", 0, linuxRootFSURL, 20, 20, 10, []string{})}
 				cellStateZero = BuildCellState("cellID", 0, "the-zone", 100, 200, 50, false, 0, linuxOnlyRootFSProviders, cellZeroLRPs, []string{}, []string{}, []string{}, 0)
 				cellZero = auctionrunner.NewCell(logger, "cell-0", client, cellStateZero)
 
-				cellOneLRPs := []rep.LRP{*BuildLRP("pg-2", "domain", 0, linuxRootFSURL, 20, 20, 10, []string{})}
+				cellOneLRPs := []models.SchedulingLRP{*BuildLRP("pg-2", "domain", 0, linuxRootFSURL, 20, 20, 10, []string{})}
 				cellStateOne = BuildCellState("cellID", 1, "other-zone", 100, 200, 50, false, 0, linuxOnlyRootFSProviders, cellOneLRPs, []string{}, []string{}, []string{}, 0)
 				cellOne = auctionrunner.NewCell(logger, "cell-1", client, cellStateOne)
 			})
@@ -207,8 +207,8 @@ var _ = Describe("Cell", func() {
 		})
 
 		Context("Starting Containers", func() {
-			var instance *rep.LRP
-			var busyState, boredState rep.CellState
+			var instance *models.SchedulingLRP
+			var busyState, boredState models.CellState
 			var busyCell, boredCell *auctionrunner.Cell
 
 			BeforeEach(func() {
@@ -224,7 +224,7 @@ var _ = Describe("Cell", func() {
 					false,
 					10,
 					linuxOnlyRootFSProviders,
-					[]rep.LRP{{ActualLRPKey: models.ActualLRPKey{ProcessGuid: "not-HA"}}},
+					[]models.SchedulingLRP{{ActualLRPKey: models.ActualLRPKey{ProcessGuid: "not-HA"}}},
 					[]string{},
 					[]string{},
 					[]string{},
@@ -242,7 +242,7 @@ var _ = Describe("Cell", func() {
 					false,
 					0,
 					linuxOnlyRootFSProviders,
-					[]rep.LRP{{ActualLRPKey: models.ActualLRPKey{ProcessGuid: "HA"}}},
+					[]models.SchedulingLRP{{ActualLRPKey: models.ActualLRPKey{ProcessGuid: "HA"}}},
 					[]string{},
 					[]string{},
 					[]string{},
@@ -434,8 +434,8 @@ var _ = Describe("Cell", func() {
 		})
 
 		Context("Starting Containers", func() {
-			var task *rep.Task
-			var busyState, boredState rep.CellState
+			var task *models.SchedulingTask
+			var busyState, boredState models.CellState
 			var busyCell, boredCell *auctionrunner.Cell
 
 			BeforeEach(func() {
@@ -608,7 +608,7 @@ var _ = Describe("Cell", func() {
 		})
 
 		Context("with work to commit", func() {
-			var lrp rep.LRP
+			var lrp models.SchedulingLRP
 
 			BeforeEach(func() {
 				lrp = *BuildLRP("pg-new", "domain", 0, linuxRootFSURL, 20, 10, 10, []string{})
@@ -619,13 +619,13 @@ var _ = Describe("Cell", func() {
 				cell.Commit()
 				Expect(client.PerformCallCount()).To(Equal(1))
 				_, work := client.PerformArgsForCall(0)
-				Expect(work).To(Equal(rep.Work{LRPs: []rep.LRP{lrp}, CellID: cell.Guid}))
+				Expect(work).To(Equal(models.Work{LRPs: []models.SchedulingLRP{lrp}, CellID: cell.Guid}))
 			})
 
 			Context("when the client returns some failed work", func() {
 				It("forwards the failed work", func() {
-					failedWork := rep.Work{
-						LRPs: []rep.LRP{lrp},
+					failedWork := models.Work{
+						LRPs: []models.SchedulingLRP{lrp},
 					}
 					client.PerformReturns(failedWork, nil)
 					Expect(cell.Commit()).To(Equal(failedWork))
@@ -634,7 +634,7 @@ var _ = Describe("Cell", func() {
 
 			Context("when the client returns an error", func() {
 				It("does not return any failed work", func() {
-					client.PerformReturns(rep.Work{}, errors.New("boom"))
+					client.PerformReturns(models.Work{}, errors.New("boom"))
 					Expect(cell.Commit()).To(BeZero())
 				})
 			})

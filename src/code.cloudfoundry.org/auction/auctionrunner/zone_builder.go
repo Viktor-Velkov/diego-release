@@ -6,14 +6,14 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/auction/auctiontypes"
+	"code.cloudfoundry.org/bbs/models"
 	"code.cloudfoundry.org/lager/v3"
-	"code.cloudfoundry.org/rep"
 	"code.cloudfoundry.org/workpool"
 )
 
 const MinBinPackFirstFitWeight = 0.0
 
-func FetchStateAndBuildZones(logger lager.Logger, workPool *workpool.WorkPool, clients map[string]rep.Client, metricEmitter auctiontypes.AuctionMetricEmitterDelegate, binPackFirstFitWeight float64) map[string]Zone {
+func FetchStateAndBuildZones(logger lager.Logger, workPool *workpool.WorkPool, clients map[string]models.RepClient, metricEmitter auctiontypes.AuctionMetricEmitterDelegate, binPackFirstFitWeight float64) map[string]Zone {
 	var zones map[string]Zone
 	for i := 0; ; i++ {
 		zones = fetchStateAndBuildZones(logger, workPool, clients, metricEmitter, binPackFirstFitWeight)
@@ -29,7 +29,7 @@ func FetchStateAndBuildZones(logger lager.Logger, workPool *workpool.WorkPool, c
 	return zones
 }
 
-func fetchStateAndBuildZones(logger lager.Logger, workPool *workpool.WorkPool, clients map[string]rep.Client, metricEmitter auctiontypes.AuctionMetricEmitterDelegate, binPackFirstFitWeight float64) map[string]Zone {
+func fetchStateAndBuildZones(logger lager.Logger, workPool *workpool.WorkPool, clients map[string]models.RepClient, metricEmitter auctiontypes.AuctionMetricEmitterDelegate, binPackFirstFitWeight float64) map[string]Zone {
 	wg := &sync.WaitGroup{}
 	zones := map[string]Zone{}
 	lock := &sync.Mutex{}
