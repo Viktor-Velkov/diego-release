@@ -176,6 +176,7 @@ files:
   - code.cloudfoundry.org/vendor/github.com/buildpacks/lifecycle/platform/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/buildpacks/lifecycle/platform/files/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/buildpacks/lifecycle/platform/launch/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/buildpacks/pack/internal/ioutil/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/buildpacks/pack/internal/layer/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/buildpacks/pack/internal/name/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/buildpacks/pack/internal/paths/*.go # gosub
@@ -200,8 +201,6 @@ files:
   - code.cloudfoundry.org/vendor/github.com/containerd/errdefs/pkg/errhttp/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/containerd/errdefs/pkg/internal/cause/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/containerd/log/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/containerd/stargz-snapshotter/estargz/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/containerd/stargz-snapshotter/estargz/errorutil/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/containerd/typeurl/v2/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/dimchansky/utfbom/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/distribution/reference/*.go # gosub
@@ -227,8 +226,6 @@ files:
   - code.cloudfoundry.org/vendor/github.com/docker/docker/api/types/versions/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/docker/docker/internal/lazyregexp/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/docker/docker/pkg/homedir/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/docker/docker/pkg/ioutils/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/docker/docker/pkg/jsonmessage/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/docker/docker/registry/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/docker/go-connections/sockets/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/docker/go-connections/tlsconfig/*.go # gosub
@@ -247,8 +244,8 @@ files:
   - code.cloudfoundry.org/vendor/github.com/google/go-cmp/cmp/internal/value/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/and/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/compression/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/estargz/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/gzip/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/limit/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/redact/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/retry/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/internal/retry/wait/*.go # gosub
@@ -265,6 +262,7 @@ files:
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/mutate/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/partial/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/remote/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/remote/internal/authchallenge/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/remote/transport/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/static/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/google/go-containerregistry/pkg/v1/stream/*.go # gosub
@@ -319,13 +317,12 @@ files:
   - code.cloudfoundry.org/vendor/github.com/moby/moby/api/types/volume/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/moby/moby/client/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/moby/moby/client/internal/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/moby/moby/client/internal/mod/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/moby/moby/client/internal/timestamp/*.go # gosub
+  - code.cloudfoundry.org/vendor/github.com/moby/moby/client/pkg/jsonmessage/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/moby/moby/client/pkg/versions/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/moby/sys/atomicwriter/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/moby/sys/sequential/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/moby/term/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/moby/term/windows/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/morikuni/aec/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/munnerz/goautoneg/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/opencontainers/go-digest/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/opencontainers/image-spec/specs-go/*.go # gosub
@@ -348,7 +345,6 @@ files:
   - code.cloudfoundry.org/vendor/github.com/spf13/cobra/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/spf13/pflag/*.go # gosub
   - code.cloudfoundry.org/vendor/github.com/tonistiigi/go-csvvalue/*.go # gosub
-  - code.cloudfoundry.org/vendor/github.com/vbatts/tar-split/archive/tar/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/auto/sdk/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/auto/sdk/internal/telemetry/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/*.go # gosub
@@ -374,7 +370,6 @@ files:
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/trace/embedded/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/trace/internal/telemetry/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/trace/noop/*.go # gosub
-  - code.cloudfoundry.org/vendor/go.yaml.in/yaml/v2/*.go # gosub
   - code.cloudfoundry.org/vendor/golang.org/x/crypto/blowfish/*.go # gosub
   - code.cloudfoundry.org/vendor/golang.org/x/crypto/chacha20/*.go # gosub
   - code.cloudfoundry.org/vendor/golang.org/x/crypto/chacha20/*.s # gosub
