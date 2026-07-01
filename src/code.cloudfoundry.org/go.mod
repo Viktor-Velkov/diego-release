@@ -27,10 +27,10 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.96.0
 	code.cloudfoundry.org/durationjson v0.79.0
 	code.cloudfoundry.org/eventhub v0.79.0
-	code.cloudfoundry.org/garden v0.0.0-20260624020405-8f632509f05f
+	code.cloudfoundry.org/garden v0.0.0-20260701020453-6a4fe469372c
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.105.0
-	code.cloudfoundry.org/guardian v0.0.0-20260624020832-94e61725ae0c
+	code.cloudfoundry.org/guardian v0.0.0-20260701021004-3db44f7a3a61
 	code.cloudfoundry.org/lager/v3 v3.76.0
 	code.cloudfoundry.org/localip v0.78.0
 	code.cloudfoundry.org/locket v1.4.0
@@ -39,10 +39,10 @@ require (
 	code.cloudfoundry.org/tlsconfig v0.61.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/aws/aws-sdk-go-v2 v1.42.0
-	github.com/aws/aws-sdk-go-v2/config v1.32.26
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.25
-	github.com/aws/aws-sdk-go-v2/service/ecr v1.58.5
+	github.com/aws/aws-sdk-go-v2 v1.42.1
+	github.com/aws/aws-sdk-go-v2/config v1.32.27
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.26
+	github.com/aws/aws-sdk-go-v2/service/ecr v1.58.6
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.12.0
 	github.com/cespare/xxhash/v2 v2.3.0
 	github.com/containers/image/v5 v5.36.2
@@ -80,7 +80,7 @@ require (
 	golang.org/x/oauth2 v0.36.0
 	golang.org/x/sys v0.46.0
 	golang.org/x/time v0.15.0
-	google.golang.org/grpc v1.81.1
+	google.golang.org/grpc v1.82.0
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -88,7 +88,7 @@ require (
 
 require (
 	cel.dev/expr v0.25.2 // indirect
-	code.cloudfoundry.org/commandrunner v0.68.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.69.0 // indirect
 	code.cloudfoundry.org/diego-db-helpers v0.6.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20260629064500-85da08bf73ac // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
@@ -108,17 +108,17 @@ require (
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/antithesishq/antithesis-sdk-go v0.7.2 // indirect
 	github.com/apex/log v1.9.0 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.29 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.29 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.29 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.30 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.39.7 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.12 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.29 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.2.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.31.4 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.7 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.43.4 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.30 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.30 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.30 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.31 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.39.8 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.13 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.30 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.2.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.31.5 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.8 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.43.5 // indirect
 	github.com/aws/smithy-go v1.27.3 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
@@ -175,7 +175,7 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/klauspost/compress v1.18.6 // indirect
+	github.com/klauspost/compress v1.19.0 // indirect
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
@@ -202,7 +202,7 @@ require (
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.69.0 // indirect
-	github.com/prometheus/procfs v0.21.0 // indirect
+	github.com/prometheus/procfs v0.21.1 // indirect
 	github.com/sirupsen/logrus v1.9.4 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/tonistiigi/go-csvvalue v0.0.0-20240814133006-030d3b2625d0 // indirect
@@ -221,8 +221,8 @@ require (
 	golang.org/x/term v0.44.0 // indirect
 	golang.org/x/text v0.38.0 // indirect
 	golang.org/x/tools v0.47.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260622175928-b703f567277d // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260622175928-b703f567277d // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260630182238-925bb5da69e7 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260630182238-925bb5da69e7 // indirect
 	gorm.io/driver/mysql v1.6.0 // indirect
 	gorm.io/driver/postgres v1.6.0 // indirect
 	gorm.io/gorm v1.31.2 // indirect
