@@ -1063,17 +1063,23 @@ dYbCU/DMZjsv+Pt9flhj7ELLo+WKHyI767hJSq9A7IT3GzFt8iGiEAt1qj2yS0DX
 				})
 
 				Context("when the container is removed", func() {
-					It("returns available capacity == total capacity", func() {
+					It("returns available capacity == total capacity", Serial, func() {
 						fakeGarden.RouteToHandler("GET", "/containers", ghttp.RespondWithJSONEncoded(http.StatusOK, struct{}{}))
 						fakeGarden.RouteToHandler("GET", "/containers/bulk_info", ghttp.RespondWithJSONEncoded(http.StatusOK, struct{}{}))
 
+						cachePath := fmt.Sprintf("%s-%d", "/tmp/cache", node)
+						configuredDiskMB := int32(10 * 1024)
+						expectedDiskMB := expectedTotalDiskMB(cachePath)
+						if configuredDiskMB < expectedDiskMB {
+							expectedDiskMB = configuredDiskMB
+						}
 						Eventually(func() models.Resources {
 							state, err := repClient.State(logger)
 							Expect(err).NotTo(HaveOccurred())
 							return state.AvailableResources
 						}).Should(Equal(models.Resources{
 							MemoryMB:   1024,
-							DiskMB:     10 * 1024,
+							DiskMB:     expectedDiskMB,
 							Containers: 3,
 						}))
 					})
