@@ -191,11 +191,6 @@ func (e *FileCacheEntry) expandedDirectory() (string, error) {
 			err = os.RemoveAll(e.FilePath)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Unable to delete the cached file", err)
-			} else {
-				// GetDirectory doubled Size before calling here; tar is now gone so halve it
-				// back to reflect only the .tar.d on disk. Mirrors the symmetric halving in
-				// decrementFileInUseCount() which fires when the tar is deleted later.
-				e.Size = e.Size / 2
 			}
 		}
 	}
@@ -339,7 +334,8 @@ func (c *FileCache) GetDirectory(logger lager.Logger, cacheKey string) (string, 
 	}
 
 	// Was it expanded before
-	if entry.dirDoesNotExist() {
+	expanding := entry.dirDoesNotExist()
+	if expanding {
 		// Do we have enough room to double the size?
 		c.makeRoom(logger, entry.Size, cacheKey)
 		entry.Size = entry.Size * 2
@@ -349,6 +345,12 @@ func (c *FileCache) GetDirectory(logger lager.Logger, cacheKey string) (string, 
 	dir, err := entry.expandedDirectory()
 	if err != nil {
 		return "", CachingInfoType{}, err
+	}
+
+	// If the tarball got deleted during expansion, halve the doubled size back
+	// down to reflect only the .tar.d now on disk.
+	if expanding && entry.fileDoesNotExist() {
+		entry.Size = entry.Size / 2
 	}
 
 	return dir, entry.CachingInfo, nil
