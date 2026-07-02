@@ -138,12 +138,6 @@ jobs:
     - name: build binaries
       run: |
         repo/.github/helpers/build.bash ${{ github.workspace }} "$BUILD_IMAGE"
-    - name: bbs-mysql
-      env:
-        DIR: src/code.cloudfoundry.org/bbs
-        DB: mysql
-      run: |
-        repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
     - name: auctioneer-mysql
       env:
         DIR: src/code.cloudfoundry.org/auctioneer
@@ -159,12 +153,6 @@ jobs:
     - name: route-emitter-mysql
       env:
         DIR: src/code.cloudfoundry.org/route-emitter
-        DB: mysql
-      run: |
-        repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
-    - name: locket-mysql
-      env:
-        DIR: src/code.cloudfoundry.org/locket
         DB: mysql
       run: |
         repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
@@ -239,12 +227,6 @@ jobs:
     - name: build binaries
       run: |
         repo/.github/helpers/build.bash ${{ github.workspace }} "$BUILD_IMAGE"
-    - name: bbs-postgres
-      env:
-        DIR: src/code.cloudfoundry.org/bbs
-        DB: postgres
-      run: |
-        repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
     - name: auctioneer-postgres
       env:
         DIR: src/code.cloudfoundry.org/auctioneer
@@ -260,12 +242,6 @@ jobs:
     - name: route-emitter-postgres
       env:
         DIR: src/code.cloudfoundry.org/route-emitter
-        DB: postgres
-      run: |
-        repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
-    - name: locket-postgres
-      env:
-        DIR: src/code.cloudfoundry.org/locket
         DB: postgres
       run: |
         repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
@@ -296,12 +272,6 @@ jobs:
     - name: build binaries
       run: |
         repo/.github/helpers/build.bash ${{ github.workspace }} "$BUILD_IMAGE"
-    - name: bbs-mysql
-      env:
-        DIR: src/code.cloudfoundry.org/bbs
-        DB: mysql
-      run: |
-        repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
     - name: auctioneer-mysql
       env:
         DIR: src/code.cloudfoundry.org/auctioneer
@@ -317,12 +287,6 @@ jobs:
     - name: route-emitter-mysql
       env:
         DIR: src/code.cloudfoundry.org/route-emitter
-        DB: mysql
-      run: |
-        repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"
-    - name: locket-mysql
-      env:
-        DIR: src/code.cloudfoundry.org/locket
         DB: mysql
       run: |
         repo/.github/helpers/test.bash ${{ github.workspace }} "$BUILD_IMAGE"

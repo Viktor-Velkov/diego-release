@@ -23,12 +23,13 @@ var (
 )
 
 type FileCache struct {
-	CachedPath     string
-	maxSizeInBytes int64
-	minFreeBytes   int64
-	Entries        map[string]*FileCacheEntry
-	OldEntries     map[string]*FileCacheEntry
-	Seq            uint64
+	CachedPath                string
+	maxSizeInBytes            int64
+	minimumPartitionFreeBytes int64
+	FreeSpaceFunc             func(path string) int64 `json:"-"`
+	Entries                   map[string]*FileCacheEntry
+	OldEntries                map[string]*FileCacheEntry
+	Seq                       uint64
 }
 
 type FileCacheEntry struct {
@@ -41,18 +42,15 @@ type FileCacheEntry struct {
 	fileInUseCount        int
 }
 
-func NewCache(dir string, maxSizeInBytes int64, minFreeBytes ...int64) *FileCache {
-	var minFree int64
-	if len(minFreeBytes) > 0 {
-		minFree = minFreeBytes[0]
-	}
+func NewCache(dir string, maxSizeInBytes, minimumPartitionFreeBytes int64) *FileCache {
 	return &FileCache{
-		CachedPath:     dir,
-		maxSizeInBytes: maxSizeInBytes,
-		minFreeBytes:   minFree,
-		Entries:        map[string]*FileCacheEntry{},
-		OldEntries:     map[string]*FileCacheEntry{},
-		Seq:            0,
+		CachedPath:                dir,
+		maxSizeInBytes:            maxSizeInBytes,
+		minimumPartitionFreeBytes: minimumPartitionFreeBytes,
+		FreeSpaceFunc:             defaultFreeSpaceOnPartition,
+		Entries:                   map[string]*FileCacheEntry{},
+		OldEntries:                map[string]*FileCacheEntry{},
+		Seq:                       0,
 	}
 }
 
@@ -193,6 +191,11 @@ func (e *FileCacheEntry) expandedDirectory() (string, error) {
 			err = os.RemoveAll(e.FilePath)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Unable to delete the cached file", err)
+			} else {
+				// GetDirectory doubled Size before calling here; tar is now gone so halve it
+				// back to reflect only the .tar.d on disk. Mirrors the symmetric halving in
+				// decrementFileInUseCount() which fires when the tar is deleted later.
+				e.Size = e.Size / 2
 			}
 		}
 	}
@@ -384,7 +387,7 @@ func (c *FileCache) updateOldEntries(logger lager.Logger, cacheKey string, entry
 
 func (c *FileCache) makeRoom(logger lager.Logger, size int64, excludedCacheKey string) {
 	usedSpace := c.usedSpace(logger)
-	for c.maxSizeInBytes < usedSpace+size {
+	for c.maxSizeInBytes < usedSpace+size || (c.minimumPartitionFreeBytes > 0 && c.FreeSpaceFunc(c.CachedPath) < c.minimumPartitionFreeBytes) {
 		var oldestEntry *FileCacheEntry
 		oldestAccessTime, oldestCacheKey := maxTime(), ""
 		for ck, f := range c.Entries {
