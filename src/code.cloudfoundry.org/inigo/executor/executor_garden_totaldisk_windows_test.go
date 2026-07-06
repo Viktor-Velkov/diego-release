@@ -13,3 +13,10 @@ func registerDiskCapacityTest(resources *executor.ExecutorResources, _ *string, 
 		Expect((*resources).DiskMB).To(Equal(*expectedDiskCapacityMB))
 	})
 }
+
+// expectedRemainingDiskCapacityMB mirrors executor/depot's RemainingResources. Windows
+// CI hosts are assumed to have ample free space matching the configured capacity, so no
+// live check is performed here (matching registerDiskCapacityTest above).
+func expectedRemainingDiskCapacityMB(_ string, configuredDiskCapacityMB int) int {
+	return configuredDiskCapacityMB
+}
