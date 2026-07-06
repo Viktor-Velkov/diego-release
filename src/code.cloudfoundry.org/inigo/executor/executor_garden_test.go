@@ -442,7 +442,7 @@ var _ = Describe("Executor/Garden", func() {
 				It("reduces the capacity by the amount reserved", func() {
 					Expect(executorClient.RemainingResources(logger)).To(Equal(executor.ExecutorResources{
 						MemoryMB:   int(gardenCapacity.MemoryInBytes/1024/1024) - 256,
-						DiskMB:     expectedDiskCapacityMB - 256,
+						DiskMB:     expectedRemainingDiskCapacityMB(cachePath, expectedDiskCapacityMB-256),
 						Containers: int(gardenCapacity.MaxContainers) - 2,
 					}))
 				})
@@ -783,7 +783,7 @@ var _ = Describe("Executor/Garden", func() {
 
 					Eventually(func() (executor.ExecutorResources, error) { return executorClient.RemainingResources(logger) }).Should(Equal(executor.ExecutorResources{
 						MemoryMB:   int(gardenCapacity.MemoryInBytes / 1024 / 1024),
-						DiskMB:     expectedDiskCapacityMB,
+						DiskMB:     expectedRemainingDiskCapacityMB(cachePath, expectedDiskCapacityMB),
 						Containers: int(gardenCapacity.MaxContainers) - 1,
 					}))
 				})
@@ -881,7 +881,7 @@ var _ = Describe("Executor/Garden", func() {
 					Expect(err).NotTo(HaveOccurred())
 
 					Expect(remaining.MemoryMB).To(Equal(int(gardenCapacity.MemoryInBytes/1024/1024) - 64))
-					Expect(remaining.DiskMB).To(Equal(expectedDiskCapacityMB - 64))
+					Expect(remaining.DiskMB).To(Equal(expectedRemainingDiskCapacityMB(cachePath, expectedDiskCapacityMB-64)))
 				})
 
 				Context("when the container disappears", func() {
@@ -896,7 +896,7 @@ var _ = Describe("Executor/Garden", func() {
 						Eventually(func() (executor.ExecutorResources, error) { return executorClient.RemainingResources(logger) }).Should(
 							Equal(executor.ExecutorResources{
 								MemoryMB:   int(gardenCapacity.MemoryInBytes / 1024 / 1024),
-								DiskMB:     expectedDiskCapacityMB,
+								DiskMB:     expectedRemainingDiskCapacityMB(cachePath, expectedDiskCapacityMB),
 								Containers: int(gardenCapacity.MaxContainers) - 1,
 							}))
 					})
