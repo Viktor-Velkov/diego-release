@@ -11,38 +11,38 @@ replace (
 )
 
 require (
-	code.cloudfoundry.org/archiver v0.77.0
+	code.cloudfoundry.org/archiver v0.78.0
 	code.cloudfoundry.org/bbs v1.11.0
 	code.cloudfoundry.org/bbs/encryption v1.9.0
 	code.cloudfoundry.org/bbs/format v1.9.0
 	code.cloudfoundry.org/bbs/models v1.8.0
-	code.cloudfoundry.org/bytefmt v0.79.0
-	code.cloudfoundry.org/certsplitter v0.78.0
-	code.cloudfoundry.org/cfhttp/v2 v2.84.0
-	code.cloudfoundry.org/clock v1.77.0
+	code.cloudfoundry.org/bytefmt v0.80.0
+	code.cloudfoundry.org/certsplitter v0.79.0
+	code.cloudfoundry.org/cfhttp/v2 v2.85.0
+	code.cloudfoundry.org/clock v1.78.0
 	code.cloudfoundry.org/cnbapplifecycle v0.0.7
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260629130111-5ee9a1ab59ab
-	code.cloudfoundry.org/debugserver v0.104.0
+	code.cloudfoundry.org/debugserver v0.105.0
 	code.cloudfoundry.org/diego-logging-client v0.114.0
-	code.cloudfoundry.org/dockerdriver v0.96.0
-	code.cloudfoundry.org/durationjson v0.79.0
-	code.cloudfoundry.org/eventhub v0.79.0
+	code.cloudfoundry.org/dockerdriver v0.97.0
+	code.cloudfoundry.org/durationjson v0.80.0
+	code.cloudfoundry.org/eventhub v0.80.0
 	code.cloudfoundry.org/garden v0.0.0-20260701020453-6a4fe469372c
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.105.0
 	code.cloudfoundry.org/guardian v0.0.0-20260701021004-3db44f7a3a61
-	code.cloudfoundry.org/lager/v3 v3.76.0
-	code.cloudfoundry.org/localip v0.78.0
+	code.cloudfoundry.org/lager/v3 v3.77.0
+	code.cloudfoundry.org/localip v0.79.0
 	code.cloudfoundry.org/locket v1.4.0
-	code.cloudfoundry.org/routing-api v0.3.0
-	code.cloudfoundry.org/routing-info v1.2.0
+	code.cloudfoundry.org/routing-api v0.4.0
+	code.cloudfoundry.org/routing-info v1.3.0
 	code.cloudfoundry.org/tlsconfig v0.61.0
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.42.1
-	github.com/aws/aws-sdk-go-v2/config v1.32.27
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.26
-	github.com/aws/aws-sdk-go-v2/service/ecr v1.58.6
+	github.com/aws/aws-sdk-go-v2/config v1.32.28
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.27
+	github.com/aws/aws-sdk-go-v2/service/ecr v1.59.0
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.12.0
 	github.com/cespare/xxhash/v2 v2.3.0
 	github.com/containers/image/v5 v5.36.2
@@ -54,7 +54,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/golang/protobuf v1.5.4
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
-	github.com/gopacket/gopacket v1.6.1
+	github.com/gopacket/gopacket v1.7.0
 	github.com/hashicorp/errwrap v1.1.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/kr/pty v1.1.8
@@ -90,7 +90,7 @@ require (
 	cel.dev/expr v0.25.2 // indirect
 	code.cloudfoundry.org/commandrunner v0.69.0 // indirect
 	code.cloudfoundry.org/diego-db-helpers v0.6.0 // indirect
-	code.cloudfoundry.org/go-diodes v0.0.0-20260629064500-85da08bf73ac // indirect
+	code.cloudfoundry.org/go-diodes v0.0.0-20260706112827-32a910f327a2 // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
@@ -112,13 +112,13 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.30 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.30 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.31 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.39.8 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.40.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.13 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.30 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.2.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.31.5 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.8 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.43.5 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.3.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.32.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.37.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.44.0 // indirect
 	github.com/aws/smithy-go v1.27.3 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bmizerany/pat v0.0.0-20210406213842-e4b6760bdd6f // indirect
@@ -127,11 +127,11 @@ require (
 	github.com/buildpacks/pack v0.40.7 // indirect
 	github.com/cactus/go-statsd-client v3.2.1+incompatible // indirect
 	github.com/chrismellard/docker-credential-acr-env v0.0.0-20230304212654-82a0ddb27589 // indirect
-	github.com/cloudfoundry-community/go-uaa v0.4.0 // indirect
+	github.com/cloudfoundry-community/go-uaa v0.4.1 // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
 	github.com/cloudfoundry/go-socks5 v0.0.0-20250423223041-4ad5fea42851 // indirect
 	github.com/cloudfoundry/socks5-proxy v0.2.180 // indirect
-	github.com/cloudfoundry/sonde-go v0.0.0-20260622134720-d7b012c5b9c4 // indirect
+	github.com/cloudfoundry/sonde-go v0.0.0-20260706112804-cd2c61a47573 // indirect
 	github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2 // indirect
 	github.com/containerd/errdefs v1.0.0 // indirect
 	github.com/containerd/errdefs/pkg v0.3.0 // indirect
@@ -219,10 +219,10 @@ require (
 	golang.org/x/net v0.56.0 // indirect
 	golang.org/x/sync v0.21.0 // indirect
 	golang.org/x/term v0.44.0 // indirect
-	golang.org/x/text v0.38.0 // indirect
+	golang.org/x/text v0.39.0 // indirect
 	golang.org/x/tools v0.47.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260630182238-925bb5da69e7 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260630182238-925bb5da69e7 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260706201446-f0a921348800 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800 // indirect
 	gorm.io/driver/mysql v1.6.0 // indirect
 	gorm.io/driver/postgres v1.6.0 // indirect
 	gorm.io/gorm v1.31.2 // indirect
