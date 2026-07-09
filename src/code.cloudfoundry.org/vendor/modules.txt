@@ -72,7 +72,7 @@ code.cloudfoundry.org/cnbapplifecycle/pkg/errors
 code.cloudfoundry.org/cnbapplifecycle/pkg/keychain
 code.cloudfoundry.org/cnbapplifecycle/pkg/log
 code.cloudfoundry.org/cnbapplifecycle/pkg/staging
-# code.cloudfoundry.org/commandrunner v0.69.0
+# code.cloudfoundry.org/commandrunner v0.70.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/commandrunner
 # code.cloudfoundry.org/credhub-cli v0.0.0-20260629130111-5ee9a1ab59ab
@@ -94,7 +94,7 @@ code.cloudfoundry.org/diego-db-helpers/guidprovider
 code.cloudfoundry.org/diego-db-helpers/sqldb/helpers
 code.cloudfoundry.org/diego-db-helpers/sqldb/helpers/monitor
 code.cloudfoundry.org/diego-db-helpers/testhelpers/sqlrunner
-# code.cloudfoundry.org/diego-logging-client v0.114.0
+# code.cloudfoundry.org/diego-logging-client v0.115.0
 ## explicit; go 1.25.8
 code.cloudfoundry.org/diego-logging-client
 code.cloudfoundry.org/diego-logging-client/testhelpers
@@ -110,7 +110,7 @@ code.cloudfoundry.org/durationjson
 # code.cloudfoundry.org/eventhub v0.80.0
 ## explicit; go 1.25.0
 code.cloudfoundry.org/eventhub
-# code.cloudfoundry.org/garden v0.0.0-20260701020453-6a4fe469372c => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20260708020641-3ee0e5230510 => ../garden
 ## explicit; go 1.25.0
 code.cloudfoundry.org/garden
 code.cloudfoundry.org/garden/client
@@ -137,7 +137,7 @@ code.cloudfoundry.org/goshims/filepathshim
 code.cloudfoundry.org/goshims/http_wrap
 code.cloudfoundry.org/goshims/osshim
 code.cloudfoundry.org/goshims/osshim/os_fake
-# code.cloudfoundry.org/guardian v0.0.0-20260701021004-3db44f7a3a61 => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20260708021126-56dbc82c72b3 => ../guardian
 ## explicit; go 1.26.3
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -297,11 +297,11 @@ github.com/aws/aws-sdk-go-v2/internal/shareddefaults
 github.com/aws/aws-sdk-go-v2/internal/strings
 github.com/aws/aws-sdk-go-v2/internal/sync/singleflight
 github.com/aws/aws-sdk-go-v2/internal/timeconv
-# github.com/aws/aws-sdk-go-v2/config v1.32.28
+# github.com/aws/aws-sdk-go-v2/config v1.32.29
 ## explicit; go 1.24
 github.com/aws/aws-sdk-go-v2/config
 github.com/aws/aws-sdk-go-v2/config/internal/ini
-# github.com/aws/aws-sdk-go-v2/credentials v1.19.27
+# github.com/aws/aws-sdk-go-v2/credentials v1.19.28
 ## explicit; go 1.24
 github.com/aws/aws-sdk-go-v2/credentials
 github.com/aws/aws-sdk-go-v2/credentials/ec2rolecreds
@@ -342,7 +342,7 @@ github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding
 # github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.30
 ## explicit; go 1.24
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url
-# github.com/aws/aws-sdk-go-v2/service/signin v1.3.0
+# github.com/aws/aws-sdk-go-v2/service/signin v1.4.0
 ## explicit; go 1.24
 github.com/aws/aws-sdk-go-v2/service/signin
 github.com/aws/aws-sdk-go-v2/service/signin/internal/endpoints
@@ -554,8 +554,8 @@ github.com/containers/image/v5/version
 # github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01
 ## explicit
 github.com/containers/libtrust
-# github.com/containers/ocicrypt v1.3.0
-## explicit; go 1.24.0
+# github.com/containers/ocicrypt v1.3.1
+## explicit; go 1.25.0
 github.com/containers/ocicrypt/spec
 # github.com/containers/storage v1.59.1
 ## explicit; go 1.23.0
@@ -1160,7 +1160,7 @@ go.step.sm/crypto/x25519
 # go.yaml.in/yaml/v3 v3.0.4
 ## explicit; go 1.16
 go.yaml.in/yaml/v3
-# golang.org/x/crypto v0.53.0
+# golang.org/x/crypto v0.54.0
 ## explicit; go 1.25.0
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blake2b
@@ -1182,10 +1182,10 @@ golang.org/x/crypto/salsa20/salsa
 golang.org/x/crypto/scrypt
 golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
-# golang.org/x/mod v0.37.0
+# golang.org/x/mod v0.38.0
 ## explicit; go 1.25.0
 golang.org/x/mod/semver
-# golang.org/x/net v0.56.0
+# golang.org/x/net v0.57.0
 ## explicit; go 1.25.0
 golang.org/x/net/bpf
 golang.org/x/net/context
@@ -1207,11 +1207,11 @@ golang.org/x/net/trace
 golang.org/x/oauth2
 golang.org/x/oauth2/clientcredentials
 golang.org/x/oauth2/internal
-# golang.org/x/sync v0.21.0
+# golang.org/x/sync v0.22.0
 ## explicit; go 1.25.0
 golang.org/x/sync/errgroup
 golang.org/x/sync/semaphore
-# golang.org/x/sys v0.46.0
+# golang.org/x/sys v0.47.0
 ## explicit; go 1.25.0
 golang.org/x/sys/cpu
 golang.org/x/sys/plan9
@@ -1221,10 +1221,10 @@ golang.org/x/sys/windows/registry
 golang.org/x/sys/windows/svc
 golang.org/x/sys/windows/svc/eventlog
 golang.org/x/sys/windows/svc/mgr
-# golang.org/x/term v0.44.0
+# golang.org/x/term v0.45.0
 ## explicit; go 1.25.0
 golang.org/x/term
-# golang.org/x/text v0.39.0
+# golang.org/x/text v0.40.0
 ## explicit; go 1.25.0
 golang.org/x/text/cases
 golang.org/x/text/encoding
@@ -1253,7 +1253,7 @@ golang.org/x/text/width
 # golang.org/x/time v0.15.0
 ## explicit; go 1.25.0
 golang.org/x/time/rate
-# golang.org/x/tools v0.47.0
+# golang.org/x/tools v0.48.0
 ## explicit; go 1.25.0
 golang.org/x/tools/cover
 golang.org/x/tools/go/ast/edge

@@ -23,14 +23,14 @@ require (
 	code.cloudfoundry.org/cnbapplifecycle v0.0.8
 	code.cloudfoundry.org/credhub-cli v0.0.0-20260629130111-5ee9a1ab59ab
 	code.cloudfoundry.org/debugserver v0.105.0
-	code.cloudfoundry.org/diego-logging-client v0.114.0
+	code.cloudfoundry.org/diego-logging-client v0.115.0
 	code.cloudfoundry.org/dockerdriver v0.97.0
 	code.cloudfoundry.org/durationjson v0.80.0
 	code.cloudfoundry.org/eventhub v0.80.0
-	code.cloudfoundry.org/garden v0.0.0-20260701020453-6a4fe469372c
+	code.cloudfoundry.org/garden v0.0.0-20260708020641-3ee0e5230510
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.105.0
-	code.cloudfoundry.org/guardian v0.0.0-20260701021004-3db44f7a3a61
+	code.cloudfoundry.org/guardian v0.0.0-20260708021126-56dbc82c72b3
 	code.cloudfoundry.org/lager/v3 v3.77.0
 	code.cloudfoundry.org/localip v0.79.0
 	code.cloudfoundry.org/locket v1.4.0
@@ -40,8 +40,8 @@ require (
 	github.com/GaryBoone/GoStats v0.0.0-20130122001700-1993eafbef57
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/aws/aws-sdk-go-v2 v1.42.1
-	github.com/aws/aws-sdk-go-v2/config v1.32.28
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.27
+	github.com/aws/aws-sdk-go-v2/config v1.32.29
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.28
 	github.com/aws/aws-sdk-go-v2/service/ecr v1.59.0
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.12.0
 	github.com/cespare/xxhash/v2 v2.3.0
@@ -76,9 +76,9 @@ require (
 	github.com/tedsuo/ifrit v0.0.0-20260418191334-846868129986
 	github.com/tedsuo/rata v1.0.0
 	github.com/vito/go-sse v1.1.3
-	golang.org/x/crypto v0.53.0
+	golang.org/x/crypto v0.54.0
 	golang.org/x/oauth2 v0.36.0
-	golang.org/x/sys v0.46.0
+	golang.org/x/sys v0.47.0
 	golang.org/x/time v0.15.0
 	google.golang.org/grpc v1.82.0
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af
@@ -88,7 +88,7 @@ require (
 
 require (
 	cel.dev/expr v0.25.2 // indirect
-	code.cloudfoundry.org/commandrunner v0.69.0 // indirect
+	code.cloudfoundry.org/commandrunner v0.70.0 // indirect
 	code.cloudfoundry.org/diego-db-helpers v0.6.0 // indirect
 	code.cloudfoundry.org/go-diodes v0.0.0-20260706112827-32a910f327a2 // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
@@ -115,7 +115,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ecrpublic v1.40.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.13 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.30 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.3.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.4.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.32.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.37.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.44.0 // indirect
@@ -138,7 +138,7 @@ require (
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/containerd/typeurl/v2 v2.3.0 // indirect
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
-	github.com/containers/ocicrypt v1.3.0 // indirect
+	github.com/containers/ocicrypt v1.3.1 // indirect
 	github.com/containers/storage v1.59.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.7.0 // indirect
 	github.com/creack/pty v1.1.24 // indirect
@@ -215,12 +215,12 @@ require (
 	go.opentelemetry.io/otel/trace v1.44.0 // indirect
 	go.step.sm/crypto v0.84.1 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/mod v0.37.0 // indirect
-	golang.org/x/net v0.56.0 // indirect
-	golang.org/x/sync v0.21.0 // indirect
-	golang.org/x/term v0.44.0 // indirect
-	golang.org/x/text v0.39.0 // indirect
-	golang.org/x/tools v0.47.0 // indirect
+	golang.org/x/mod v0.38.0 // indirect
+	golang.org/x/net v0.57.0 // indirect
+	golang.org/x/sync v0.22.0 // indirect
+	golang.org/x/term v0.45.0 // indirect
+	golang.org/x/text v0.40.0 // indirect
+	golang.org/x/tools v0.48.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260706201446-f0a921348800 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260706201446-f0a921348800 // indirect
 	gorm.io/driver/mysql v1.6.0 // indirect
