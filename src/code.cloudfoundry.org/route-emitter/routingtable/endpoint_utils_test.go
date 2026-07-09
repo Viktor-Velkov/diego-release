@@ -54,27 +54,27 @@ var _ = Describe("LRP Utils", func() {
 
 	Describe("HashWithOptions", func() {
 		It("treats semantically identical JSON options as equal regardless of key order", func() {
-			routeAlpha := routingtable.Route{
+			routeA := routingtable.Route{
 				Hostname: "foo.example.com",
 				Options:  json.RawMessage(`{"b":2,"a":1}`),
 			}
-			routeBeta := routingtable.Route{
+			routeB := routingtable.Route{
 				Hostname: "foo.example.com",
 				Options:  json.RawMessage(`{"a":1,"b":2}`),
 			}
-			Expect(routeAlpha.HashWithOptions()).To(Equal(routeBeta.HashWithOptions()))
+			Expect(routeA.HashWithOptions()).To(Equal(routeB.HashWithOptions()))
 		})
 
 		It("distinguishes routes with different option values", func() {
-			routeAlpha := routingtable.Route{
+			routeA := routingtable.Route{
 				Hostname: "foo.example.com",
 				Options:  json.RawMessage(`{"loadbalancing":"hash"}`),
 			}
-			routeBeta := routingtable.Route{
+			routeB := routingtable.Route{
 				Hostname: "foo.example.com",
 				Options:  json.RawMessage(`{"loadbalancing":"round-robin"}`),
 			}
-			Expect(routeAlpha.HashWithOptions()).NotTo(Equal(routeBeta.HashWithOptions()))
+			Expect(routeA.HashWithOptions()).NotTo(Equal(routeB.HashWithOptions()))
 		})
 
 		It("distinguishes a route with options from one without", func() {
@@ -92,6 +92,25 @@ var _ = Describe("LRP Utils", func() {
 			withNil := routingtable.Route{Hostname: "foo.example.com", Options: nil}
 			withEmpty := routingtable.Route{Hostname: "foo.example.com", Options: json.RawMessage{}}
 			Expect(withNil.HashWithOptions()).To(Equal(withEmpty.HashWithOptions()))
+		})
+
+		It("falls back to a raw byte comparison when options are not valid JSON", func() {
+			routeA := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`not-valid-json`),
+			}
+			routeB := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`not-valid-json`),
+			}
+			routeC := routingtable.Route{
+				Hostname: "foo.example.com",
+				Options:  json.RawMessage(`also-not-valid-json`),
+			}
+
+			Expect(func() { routeA.HashWithOptions() }).NotTo(Panic())
+			Expect(routeA.HashWithOptions()).To(Equal(routeB.HashWithOptions()))
+			Expect(routeA.HashWithOptions()).NotTo(Equal(routeC.HashWithOptions()))
 		})
 	})
 
