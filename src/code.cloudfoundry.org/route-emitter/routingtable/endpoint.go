@@ -100,6 +100,10 @@ func (info ExternalEndpointInfo) Hash() interface{} {
 	return info
 }
 
+func (info ExternalEndpointInfo) HashWithOptions() interface{} {
+	return info.Hash()
+}
+
 func (info ExternalEndpointInfo) MessageFor(e Endpoint, directInstanceRoute, _ bool) (*RegistryMessage, *tcpmodels.TcpRouteMapping, *RegistryMessage) {
 	tlsHostPort := -1
 	tlsContainerPort := -1
@@ -168,6 +172,13 @@ type routeHash struct {
 	Protocol         string
 }
 
+// routeHashWithOptions extends routeHash to include options, normalized so
+// semantically identical option sets always compare equal.
+type routeHashWithOptions struct {
+	routeHash
+	Options string
+}
+
 // route hash is used to find route differences
 // it needs to be dereferenced so that it can be used as a key in a hash map
 func (r Route) Hash() interface{} {
@@ -177,6 +188,29 @@ func (r Route) Hash() interface{} {
 		IsolationSegment: r.IsolationSegment,
 		LogGUID:          r.LogGUID,
 		Protocol:         r.Protocol,
+	}
+}
+
+// HashWithOptions includes normalized options so diffRoutes detects options-only changes.
+func (r Route) HashWithOptions() interface{} {
+	opts := string(r.Options)
+	if len(r.Options) > 0 {
+		var v interface{}
+		if err := json.Unmarshal(r.Options, &v); err == nil {
+			if b, err := json.Marshal(v); err == nil {
+				opts = string(b)
+			}
+		}
+	}
+	return routeHashWithOptions{
+		routeHash: routeHash{
+			Hostname:         r.Hostname,
+			RouteServiceUrl:  r.RouteServiceUrl,
+			IsolationSegment: r.IsolationSegment,
+			LogGUID:          r.LogGUID,
+			Protocol:         r.Protocol,
+		},
+		Options: opts,
 	}
 }
 
@@ -197,6 +231,10 @@ type InternalRoute struct {
 
 func (r InternalRoute) Hash() interface{} {
 	return r
+}
+
+func (r InternalRoute) HashWithOptions() interface{} {
+	return r.Hash()
 }
 
 func (r InternalRoute) MessageFor(endpoint Endpoint, _, emitEndpointUpdatedAt bool) (*RegistryMessage, *tcpmodels.TcpRouteMapping, *RegistryMessage) {

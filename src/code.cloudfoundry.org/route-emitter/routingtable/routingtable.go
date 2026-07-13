@@ -426,6 +426,7 @@ func (t *internalRoutingTable) GetRoutingEvents() (TCPRouteMappings, MessagesToE
 type routeMapping interface {
 	MessageFor(endpoint Endpoint, directInstanceAddress, emitEndpointUpdatedAt bool) (*RegistryMessage, *tcpmodels.TcpRouteMapping, *RegistryMessage)
 	Hash() interface{}
+	HashWithOptions() interface{}
 }
 
 func httpRoutesFrom(lrp *models.DesiredLRP) map[RoutingKey][]routeMapping {
@@ -638,7 +639,8 @@ func diffRoutes(before, after []routeMapping) routesDiff {
 	}
 
 	for routeHash := range newRoutes {
-		if _, ok := existingRoutes[routeHash]; !ok {
+		// Register routes that are new, or whose options changed.
+		if _, ok := existingRoutes[routeHash]; !ok || existingRoutes[routeHash].HashWithOptions() != newRoutes[routeHash].HashWithOptions() {
 			diff.added = append(diff.added, newRoutes[routeHash])
 		}
 	}
