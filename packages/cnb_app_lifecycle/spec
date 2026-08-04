@@ -363,9 +363,10 @@ files:
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/metric/embedded/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/metric/noop/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/propagation/*.go # gosub
+  - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/semconv/internal/metricpool/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/semconv/v1.37.0/*.go # gosub
-  - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/semconv/v1.41.0/*.go # gosub
-  - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/semconv/v1.41.0/httpconv/*.go # gosub
+  - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/semconv/v1.43.0/*.go # gosub
+  - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/semconv/v1.43.0/httpconv/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/trace/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/trace/embedded/*.go # gosub
   - code.cloudfoundry.org/vendor/go.opentelemetry.io/otel/trace/internal/telemetry/*.go # gosub
