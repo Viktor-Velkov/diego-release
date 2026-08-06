@@ -27,7 +27,7 @@ require (
 	code.cloudfoundry.org/dockerdriver v0.101.0
 	code.cloudfoundry.org/durationjson v0.82.0
 	code.cloudfoundry.org/eventhub v0.83.0
-	code.cloudfoundry.org/garden v0.0.0-20260729020900-a0441c36f7b5
+	code.cloudfoundry.org/garden v0.0.0-20260805020914-eb681524f408
 	code.cloudfoundry.org/go-loggregator/v9 v9.2.1
 	code.cloudfoundry.org/goshims v0.107.0
 	code.cloudfoundry.org/guardian v0.0.0-20260730115415-6f75b111856e
