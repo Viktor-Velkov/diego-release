@@ -638,8 +638,8 @@ code.cloudfoundry.org/goshims v0.107.0 h1:inbML8AaLXVELnqbrOXDuYkM66duK8qb1vQg/I
 code.cloudfoundry.org/goshims v0.107.0/go.mod h1:uICsJV2LXpBvmAgjoaNm3T+EixSJwD80Ng8MtD30Nto=
 code.cloudfoundry.org/lager/v3 v3.80.0 h1:TYFCcCQ2lG+kEN+3NJiUvXRhWTsW5Ju14xmV429YaT0=
 code.cloudfoundry.org/lager/v3 v3.80.0/go.mod h1:08ujODr8WeHIekdvjPTMDGTXpbc5lpbPpFbkOTJw6v8=
-code.cloudfoundry.org/localip v0.82.0 h1:ZAJAB4R1v1wUAqaoDHNERi6e7gFKmWMdAvbj3PYJfl4=
-code.cloudfoundry.org/localip v0.82.0/go.mod h1:bj+jelfPgqSusGYmOcQSXp+O1JUdr/n8Fkm7GN4JkOs=
+code.cloudfoundry.org/localip v0.83.0 h1:ETde+oVFRMF09tmel1WhlrAzAcWlaENr+Q1MqmXYv6I=
+code.cloudfoundry.org/localip v0.83.0/go.mod h1:b+JnJ1kzJk+KAf/fLeC5cvsIknprZUkerYKQr+Uhhk0=
 code.cloudfoundry.org/locket v1.6.0 h1:OePm4cPqIwFucCpL4+5vrpjHUe9d0FVSMJZsaOlVWLQ=
 code.cloudfoundry.org/locket v1.6.0/go.mod h1:S+W4pISWq9FWbu3LaopvM+rzYHUyHFKLtiuVyRMG+2M=
 code.cloudfoundry.org/routing-api v0.10.0 h1:0G/6zSXpvzxp8RJXlVOUK0ZkgwHI8G5k8JODbtJX9WQ=

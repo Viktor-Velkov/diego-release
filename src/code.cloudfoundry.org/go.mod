@@ -32,7 +32,7 @@ require (
 	code.cloudfoundry.org/goshims v0.107.0
 	code.cloudfoundry.org/guardian v0.0.0-20260730115415-6f75b111856e
 	code.cloudfoundry.org/lager/v3 v3.80.0
-	code.cloudfoundry.org/localip v0.82.0
+	code.cloudfoundry.org/localip v0.83.0
 	code.cloudfoundry.org/locket v1.6.0
 	code.cloudfoundry.org/routing-api v0.10.0
 	code.cloudfoundry.org/routing-info v1.8.0
