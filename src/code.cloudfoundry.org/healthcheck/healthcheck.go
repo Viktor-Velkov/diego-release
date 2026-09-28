@@ -1,12 +1,16 @@
 package healthcheck
 
 import (
+	"context"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"net"
 	"net/http"
 	"os"
 	"time"
+
+	"golang.org/x/net/http2"
 )
 
 type HealthCheckError struct {
@@ -23,10 +27,11 @@ type HealthCheck struct {
 	uri     string
 	port    string
 	timeout time.Duration
+	http2   bool
 }
 
-func NewHealthCheck(network, uri, port string, timeout time.Duration) HealthCheck {
-	return HealthCheck{network, uri, port, timeout}
+func NewHealthCheck(network, uri, port string, timeout time.Duration, useHTTP2 bool) HealthCheck {
+	return HealthCheck{network, uri, port, timeout, useHTTP2}
 }
 
 func (h *HealthCheck) CheckInterfaces(interfaces []net.Interface) error {
@@ -74,6 +79,17 @@ func (h *HealthCheck) HTTPHealthCheck(ip string) error {
 	addr := fmt.Sprintf("http://%s:%s%s", ip, h.port, h.uri)
 	client := http.Client{
 		Timeout: h.timeout,
+	}
+	if h.http2 {
+		// Speak HTTP/2 cleartext (h2c) using prior knowledge: no upgrade
+		// handshake, dial a plaintext TCP connection and start an h2 session
+		// directly. This matches an app that serves h2c on its listen port.
+		client.Transport = &http2.Transport{
+			AllowHTTP: true,
+			DialTLSContext: func(ctx context.Context, network, addr string, _ *tls.Config) (net.Conn, error) {
+				return net.Dial(network, addr)
+			},
+		}
 	}
 	now := time.Now()
 	req, err := http.NewRequest("GET", addr, nil)

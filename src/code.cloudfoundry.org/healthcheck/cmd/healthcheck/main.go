@@ -34,6 +34,12 @@ var timeout = flag.Duration(
 	"dial timeout",
 )
 
+var http2Flag = flag.Bool(
+	"http2",
+	false,
+	"if set, perform HTTP checks over HTTP/2 cleartext (h2c) using prior knowledge instead of HTTP/1.1",
+)
+
 var startupInterval = flag.Duration(
 	"startup-interval",
 	0,
@@ -74,7 +80,7 @@ func main() {
 		return
 	}
 
-	h := newHealthCheck(*network, *uri, *port, *timeout)
+	h := newHealthCheck(*network, *uri, *port, *timeout, *http2Flag)
 
 	var timeoutTimerCh <-chan time.Time
 	if duration := *startupTimeout; duration > 0 {

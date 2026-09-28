@@ -12,6 +12,7 @@ import (
 func newHealthCheck(
 	network, uri, port string,
 	timeout time.Duration,
+	useHTTP2 bool,
 ) healthcheck.HealthCheck {
-	return healthcheck.NewHealthCheck(network, uri, port, timeout)
+	return healthcheck.NewHealthCheck(network, uri, port, timeout, useHTTP2)
 }

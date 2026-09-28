@@ -9,6 +9,8 @@ import (
 
 	"code.cloudfoundry.org/healthcheck"
 
+	"golang.org/x/net/http2"
+
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/ghttp"
@@ -65,7 +67,7 @@ var _ = Describe("HealthCheck", func() {
 		server.RouteToHandler("GET", "/api/_ping", handler)
 		server.Start()
 
-		hc = healthcheck.NewHealthCheck("tcp", uri, port, timeout)
+		hc = healthcheck.NewHealthCheck("tcp", uri, port, timeout, false)
 	})
 
 	AfterEach(func() {
@@ -246,6 +248,76 @@ var _ = Describe("HealthCheck", func() {
 
 			})
 
+		})
+	})
+})
+
+var _ = Describe("HTTP/2 (h2c) HealthCheck", func() {
+	var (
+		ip       string
+		port     string
+		listener net.Listener
+		h2server *http2.Server
+		done     chan struct{}
+	)
+
+	// startH2C stands up an HTTP/2 cleartext ("prior knowledge") server: a plain
+	// TCP listener whose connections are handed directly to http2.Server.ServeConn,
+	// with no TLS and no h2c upgrade handshake. This mirrors an app that serves h2c
+	// on its listen port, which is exactly what the -http2 healthcheck targets.
+	startH2C := func(handler http.Handler) {
+		var err error
+		ip = "127.0.0.1"
+		listener, err = net.Listen("tcp", ip+":0")
+		Expect(err).NotTo(HaveOccurred())
+		_, port, err = net.SplitHostPort(listener.Addr().String())
+		Expect(err).NotTo(HaveOccurred())
+
+		h2server = &http2.Server{}
+		done = make(chan struct{})
+		go func() {
+			defer close(done)
+			for {
+				conn, err := listener.Accept()
+				if err != nil {
+					return
+				}
+				go h2server.ServeConn(conn, &http2.ServeConnOpts{Handler: handler})
+			}
+		}()
+	}
+
+	AfterEach(func() {
+		if listener != nil {
+			listener.Close()
+			Eventually(done).Should(BeClosed())
+		}
+	})
+
+	Context("when the server speaks h2c and the check requests HTTP/2", func() {
+		BeforeEach(func() {
+			startH2C(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				Expect(r.ProtoMajor).To(Equal(2))
+				w.WriteHeader(http.StatusOK)
+			}))
+		})
+
+		It("succeeds", func() {
+			hc := healthcheck.NewHealthCheck("tcp", "/", port, time.Second, true)
+			Expect(hc.HTTPHealthCheck(ip)).To(Succeed())
+		})
+	})
+
+	Context("when the server only speaks h2c but the check requests HTTP/1.1", func() {
+		BeforeEach(func() {
+			startH2C(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(http.StatusOK)
+			}))
+		})
+
+		It("fails, proving the transport actually switched to h2c", func() {
+			hc := healthcheck.NewHealthCheck("tcp", "/", port, time.Second, false)
+			Expect(hc.HTTPHealthCheck(ip)).To(HaveOccurred())
 		})
 	})
 })
